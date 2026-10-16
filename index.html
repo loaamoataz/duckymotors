@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUCKY MOTORS - مركز البطّة لصيانة السيارات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #f1c40f;
+            --yellow-hover: #d4ac0d;
+            --dark-bg: #121212;
+            --card-dark: #1e1e1e;
+            --card-light: #ffffff;
+            --text-dark: #222222;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --whatsapp-green: #25D366;
+            --whatsapp-hover: #1ebc57;
+            --sos-red: #e74c3c;
+            --sos-red-hover: #c0392b;
+            --charity-green: #27ae60;
+            --neon-glow: 0 0 10px #f1c40f, 0 0 20px #f1c40f, 0 0 35px #f1c40f, 0 0 50px #f1c40f;
+            --sos-glow: 0 0 10px #e74c3c, 0 0 20px #e74c3c, 0 0 35px #e74c3c;
+            --charity-glow: 0 0 10px #27ae60, 0 0 20px #27ae60;
+        }
+/* تنسيق موحد لجميع أزرار التنقل العادية */
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #d4ac0d !important;
+    -webkit-text-fill-color: #d4ac0d !important;
+    font-weight: 800 !important;
+    border-radius: 20px !important;
+    border: 3px dashed #000000 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease !important;
+}
+
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):hover,
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).active {
+    background-color: #fcfcfc !important;
+    color: #b7950b !important;
+    border-color: #000000 !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px);
+}/* تنسيق القوائم المنبثقة: خلفية بيضاء، كلام ذهبي فخم، وإطار ذهبي أنيق */
+.duck-bubble-popover {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #d4ac0d !important;
+    border: 2px solid #000000 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+}
+.duck-bubble-popover .bubble-text, 
+.duck-bubble-popover span {
+    color: #d4ac0d !important;
+    -webkit-text-fill-color: #d4ac0d !important;
+    font-weight: bold !important;
+}
+
+/* تعديل لون السهم الصغير الموجه للزرار ليطابق الخلفية البيضاء أو الإطار */
+.duck-bubble-popover::after,
+.duck-bubble-popover::before {
+    border-bottom-color: #ffffff !important;
+    border-top-color: #ffffff !important;
+}
+/* تنسيق السعر القديم المشطوب */
+.old-price {
+    text-decoration: line-through !important;
+    color: #e74c3c !important;
+    font-size: 0.85em !important;
+    margin-left: 8px !important;
+    opacity: 0.75;
+}
+
+/* تنسيق السعر الجديد الأصفر النيون المضيء */
+.new-price {
+    color: #b8860b !important;
+    font-weight: 900 !important;
+    font-size: 1.1em !important;
+    text-shadow: none !important;
+}
+/* تأثيرات كريتيف لزرار الواتساب (نبض واهتزاز البطة) */
+.duck-whatsapp-btn {
+    animation: whatsappPulse 2s infinite ease-in-out !important;
+    transition: all 0.3s ease !important;
+}
+
+.duck-whatsapp-btn:hover {
+    transform: translateY(-4px) scale(1.03) !important;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4) !important;
+}
+
+/* حركة اهتزاز الأيقونة أو الإيموجي جوه الزرار عند الوقوف بالماوس */
+.duck-whatsapp-btn:hover img,
+.duck-whatsapp-btn:hover span {
+    animation: duckWiggle 0.5s ease infinite alternate !important;
+}
+
+@keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+@keyframes duckWiggle {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(10deg); }
+}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #171717;
+            color: var(--text-light);
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background-color: var(--primary-yellow);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(241, 196, 15, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        nav button {
+            background: transparent;
+            border: 2px solid transparent;
+            color: #000000;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav button:hover {
+            background-color: #000000;
+            color: var(--primary-yellow);
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            background-color: #000000;
+            color: var(--primary-yellow);
+            border-color: #000000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+     /* تنسيق زر Golden Duck Challenge بخلفية بيضاء وكلمة سوداء عليها نيون أصفر */
+.nav-btn-challenge {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    
+    /* نيون وتوهج أصفر حول الكلمة السوداء */
+    text-shadow: 0 0 5px #ffd700, 0 0 10px #ffea00 !important;
+    
+    font-weight: 900 !important;
+    border-radius: 20px !important;
+    border: 3px dashed #000000 !important;
+    animation: neonPulse 1.8s infinite ease-in-out !important;
+    transition: all 0.3s ease !important;
+}
+
+@keyframes neonPulse {
+    0% {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 215, 0, 0.6);
+        transform: scale(1.03);
+    }
+    100% {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        transform: scale(1);
+    }
+}
+
+     .nav-btn-sos {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #e74c3c !important;
+    -webkit-text-fill-color: #e74c3c !important;
+    font-weight: 900 !important;
+    border-radius: 20px !important;
+    border: 3px dashed #e74c3c !important;
+    animation: pulseSos 1.8s infinite ease-in-out !important;
+    transition: all 0.3s ease !important;
+}
+
+@keyframes pulseSos {
+    0% {
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.7), 0 0 0 0 rgba(231, 76, 60, 0.9);
+        transform: scale(1);
+    }
+    50% {
+        /* إشعاع أحمر قوي بيوسع لبره كأنه موجة رادار */
+        box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 0 14px rgba(231, 76, 60, 0);
+        transform: scale(1.04);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.7), 0 0 0 0 rgba(231, 76, 60, 0);
+        transform: scale(1);
+    }
+}
+
+.nav-btn-sos:hover, .nav-btn-sos.active {
+    background: #ffffff !important;
+    background-color: #fdf2f2 !important;
+    color: #c0392b !important;
+    border-color: #c0392b !important;
+    box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 10px rgba(231, 76, 60, 0.8) !important;
+    transform: translateY(-2px) scale(1.04);
+}
+
+  /* تنسيق زر سهم الخير والصدقة بالنبض الأخضر النيون */
+.nav-btn-charity {
+    background-color: #ffffff !important;
+    color: #2ecc71 !important;
+    font-weight: 900 !important;
+    border-radius: 20px !important;
+    border: 3px dashed #2ecc71 !important;
+    animation: greenNeonPulse 1.8s infinite ease-in-out !important;
+    transition: all 0.3s ease !important;
+}
+
+@keyframes greenNeonPulse {
+    0% {
+        box-shadow: 0 0 8px rgba(46, 204, 113, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.9), 0 0 10px rgba(46, 204, 113, 0.6);
+        transform: scale(1.03);
+    }
+    100% {
+        box-shadow: 0 0 8px rgba(46, 204, 113, 0.8);
+        transform: scale(1);
+    }
+}
+
+.nav-btn-charity:hover, .nav-btn-charity.active {
+    background-color: #f4fbf4 !important;
+    color: #27ae60 !important;
+    border-color: #27ae60 !important;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.9), 0 0 8px rgba(46, 204, 113, 0.6) !important;
+    transform: translateY(-2px) scale(1.03);
+}
+        @keyframes pulseSos {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        .duck-bubble-popover {
+            display: none;
+            position: absolute;
+            top: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2b2e3a;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 14px;
+            border: 2px solid var(--primary-yellow);
+            white-space: nowrap;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.6);
+            align-items: center;
+            gap: 8px;
+            z-index: 1100;
+            animation: popupAnim 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .duck-bubble-popover.sos-bubble {
+            border-color: var(--sos-red);
+            background-color: #3d1414;
+        }
+
+        .duck-bubble-popover.charity-bubble {
+            border-color: #2ecc71;
+            background-color: #122b15;
+        }
+
+        .duck-bubble-popover::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 8px 8px 8px;
+            border-style: solid;
+            border-color: transparent transparent #2b2e3a transparent;
+        }
+
+        .duck-bubble-popover.sos-bubble::before {
+            border-color: transparent transparent #3d1414 transparent;
+        }
+
+        .duck-bubble-popover.charity-bubble::before {
+            border-color: transparent transparent #122b15 transparent;
+        }
+
+        .duck-bubble-popover.show {
+            display: flex;
+        }
+
+        @keyframes popupAnim {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.7); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1); }
+        }
+
+        .bubble-text {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-yellow);
+        }
+
+        .sos-bubble .bubble-text { color: #ff6b6b; }
+        .charity-bubble .bubble-text { color: #2ecc71; }
+
+        .brand-container {
+            padding: 25px 15px 10px 15px;
+            background: linear-gradient(180deg, #171717 0%, #111111 100%);
+        }
+
+        h1.brand-title {
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-shadow: var(--neon-glow);
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .page-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HOME SECTION STYLES */
+        .hero-card {
+            background-color: var(--card-dark);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 15px;
+        }
+
+        .duck-img-main {
+            display: block;
+            margin: 0 auto 25px auto;
+            max-width: 100%;
+            width: 750px;
+            height: auto;
+            border-radius: 16px;
+            border: 3px solid var(--primary-yellow);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.2);
+            object-fit: cover;
+        }
+
+        .hero-header h2 {
+            font-size: 32px;
+            color: var(--primary-yellow);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero-header hr {
+            border: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .hero-header h3 {
+            font-size: 24px;
+            color: #ffffff;
+            margin: 10px 0;
+            font-weight: 700;
+        }
+
+        .hero-header h4 {
+            font-size: 22px;
+            color: #e67e22;
+            margin: 12px 0;
+            font-weight: 800;
+        }
+
+        .hero-header p {
+            font-size: 20px;
+            color: var(--primary-yellow);
+            font-weight: 800;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .duck-sound-btn {
+            background-color: var(--primary-yellow);
+            color: #000000;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .duck-sound-btn:hover {
+            background-color: var(--yellow-hover);
+            transform: scale(1.06);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.5);
+        }
+
+        /* NEW COMPONENTS STYLES */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+            text-align: right;
+        }
+
+        .interactive-card {
+            background: var(--card-dark);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .interactive-card h3 {
+            color: var(--primary-yellow);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed var(--primary-yellow);
+            padding-bottom: 10px;
+        }
+
+        .calc-result-box {
+            background-color: #121212;
+            border: 2px solid #2ecc71;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .price-tag {
+            font-size: 26px;
+            font-weight: 900;
+            color: #2ecc71;
+        }
+
+        .price-old {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .tracker-box {
+            background: var(--card-dark);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 25px;
+            text-align: right;
+        }
+
+        .tracker-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .step-item {
+            flex: 1;
+            min-width: 120px;
+            background: #121212;
+            padding: 15px 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .step-item.completed {
+            border-color: #2ecc71;
+            opacity: 1;
+            background: #112b15;
+            color: #2ecc71;
+        }
+
+        .step-item.active {
+            border-color: var(--primary-yellow);
+            opacity: 1;
+            background: #2b2507;
+            color: var(--primary-yellow);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .ba-card {
+            background: #121212;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .ba-images {
+            display: flex;
+            position: relative;
+        }
+
+        .ba-img {
+            width: 50%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .ba-label {
+            position: absolute;
+            bottom: 5px;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.7);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .review-card {
+            background: var(--card-dark);
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #333;
+        }
+
+        .stars { color: #f1c40f; margin-bottom: 8px; }
+
+        .chatbot-floating {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 1500;
+        }
+
+        .chatbot-btn {
+            background: var(--primary-yellow);
+            color: #000;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-btn:hover { transform: scale(1.1); }
+
+        .chat-window {
+            display: none;
+            position: absolute;
+            bottom: 75px;
+            left: 0;
+            width: 320px;
+            background: #1e1e1e;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            flex-direction: column;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .chat-window.show { display: flex; }
+
+        .chat-header {
+            background: var(--primary-yellow);
+            color: #000;
+            padding: 12px;
+            font-weight: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-body {
+            padding: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-msg {
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 85%;
+        }
+
+        .chat-msg.bot { background: #2b2b2b; color: #fff; align-self: flex-start; }
+        .chat-msg.user { background: var(--primary-yellow); color: #000; align-self: flex-end; font-weight: 700; }
+
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px;
+            background: #121212;
+        }
+
+        .chat-opt-btn {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid var(--primary-yellow);
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .chat-opt-btn:hover { background: var(--primary-yellow); color: #000; }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #1e1e1e;
+            border: 2px solid #2ecc71;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+            z-index: 1400;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            transform: translateY(150%);
+            transition: transform 0.4s ease;
+        }
+
+        .toast-notification.show { transform: translateY(0); }
+
+        /* STYLES GOLDEN DUCK CHALLENGE */
+        .challenge-hero {
+            background: linear-gradient(135deg, #2b2507 0%, #111111 100%);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 20px;
+            padding: 35px 20px;
+            box-shadow: var(--neon-glow);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .challenge-title { font-size: 36px; font-weight: 900; color: var(--primary-yellow); margin-bottom: 10px; }
+        .challenge-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 20px; }
+
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            text-align: right;
+        }
+
+        .prize-card {
+            background: var(--card-dark);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-card:hover {
+            border-color: var(--primary-yellow);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(241, 196, 15, 0.2);
+        }
+
+        .prize-card.grand-prize {
+            border: 2px solid var(--primary-yellow);
+            background: linear-gradient(180deg, #2a2408 0%, #1e1e1e 100%);
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+
+        .prize-badge {
+            display: inline-block;
+            background: var(--primary-yellow);
+            color: #000;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .prize-card h3 { color: #ffffff; font-size: 20px; margin-bottom: 8px; }
+        .prize-card p { color: #cccccc; font-size: 15px; line-height: 1.6; }
+
+        .rules-box {
+            background-color: var(--card-dark);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .rules-box h3 {
+            color: var(--primary-yellow);
+            font-size: 24px;
+            border-bottom: 2px solid var(--primary-yellow);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .rules-list { list-style: none; padding-right: 15px; }
+        .rules-list li { font-size: 16px; margin: 12px 0; color: #dddddd; position: relative; }
+        .rules-list li::before { content: "📌 "; position: absolute; right: -25px; }
+
+        /* EMERGENCY SOS SECTION STYLES */
+        .sos-hero {
+            background: linear-gradient(135deg, #4a1212 0%, #111111 100%);
+            border: 2px solid var(--sos-red);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: var(--sos-glow);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sos-title { font-size: 36px; font-weight: 900; color: #ff6b6b; margin-bottom: 10px; }
+        .sos-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 15px; }
+
+        .sos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+            text-align: right;
+        }
+
+        .sos-card {
+            background: var(--card-dark);
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid #442222;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sos-card:hover {
+            border-color: var(--sos-red);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .sos-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .sos-card-header h3 { color: #ffffff; font-size: 19px; font-weight: 800; }
+        .sos-card p { color: #bbbbbb; font-size: 14px; margin-bottom: 15px; line-height: 1.5; }
+
+        .sos-input-group { margin-bottom: 12px; }
+        .sos-input-group label { display: block; font-size: 13px; color: var(--primary-yellow); margin-bottom: 5px; font-weight: 700; }
+        .sos-input-group select, .sos-input-group input {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #121212;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn-sos-action {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--sos-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-sos-action:hover { background-color: var(--sos-red-hover); }
+
+        .sos-response-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .sos-modal-content {
+            background: #1e1e1e;
+            border: 3px solid var(--sos-red);
+            border-radius: 20px;
+            max-width: 550px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: var(--sos-glow);
+            animation: popupAnim 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .sos-modal-content h2 { color: #ff6b6b; font-size: 26px; margin-bottom: 15px; font-weight: 900; }
+        .sos-modal-content p { font-size: 18px; color: #ffffff; line-height: 1.7; margin-bottom: 25px; font-weight: 700; }
+
+        /* CHARITY STYLES */
+        .charity-hero {
+            background: linear-gradient(135deg, #103317 0%, #111111 100%);
+            border: 2px solid #2ecc71;
+            border-radius: 20px;
+            padding: 35px 20px;
+            box-shadow: var(--charity-glow);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .charity-title { font-size: 36px; font-weight: 900; color: #2ecc71; margin-bottom: 10px; }
+        .charity-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 20px; }
+
+        .charity-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+            text-align: right;
+        }
+
+        .pillar-card {
+            background: var(--card-dark);
+            border-radius: 18px;
+            padding: 25px;
+            border: 2px solid rgba(46, 204, 113, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pillar-card h3 { color: #2ecc71; font-size: 22px; font-weight: 900; margin-bottom: 15px; border-bottom: 1px dashed #2ecc71; padding-bottom: 8px; }
+        .pillar-card ul { list-style: none; padding-right: 0; }
+        .pillar-card ul li { margin: 12px 0; color: #dddddd; font-size: 16px; line-height: 1.6; }
+
+        .donation-box {
+            background: linear-gradient(180deg, #142016 0%, #1a1a1a 100%);
+            border: 2px solid #2ecc71;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .donation-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .donation-btn {
+            background-color: #2a2a2a;
+            border: 2px solid #2ecc71;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .donation-btn:hover, .donation-btn.selected {
+            background-color: #2ecc71;
+            color: #000000;
+            transform: scale(1.05);
+        }
+
+        .menus-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 25px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .menu-box {
+            flex: 1;
+            min-width: 320px;
+            background-color: var(--card-dark);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .menu-box h2 {
+            color: var(--primary-yellow);
+            border-bottom: 3px solid var(--primary-yellow);
+            padding-bottom: 12px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 900;
+        }
+
+        details {
+            background-color: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 10px;
+            padding: 14px 18px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        details[open] {
+            background-color: #ffffff;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.15);
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        summary {
+            font-weight: 800;
+            cursor: pointer;
+            outline: none;
+            color: #000000;
+            font-size: 17px;
+            user-select: none;
+        }
+
+        summary:hover { color: #b7950b; }
+
+        details ul {
+            list-style: square;
+            padding-right: 20px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #000000;
+            text-align: right;
+            flex: 1;
+        }
+
+        details ul li { margin: 6px 0; line-height: 1.5; }
+
+        .details-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex: 1;
+            width: 100%;
+        }
+
+        .service-video, .service-img {
+            width: 120px;
+            height: 120px;
+            min-width: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--primary-yellow);
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.4);
+        }
+
+        .bottom-duck-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 2px solid var(--primary-yellow);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
+        .neon-alert {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border: 3px solid var(--primary-yellow);
+            box-shadow: var(--neon-glow);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px auto 30px auto;
+            max-width: 800px;
+            text-shadow: 0 0 5px var(--primary-yellow);
+        }
+
+        .neon-alert h3 { margin-bottom: 10px; color: var(--primary-yellow); font-size: 26px; font-weight: 900; }
+        .neon-alert p { font-size: 20px; font-weight: 800; }
+
+        .auth-card {
+            max-width: 450px;
+            margin: 30px auto;
+            background: var(--card-dark);
+            padding: 35px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 2px solid var(--primary-yellow);
+            text-align: right;
+        }
+
+        .auth-card h2 { margin-bottom: 25px; color: var(--primary-yellow); text-align: center; font-size: 24px; font-weight: 800; }
+
+        .form-group { margin-bottom: 20px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 15px; color: #ffffff; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #444;
+            background-color: #121212;
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.4);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-yellow);
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover { background-color: var(--yellow-hover); transform: translateY(-2px); }
+
+        .user-dashboard {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            border: 2px solid var(--primary-yellow);
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.25);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            text-align: right;
+        }
+
+        .user-info h2 { color: var(--primary-yellow); margin-bottom: 8px; font-size: 28px; font-weight: 900; }
+        .user-info p { margin: 6px 0; font-size: 17px; color: #dddddd; }
+
+        .points-badge {
+            background-color: var(--primary-yellow);
+            color: #000000;
+            padding: 18px 28px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 24px;
+            box-shadow: var(--neon-glow);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            margin-top: 15px;
+            overflow: hidden;
+            border: 1px solid var(--primary-yellow);
+        }
+
+        .progress-bar {
+            width: 70%;
+            background: linear-gradient(90deg, #1ebc57, #25D366);
+            height: 24px;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            line-height: 24px;
+            font-weight: 900;
+        }
+
+        .dashboard-section {
+            background-color: var(--card-dark);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            margin-bottom: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            text-align: right;
+        }
+
+        .dashboard-section h3 {
+            color: var(--primary-yellow);
+            border-bottom: 2px solid var(--primary-yellow);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .table-responsive { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 600px;
+        }
+
+        table th, table td {
+            border: 1px solid #333333;
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        table th { background-color: var(--primary-yellow); color: #000000; font-weight: 900; }
+        table tbody tr { background-color: #1a1a1a; }
+        table tbody tr:nth-child(even) { background-color: #242424; }
+
+        .rewards-list { list-style: none; line-height: 2.3; font-size: 18px; padding-right: 10px; color: #ffffff; }
+
+        .duck-whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 900;
+            padding: 16px 38px;
+            border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            margin: 25px 0;
+        }
+
+        .duck-whatsapp-btn:hover {
+            transform: scale(1.06);
+            background-color: var(--whatsapp-hover);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .contact-cards { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .contact-card {
+            background: var(--card-dark);
+            padding: 25px;
+            border-radius: 14px;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            border-top: 4px solid var(--primary-yellow);
+            border-left: 1px solid rgba(241, 196, 15, 0.2);
+            border-right: 1px solid rgba(241, 196, 15, 0.2);
+        }
+
+        .contact-card h4 { margin-bottom: 10px; font-size: 20px; color: var(--primary-yellow); font-weight: 800; }
+        .contact-card p { color: #dddddd; font-size: 16px; }
+
+        footer {
+            background: #0a0a0a;
+            color: #888888;
+            padding: 20px;
+            margin-top: auto;
+            font-size: 15px;
+            border-top: 2px solid var(--primary-yellow);
+        }
+
+        /* CUSTOM EXTRA SERVICES STYLES */
+        .neon-heading-batota {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary-yellow);
+            text-shadow: var(--neon-glow);
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .extra-hero-img {
+            display: block;
+            margin: 0 auto 30px auto;
+            max-width: 100%;
+            width: 750px;
+            height: auto;
+            border-radius: 16px;
+            border: 3px solid var(--primary-yellow);
+            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.2);
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            h1.brand-title { font-size: 32px; }
+            .neon-heading-batota { font-size: 34px; }
+            nav button { font-size: 13px; padding: 6px 12px; }
+            .hero-header h2 { font-size: 24px; }
+            .hero-header h3 { font-size: 18px; }
+            .hero-header p { font-size: 16px; }
+            .duck-whatsapp-btn { font-size: 18px; padding: 12px 25px; }
+            .service-video, .service-img { width: 100%; height: auto; margin-top: 10px; }
+            .chat-window { width: 280px; left: -10px; }
+        }
+    </style>
+</head>
+<body>
+<!-- NAVIGATION TABS -->
+<nav>
+    <!-- الرئيسية -->
+    <div class="nav-item-wrapper">
+        <button id="nav-home" class="active" onclick="switchSectionAndBubble('home', 'nest')">الرئيسية</button>
+        <div class="duck-bubble-popover" id="popover-nest">
+            <span class="bubble-text">عش البطة 🦆🏠</span>
+        </div>
+    </div>
+
+    <!-- الخدمات والأسعار -->
+    <div class="nav-item-wrapper">
+        <button id="nav-services" onclick="switchSectionAndBubble('services', 'food')">الخدمات والأسعار</button>
+        <div class="duck-bubble-popover" id="popover-food">
+            <span class="bubble-text">أكل عيش البطة 🦆🍞</span>
+        </div>
+    </div>
+
+    <!-- خدمات إضافية -->
+    <div class="nav-item-wrapper">
+        <button id="nav-extra" onclick="switchSectionAndBubble('extra', 'extra')">خدمات إضافية</button>
+        <div class="duck-bubble-popover" id="popover-extra">
+            <span class="bubble-text">خدمات البطة الإضافية 🦆🛠️</span>
+        </div>
+    </div>
+
+    <!-- استراحة البطة (تم النقل قبل حسابي) -->
+    <div class="nav-item-wrapper">
+        <button id="nav-snack" class="nav-btn-snack" onclick="switchSectionAndBubble('snack', 'snack')">استراحه البطة  </button>
+        <div class="duck-bubble-popover snack-bubble" id="popover-snack">
+            <span class="bubble-text">زغط البطة 🦆🍽️</span>
+        </div>
+    </div>
+
+    <!-- حسابى / تسجيل الدخول -->
+    <div class="nav-item-wrapper">
+        <button id="nav-account" onclick="switchSectionAndBubble('account', 'profile')">حسابى / تسجيل الدخول</button>
+        <div class="duck-bubble-popover" id="popover-profile">
+            <span class="bubble-text">ملف البطة الشخصى  🦆🪪</span>
+        </div>
+    </div>
+
+    <!-- تواصل معنا -->
+    <div class="nav-item-wrapper">
+        <button id="nav-contact" onclick="switchSectionAndBubble('contact', 'contact')">تواصل معنا</button>
+        <div class="duck-bubble-popover" id="popover-contact">
+            <span class="bubble-text">كاك معانا! 🦆📞</span>
+        </div>
+    </div>
+
+    <!-- طوارئ الطريق -->
+    <div class="nav-item-wrapper">
+        <button id="nav-sos" class="nav-btn-sos" onclick="switchSectionAndBubble('sos', 'sos')"> طوارئ الطريق</button>
+        <div class="duck-bubble-popover sos-bubble" id="popover-sos">
+            <span class="bubble-text">البطة فى أزمة 🦆🚨</span>
+        </div>
+    </div>
+
+    <!-- Golden Duck Challenge -->
+    <div class="nav-item-wrapper">
+        <button id="nav-challenge" class="nav-btn-challenge" onclick="switchSectionAndBubble('challenge', 'challenge')">Golden Duck Challenge</button>
+        <div class="duck-bubble-popover" id="popover-challenge">
+            <span class="bubble-text">أبنائى البطابيط 🦆🐥</span>
+        </div>
+    </div>
+
+    <!-- سهم الخير والصدقة -->
+    <div class="nav-item-wrapper">
+        <button id="nav-charity" class="nav-btn-charity" onclick="switchSectionAndBubble('charity', 'charity')">سهم الخير والصدقة</button>
+        <div class="duck-bubble-popover charity-bubble" id="popover-charity">
+            <span class="bubble-text">سهم يعمر.. وروح تتنشر 🌾</span>
+        </div>
+    </div>
+</nav>
+    <!-- NEON BRAND HEADER -->
+    <div class="brand-container">
+        <h1 class="brand-title">DUCKY MOTORS</h1>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- SECTION: الرئيسية (مقتصرة على الكارت الرئيسي حتى زر اسمع صوت البطة) -->
+        <div id="section-home" class="page-section active">
+            <div class="hero-card">
+                <img src="ducky.jpg" alt="Duck Main" class="duck-img-main" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=DUCKY+MOTORS+CENTER';">
+
+                <div class="hero-header">
+                    <h2> مركز البطّة لـ صيانة السيارات🦆</h2>
+                    <hr>
+                    <h3>عربيتك مش مرتاحة؟</h3>
+                    <h3>تعالى لـ البطّة السفّاحة!</h3>
+                    <h4>لـ الصيانة الدباحة 🔧</h4>
+                    <p>هدفنا الأول راحتك وأمان عربيتك</p>
+
+                    <div>
+                        <button class="duck-sound-btn" onclick="playDuckySound()">
+                             اسمع صوت البطة🦆
+                        </button>
+                        <audio id="duckAudio" src="audio.mpeg"></audio>
+                    </div>
+
+                    <hr>
+                </div>
+            </div>
+        </div>
+<!-- SECTION: استراحة البطة -->
+<div id="section-snack" class="page-section">
+    <div class="container" style="direction: rtl; text-align: right; color: #fff;">
+        
+        <div class="section-title text-center" style="margin-bottom: 35px; text-align: center;">
+            <h2 style="color: #d4ac0d; font-size: 30px; font-weight: bold;">☕ استراحة البطة (Duck Lounge)</h2>
+        </div>
+
+        <!-- ==================== 1. المأكولات ==================== -->
+        <div class="lounge-category-block" style="margin-bottom: 40px;">
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🥐 المأكولات (Ducky Bites)</h3>
+            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                
+                <!-- أ. مأكولات غير صحية وسريعة -->
+                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍔 مأكولات سريعة & ساندوتشات</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">ساندوتشات ومخبوزات سريعة</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>ساندوتش بانيه دجاج - 65 EGP</option>
+                        <option>ساندوتش كفتة مشوية - 70 EGP</option>
+                        <option>ساندوتش برجر لحم فاخر - 75 EGP</option>
+                        <option>ساندوتش هوت دوج - 55 EGP</option>
+                        <option>كرواسون زبدة فاخر - 40 EGP</option>
+                        <option>كرواسون جبنة شيدر - 45 EGP</option>
+                        <option>كرواسون شيكولاتة داكنة - 45 EGP</option>
+                        <option>باتيه تركي مدخن - 35 EGP</option>
+                        <option>باتيه جبنة بيضاء وزيتون - 35 EGP</option>
+                        <option>ميني بيتزا مشكلة - 40 EGP</option>
+                    </select>
+                </div>
+
+                <!-- ب. مأكولات صحية -->
+                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥗 مأكولات صحية</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">كلوب ساندوتش & وراب دايت</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>كلوب ساندوتش دايت (توست بني + تركي + شيدر لايت) - 85 EGP</option>
+                        <option>وراب دجاج مشوي (خبز شوفان + صوص زبادي) - 95 EGP</option>
+                        <option>توست تونة بالأفوكادو والليمون - 90 EGP</option>
+                        <option>سلطة سيزر بالدجاج المشوي - 75 EGP</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== 2. السناكس والمسليات ==================== -->
+        <div class="lounge-category-block" style="margin-bottom: 40px;">
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🍿 السناكس والمسليات (Quack Snacking)</h3>
+            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                
+                <!-- أ. سناكس صحية -->
+                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🌱 سناكس ومكسرات صحية</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">سناكس Fit & Healthy</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>شيبس الذرة المخبوز (Baked) أعشاب وجبنة - 30 EGP</option>
+                        <option>بروتين بار (Fit & Protein Bar) - 60 EGP</option>
+                        <option>شيكولاتة داكنة (Dark Chocolate 70%+) - 50 EGP</option>
+                        <option>كيس مكسرات مشكلة (لوز، عين جمل، كاجو) - 45 EGP</option>
+                        <option>فواكه مجففة مشكلة - 35 EGP</option>
+                    </select>
+                </div>
+
+                <!-- ب. سناكس غير صحية وتسالٍ -->
+                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍿 تسالي وحلويات</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">فشار، شيبسيات وحلويات</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>فشار سخن بالزبدة - 25 EGP</option>
+                        <option>فشار بالجبنة / الجبنة المتبلة - 25 EGP</option>
+                        <option>فشار بالكراميل - 30 EGP</option>
+                        <option>شيبسيات ومقرمشات أطعم مختلفة - 20 EGP</option>
+                        <option>دوناتس شيكولاتة / كراميل - 35 EGP</option>
+                        <option>كب كيك فاخر - 30 EGP</option>
+                        <option>شيكولاتات شهيرة مشكلة - 25 EGP</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== 3. المشروبات التفصيلية ==================== -->
+        <div class="lounge-category-block" style="margin-bottom: 40px;">
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">☕ المشروبات (Duck Hydration)</h3>
+            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                
+                <!-- أ. المشروبات الساخنة والأعشاب -->
+                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">☕ مشروبات ساخنة وأعشاب</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">القهوة، الشاي، والأعشاب</h3>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <select style="width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
+                            <option>اختر</option>
+                            <option>قهوة فاتح ساده - 25 EGP</option>
+                            <option>قهوة فاتح محوج - 30 EGP</option>
+                            <option>قهوة وسط ساده - 25 EGP</option>
+                            <option>قهوة وسط محوج - 30 EGP</option>
+                            <option>قهوة غامق ساده - 25 EGP</option>
+                            <option>قهوة غامق محوج - 30 EGP</option>
+                            <option>قهوة مانو - 30 EGP</option>
+                            <option>قهوة سكتو - 30 EGP</option>
+                            <option>قهوة فرنساوي - 35 EGP</option>
+                            <option>شاي أحمر - 20 EGP</option>
+                            <option>شاي بلبن - 25 EGP</option>
+                            <option>شاي كرك - 30 EGP</option>
+                            <option>شاي مرامية - 25 EGP</option>
+                            <option>شاي بطعم التوت - 25 EGP</option>
+                            <option>شاي بطعم الفراولة - 25 EGP</option>
+                            <option>ينسون - 20 EGP</option>
+                            <option>نعناع - 20 EGP</option>
+                            <option>حلبة - 20 EGP</option>
+                            <option>قرفة - 20 EGP</option>
+                        </select>
+
+                        <select style="width: 100%; padding: 8px; background: #111; color: #2ea44f; font-weight: bold; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
+                            <option>اختر السكر أو التحلية</option>
+                            <option>سادة (بدون سكر)</option>
+                            <option>على الريحة</option>
+                            <option>مضبوط</option>
+                            <option>زيادة</option>
+                            <option>سكر ستيفيا (دايت)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ب. مشروبات باردة صحية -->
+                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥤 مشروبات باردة صحية</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">مياه معدنية وعصائر طبيعية</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>مياه معدنية صغيرة - 10 EGP</option>
+                        <option>مياه معدنية كبيرة - 15 EGP</option>
+                        <option>مياه فوارة بالليمون والنعناع - 25 EGP</option>
+                        <option>عصير برتقال طبيعي 100% - 40 EGP</option>
+                        <option>عصير تفاح طبيعي بدون سكر - 40 EGP</option>
+                        <option>عصير مانجو طبيعي - 45 EGP</option>
+                        <option>عصير فراولة طازج - 40 EGP</option>
+                    </select>
+                </div>
+
+                <!-- ج. Energy Drinks (إنجليزي) -->
+                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">⚡ Energy Drinks</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Energy Drinks</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>Red Bull Original - 65 EGP</option>
+                        <option>Red Bull Sugarfree - 65 EGP</option>
+                        <option>Red Bull Watermelon Edition - 65 EGP</option>
+                        <option>Red Bull Tropical Edition - 65 EGP</option>
+                        <option>Monster Energy Original - 70 EGP</option>
+                        <option>Monster Ultra Zero - 70 EGP</option>
+                        <option>Monster Mango Loco - 75 EGP</option>
+                        <option>Twist Energy Drink - 35 EGP</option>
+                        <option>Gorilla Energy Drink - 35 EGP</option>
+                        <option>Bomb Energy Drink - 30 EGP</option>
+                        <option>Hell Energy Drink - 30 EGP</option>
+                        <option>Velo Energy - 35 EGP</option>
+                        <option>Sting Energy Drink - 20 EGP</option>
+                    </select>
+                </div>
+
+                <!-- د. مشروبات باردة غير صحية وآيس كوفي -->
+                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🧋 مشروبات باردة غير صحية</div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">آيس كوفي، ميلك شيك ومشروبات غازية</h3>
+                    
+                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                        <option>اختر</option>
+                        <option>Ice Coffee Vanilla - 40 EGP</option>
+                        <option>Ice Coffee Caramel - 40 EGP</option>
+                        <option>Ice Latte - 45 EGP</option>
+                        <option>Spanish Latte Iced - 50 EGP</option>
+                        <option>Milkshake Chocolate - 50 EGP</option>
+                        <option>Milkshake Vanilla - 50 EGP</option>
+                        <option>Milkshake Strawberry - 50 EGP</option>
+                        <option>Ice Tea (Peach / Raspberry) - 30 EGP</option>
+                        <option>Soft Drinks Canz (Pepsi/Coke/7Up) - 25 EGP</option>
+                        <option>Soft Drinks Diet / Zero - 25 EGP</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- بنر طوارئ الطريق -->
+        <div class="road-rescue-banner" style="background: linear-gradient(135deg, #d4ac0d, #b38f00); color: #000; padding: 20px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 20px;">
+            <h3 style="margin: 0 0 5px 0; font-size: 20px;">🚨 خدمة توصيل طوارئ الطريق (Duck Rescue Express)</h3>
+            <p style="margin: 0; font-size: 14px;">عطلان على الطريق؟ اختار طلبك بالتفصيل وهيوصلك طازة مع ونش الطوارئ أو فني الصيانة!</p>
+        </div>
+
+    </div>
+</div>
+        <!-- SECTION: خدمات إضافية (المهندسة بطوطه + الصورة الموسطنة + الحاسبة حتى بطل صندوق الخير والوساطة) -->
+        <div id="section-extra" class="page-section">
+            
+            <!-- عنوان نيون خاص بالصفحة -->
+            <h1 class="neon-heading-batota">المهندسة بطوطه</h1>
+
+            <!-- الصورة موسطنة فى الشاشة وبنفس تنسيق الصورة الرئيسية -->
+            <img src="lilola.jpeg" alt="المهندسة بطوطه" class="extra-hero-img" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=LILOLA+JPEG';">
+
+            <!-- GRID: حاسبة التكلفة المباشرة + حجز المواعيد -->
+            <div class="interactive-grid">
+                
+                <!-- 1. حاسبة التكلفة السريعة -->
+                <div class="interactive-card">
+                    <h3>🧮 حاسبة التكلفة والخصم الفورى</h3>
+                    <div class="form-group">
+                        <label>نوع السيارة:</label>
+                        <select id="calc-car-type" onchange="calculatePrice()">
+    <option value="1">سيدان</option>
+    <option value="1">هاتشباك</option>
+    <option value="1.2">SUV</option>
+    <option value="1.2">دفع رباعى</option>
+    <option value="1.5">نقل</option>
+</select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>اختر الخدمة المطلوبة:</label>
+                        <select id="calc-service-type" onchange="calculatePrice()">
+                            <option value="200">غسيل خارجى وتلميع (200 EGP)</option>
+                            <option value="1100">تغيير زيت المحرك + فلتر (1,100 EGP)</option>
+                            <option value="500">تنظيف داخلى عميق (500 EGP)</option>
+                            <option value="800">صيانة الفرامل والعفشة (800 EGP)</option>
+                            <option value="1500">برمجه ECU(1,500 EGP)</option>
+                            <option value="1000">رش فرن لـ القطعة (1,000 EGP)</option>
+                        </select>
+                    </div>
+
+                    <div class="calc-result-box">
+                        <span style="font-size: 14px; color: #aaa;">التكلفة الإجمالية بعد خصم (50%):</span><br>
+                        <span id="calc-price-discount" class="price-tag">100 EGP</span>
+                        <span id="calc-price-old" class="price-old">200 EGP</span>
+                    </div>
+                </div>
+
+                <!-- 2. نظام حجز المواعيد والخادم -->
+                <div class="interactive-card">
+                    <h3>📅 حجز موعد صيانة أون لاين</h3>
+                    <form onsubmit="handleBookingSubmit(event)">
+                        <div class="form-group">
+                            <label>اليوم المفضل:</label>
+                            <input type="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>طريقة الخدمة:</label>
+                            <select id="booking-type">
+                                <option value="branch">سوف أحضر الى الفرع 🚗</option>
+                                <option value="butler">طلب "خادم البطة" (سائق لاستلام وتسليم السيارة من المنزل) 🏎️</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit" style="font-size: 16px;">تأكيد حجز الموعد 🎯</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- خدمة الوساطة وسوق السيارات البيع/الشراء والفحص المفتوح -->
+            <div class="tracker-box" style="margin-top: 30px; border-color: var(--primary-yellow);">
+                <h3 style="color: var(--primary-yellow); font-size: 24px; border-bottom: 2px dashed var(--primary-yellow); padding-bottom: 10px;">🚗 سوق السيارات المستعملة والوساطة الموثوقة (خدمة المحبة)</h3>
+                <p style="color: #ddd; font-size: 16px; margin: 12px 0; line-height: 1.6;">
+                    عايز تبيع عربيتك بـ أمان وبدون استغلال التجار أو عايز تشترى عربية ومطمن لـ حالتها الفنية؟ مركز <strong>DUCKY MOTORS</strong> بـ يقدملك خدمه عرض عربيتك عندنا بـ كل تفاصيلها وعدد الكيلومترات الموثق وسجل الصيانة.
+                </p>
+                
+                <div class="interactive-grid" style="margin-top: 20px;">
+                    <!-- نموذج عرض سيارة لـ البيع -->
+                    <div class="interactive-card" style="border-color: #333; background: #121212;">
+                        <h4 style="color: var(--primary-yellow); font-size: 20px; margin-bottom: 15px;">📝 اعرض عربيتك لـ البيع عن طريقنا</h4>
+                        <form onsubmit="handleCarSellSubmit(event)">
+                            <div class="form-group">
+                                <label>نوع السيارة والموديل:</label>
+                                <input type="text" placeholder="مثال: تويوتا كورولا 2020" required>
+                            </div>
+                            <div class="form-group">
+                                <label>عدد الكيلومترات (KM):</label>
+                                <input type="number" placeholder="مثال: 85000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>تاريخ آخر صيانة ومعاينة بـ المركز:</label>
+                                <input type="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>مكان المعاينة لـ المشترى :</label>
+                                <select>
+                                    <option value="branch">داخل مقر مركز DUCKY MOTORS (موصى به) 🏬</option>
+                                    <option value="external">معاينة خارجية لدى العميل 🏠</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>ملاحظات وتفاصيل إضافية:</label>
+                                <textarea rows="2" placeholder="اكتب حالة الصاج، الفابريكا، الكاوتش، أو أى تفاصيل..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit" style="font-size: 15px; background-color: var(--primary-yellow);">عرض السيارة فوراً وسحب التقرير 🚀</button>
+                        </form>
+                    </div>
+
+                    <!-- خدمة الكشف لـ السيارات الخارجية لـ منع النصب -->
+                    <div class="interactive-card" style="border-color: #333; background: #121212;">
+                        <h4 style="color: #2ecc71; font-size: 20px; margin-bottom: 15px;">🔍 طلب كشف وفحص شامل لـ غير العملاء</h4>
+                        <p style="color: #ccc; font-size: 14px; margin-bottom: 15px; line-height: 1.6;">
+                            حتى لو مش عميل عندنا وجايب عربية تشتريها من بره، تقدر تشترى ودماغك مرتاحة هات العربية والمالك ونكشفلك عليها بـ 280 نقطة فحص كاملة (موتور، فتيس، شاسيه، كهرباء، وصاج) ونوثقهالك بـ الجدول العام لـ منع النصب.
+                        </p>
+                        <form onsubmit="handleInspectionSubmit(event)">
+                            <div class="form-group">
+                                <label>اسم المشترى / طالب الكشف:</label>
+                                <input type="text" placeholder="أدخل اسمك" required>
+                            </div>
+                            <div class="form-group">
+                                <label>رقم التليفون لـ التواصل:</label>
+                                <input type="tel" placeholder="010XXXXXXXX" required>
+                            </div>
+                            <div class="form-group">
+                                <label>تاريخ موعد الفحص المقترح:</label>
+                                <input type="date" required>
+                            </div>
+                            <button type="submit" class="btn-submit" style="font-size: 15px; background-color: #2ecc71; color: #000;">حجز موعد كشف منع النصب 🎯</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جدول مرجعى عام لـ السيارات المنفذ عليها الكشف لـ منع النصب -->
+            <div class="dashboard-section" style="margin-top: 30px; border: 2px solid var(--primary-yellow);">
+                <h3 style="color: var(--primary-yellow); font-size: 22px;">📊 السجل المرجعي العام لـ السيارات التي تم الكشف عليها (شفافية كاملة لـ منع النصب)</h3>
+                <p style="color: #bbb; font-size: 14px; margin-bottom: 15px;">جدول موثق مفتوح لـ جميع الراغبين فى شراء السيارات لـ التحقق من تاريخ وقراءة عداد الكيلومترات والحالة الفنية الفعلية لـ السيارة قبل الشراء:</p>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نوع الموديل</th>
+                                <th>رقم الشاسيه / اللوحة</th>
+                                <th>قراءة العداد (KM)</th>
+                                <th>تاريخ الكشف</th>
+                                <th>سجل الصيانة</th>
+                                <th>نتيجة الفحص والحالة العامة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>تويوتا كورولا 2021</td>
+                                <td>#DUCK-CAR-8011</td>
+                                <td>65,000 كم</td>
+                                <td>2026/09/20</td>
+                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم بـ الكامل ✔️</span></td>
+                                <td>فابريكا بـ الكامل، موتور 95%، تم تغيير زيت وفلاتر بـ الفرع.</td>
+                            </tr>
+                            <tr>
+                                <td>نيسان صنى 2019</td>
+                                <td>#DUCK-CAR-3390</td>
+                                <td>112,000 كم</td>
+                                <td>2026/08/15</td>
+                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم ✔️</span></td>
+                                <td>رش خارجى نظافة عدا السقف، عفشة بـ حالة ممتازة، محرك 88%.</td>
+                            </tr>
+                            <tr>
+                                <td>هيونداى إلاينترا CN7 2022</td>
+                                <td>#DUCK-CAR-9912</td>
+                                <td>42,000 كم</td>
+                                <td>2026/07/10</td>
+                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم بـ الكامل ✔️</span></td>
+                                <td>حالة الزيرو، لا توجد أى ملحوظات، جاهزة لـ نقل الملكية.</td>
+                            </tr>
+                            <tr>
+                                <td>كيا سيراتو 2017</td>
+                                <td>#DUCK-CAR-1145</td>
+                                <td>148,000 كم</td>
+                                <td>2026/05/02</td>
+                                <td><span style="color: #e67e22; font-weight: 800;">غير منتظم ⚠️</span></td>
+                                <td>ملاحظة: تلاعب سابق بـ العداد الخارجى، الشاسيه سليم، المحرك بحاجة لـ صيانة فرامل.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. تتبع حالة الصيانة المباشرة -->
+            <div class="tracker-box">
+                <h3 style="color: var(--primary-yellow); font-size: 22px;">🚗 تتبع حالة صيانة عربيتك (Live Duck Tracker)</h3>
+                <p style="color: #ccc; font-size: 14px;">أدخل رقم عضويتك لـ معرفة المرحلة الحالية لـ سيارتك فى المركز:</p>
+                <div style="display: flex; gap: 10px; margin-top: 10px; max-width: 450px;">
+                    <input type="text" id="tracker-input" placeholder="#DUCK-9942" value="#DUCK-9942" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #121212; color: #fff; flex: 1;">
+                    <button onclick="checkDuckTracker()" class="btn-submit" style="width: auto; padding: 10px 20px; font-size: 15px;">استعلام</button>
+                </div>
+
+                <div class="tracker-steps" id="tracker-steps-container">
+                    <div class="step-item completed">
+                        <div style="font-size: 20px;">📥</div>
+                        <strong>1. الاستلام</strong>
+                    </div>
+                    <div class="step-item active">
+                        <div style="font-size: 20px;">🔧</div>
+                        <strong>2. الفحص والصيانة</strong>
+                    </div>
+                    <div class="step-item">
+                        <div style="font-size: 20px;">🧼</div>
+                        <strong>3. الغسيل والتلميع</strong>
+                    </div>
+                    <div class="step-item">
+                        <div style="font-size: 20px;">✨</div>
+                        <strong>4. جاهزة لـ التسليم</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. معرض أعمال قبل وبعد -->
+            <div style="margin-top: 35px; text-align: right;">
+                <h3 style="color: var(--primary-yellow); font-size: 24px; border-bottom: 2px solid var(--primary-yellow); padding-bottom: 8px; display: inline-block;">📸 معرض أعمال البطة (قبل وبعد)</h3>
+                
+                <div class="gallery-grid">
+                    <div class="ba-card">
+                        <div class="ba-images">
+                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (الشحوم)</span>
+                            <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Engine">
+                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد الكيماوى</span>
+                            <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Engine">
+                        </div>
+                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">تنظيف وغسيل المحرك بـ الكيماوى</p>
+                    </div>
+
+                    <div class="ba-card">
+                        <div class="ba-images">
+                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (الخدوش)</span>
+                            <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Body">
+                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد الدهان</span>
+                            <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Body">
+                        </div>
+                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">دهان ورش فرن وإزالة الخدوش</p>
+                    </div>
+
+                    <div class="ba-card">
+                        <div class="ba-images">
+                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (البقع)</span>
+                            <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Interior">
+                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد التنظيف</span>
+                            <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Interior">
+                        </div>
+                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">تنظيف داخلى عميق لـ الصالون</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. آراء العملاء ولوحة الشرف -->
+            <div style="margin-top: 35px;">
+                <h3 style="color: var(--primary-yellow); font-size: 24px; text-align: right;">⭐ تقييمات أبطال البطة & لوحة الشرف</h3>
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">"خدمة ممتازة وسريعة، وخادم البطة خد العربية ورجعها زى الفل!"</p>
+                        <strong style="color: var(--primary-yellow); font-size: 15px;">- أ. أحمد توفيق (#DUCK-8812)</strong>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">"عمرة المحرك اتعملت بجد بـ احترافية، والأسعار بعد خصم الـ 50% ممتازة."</p>
+                        <strong style="color: var(--primary-yellow); font-size: 15px;">- مهندس/ محمود حسن (#DUCK-3310)</strong>
+                    </div>
+
+                    <div class="review-card" style="border: 2px solid #2ecc71; background: #122b15;">
+                        <h4 style="color: #2ecc71; margin-bottom: 5px;"> بطل صندوق الخير لهذا الشهر🏆</h4>
+                        <p style="font-size: 14px; color: #fff;">العضو <strong>#DUCK-9942</strong> ساهم بـ 15 سهم خير لدعم طوارئ الطرق والحالات الحرجة! 🌱</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION: GOLDEN DUCK CHALLENGE -->
+        <div id="section-challenge" class="page-section">
+            <div class="challenge-hero">
+                <h2 class="challenge-title">🏆 مسابقة لغز البطة الذهبية 🦆👑</h2>
+                <p class="challenge-subtitle">أهلاً بكم يا أبنائى البطابيط! حل اللغز واكسب صيانة مجانية شاملة طول حياتك!</p>
+                <div style="font-size: 18px; color: var(--primary-yellow); font-weight: 800;">
+                    🎯 المسابقة مخصصة حصرياً لأول 50 عميل فقط!
+                </div>
+            </div>
+
+            <div class="prizes-grid">
+                <div class="prize-card grand-prize">
+                    <span class="prize-badge">👑 المركز الأول (بطل البطة الذهبية)</span>
+                    <h3 style="font-size: 26px; color: var(--primary-yellow);">اشتراك جولد فرى مجانى مدى الحياة! 🎉</h3>
+                    <p style="font-size: 18px; color: #fff;">صيانة كاملة لـ شاسيه سيارتك مجاناً لـ الأبد (زيت، فلاتر، فحص كمبيوتر، غسيل وتلميع بدون أى تكلفة مدى الحياة)!</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🥈لمركز الثانى</span>
+                    <h3>باكيدج عمرة وصيانة محرك كاملة</h3>
+                    <p>صيانة وعمرة ميكانيكية شاملة محرك/فتيس مجاناً بـ الكامل.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🥉 المركز الثالث</span>
+                    <h3>ECU&CONTROL CHECK لمدة سنة</h3>
+                    <p>فحص جميع أجهزة وحساسات السيارة مجاناً لمدة عام.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز الرابع</span>
+                    <h3>باكيدج سمكرة ودهان فرن</h3>
+                    <p>إصلاح وصيانة صاج ودهان فرن لقطعتين مجاناً الكامل.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز الخامس</span>
+                    <h3>باكيدج زيوت محرك وفتيس</h3>
+                    <p>تغيير زيت المحرك + الفتيس والفلتر مجاناً لـ 3 مرات متتالية.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز السادس</span>
+                    <h3>باكيدج Detailing & Deep Cleaning</h3>
+                    <p>تنظيف داخلى عميق وتلميع شمع خارجى مجاناً (مرتين).</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز السابع</span>
+                    <h3>باكيدج صيانة العفشة والفرامل</h3>
+                    <p>صيانة وفحص كامل لـ الفرامل والعفشة والفتيس مجاناً.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز الثامن</span>
+                    <h3>خصم 70% على قطع الغيار</h3>
+                    <p>خصم 70% على أى باكيدج قطع غيار أصلية فى الصيانة القادمة.</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز التاسع</span>
+                    <h3>غسيل كيماوى لـ المحرك</h3>
+                    <p>غسيل كيماوى كامل لـ الأنفورم والمحرك مجاناً (3 مرات).</p>
+                </div>
+
+                <div class="prize-card">
+                    <span class="prize-badge">🏅 المركز العاشر</span>
+                    <h3> خصم 50% استثنائى </h3>
+                    <p>خصم 50% على كافة الخدمات الخارجية غير المشمولة فى باكيدجات العرض الأول.</p>
+                </div>
+            </div>
+
+            <div class="rules-box">
+                <h3>⚖️ الشروط والقواعد الصارمة لـ المسابقة</h3>
+                <ul class="rules-list">
+                    <li>المسابقة مقتصرة حصرياً على <strong>أول 50 عميل</strong> مسجل في باكيدج الخصم 50%.</li>
+                    <li>يعتمد معيار الفوز والترتيب على <strong>السبق الزمنى بـ الثانية (Timestamp)</strong> لـ تسليم حل اللغز النهائى الصحيح.</li>
+                    <li>لكل رقم عضوية محاولة واحدة فقط لـ منع التخمين العشوائى .</li>
+                    <li>الجوائز مرتبطة بـ رقم شاسيه السيارة المسجلة بـ اسم العميل وغير قابلة لـ البيع أو التحويل لـ شخص آخر.</li>
+                    <li>أى محاولة لاستخدام حسابات وهمية أو ثغرات تؤدى لـ لإستبعاد النهائى وحظر العضوية.</li>
+                </ul>
+            </div>
+
+            <div class="rules-box" style="border: 2px solid var(--primary-yellow); background-color: #1a180c; margin-top: 30px;">
+                <h3 style="text-align: center; color: var(--primary-yellow); font-size: 28px;">🧩 شاشة حل لغز البطة الذهبية</h3>
+                <p style="text-align: center; color: #ccc; margin-bottom: 20px;">جاوب على الأسئلة التلاتة بسرعة عشان تسجل وقتك بـ الثانية وتكون من أول 10 فائزين!</p>
+
+                <form id="duck-puzzle-form" onsubmit="submitDuckPuzzle(event)">
+                    <div class="form-group">
+                        <label style="color: var(--primary-yellow); font-size: 17px;">1️⃣ اجمع أول حروف من (بطاطس - طماطم - هدية) عشان تطلع كلمة السر:</label>
+                        <input type="text" id="puzzle-q1" placeholder="اكتب الكلمة هنا..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: var(--primary-yellow); font-size: 17px;">2️⃣ غسيل العربية بـ 200 جنيه، بعد خصم الـ 50% بتاعة العرض هتدفع كام؟</label>
+                        <input type="number" id="puzzle-q2" placeholder="أدخل المبلغ بالأرقام..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: var(--primary-yellow); font-size: 17px;">3️⃣ شيء يركب معاك فى العربية، يحميك من الصيانة الدباحة وبيتغير مع الزيت.. إيه هو؟</label>
+                        <input type="text" id="puzzle-q3" placeholder="اكتب إجابتك هنا..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="color: #fff; font-size: 16px;">🪪 أدخل رقم عضويتك (مثال: DUCK-9942):</label>
+                        <input type="text" id="puzzle-user-id" placeholder="#DUCK-0000" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="font-size: 20px; background-color: var(--primary-yellow);"> إرسال الحل وتسجيل الوقت بـ الثانية🚀</button>
+                </form>
+
+                <div id="puzzle-result" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 18px; text-align: center;"></div>
+            </div>
+        </div>
+
+        <!-- SECTION: EMERGENCY SOS -->
+        <div id="section-sos" class="page-section">
+            <div class="sos-hero">
+                <h2 class="sos-title"> طوارئ الطريق - البطة فى أزمة! 🦆🚨</h2>
+                <p class="sos-subtitle">اتزنقت فى صحرا؟ العربية وقفت فوراً؟ متقلقش فرقة الإنقاذ السريع جاية لك فوراً!</p>
+                <span style="background: var(--sos-red); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 15px;">
+                    ⚡ خدمة إنقاذ وإغاثة سريعة على مدار 24 ساعة
+                </span>
+            </div>
+
+            <div class="sos-grid">
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">📍</span>
+                            <h3>تائه / مش عارف تحدد لوكيشن</h3>
+                        </div>
+                        <p>لو فى طريق صحراوى أو مجهول ومش عارف عنوانك، اضغط لـ تحديد إحداثياتك الفورية.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(1)">📌إرسال موقعى الجغرافى الفورى</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">⛽</span>
+                            <h3>البنزين خلص على الطريق</h3>
+                        </div>
+                        <p>حدد نوع البنزين وهيجيب لك الدليفرى الوقود الكافى لـ الوصول لأقرب محطة.</p>
+                        <div class="sos-input-group">
+                            <label>حدد نوع البنزين المطلوب:</label>
+                            <select id="sos-fuel-type">
+                                <option value="92">بنزين 92</option>
+                                <option value="95">بنزين 95</option>
+                                <option value="80">بنزين 80</option>
+                                <option value="سولار">سولار / ديزل</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(2)">⛽ إرسال دليفرى بنزين عاجل</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">⚡</span>
+                            <h3>نفاد شحن السيارة الكهربائية</h3>
+                        </div>
+                        <p>شاحن سريع متنقل يوصل لك فى موقعك لـ شحن البطارية طوارئ.</p>
+                        <div class="sos-input-group">
+                            <label>نوع مدخل الشحن:</label>
+                            <select id="sos-ev-type">
+                                <option value="Type 2">Type 2 (أوروبى)</option>
+                                <option value="CCS2">CCS2 السريع</option>
+                                <option value="GB/T">GB/T (صينى)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(3)">🔋 طلب شاحن متنقل عاجل</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🛞</span>
+                            <h3>عطل / فرقعة فى الكاوتش</h3>
+                        </div>
+                        <p>الفرده فرقعت أو نامت؟ اكتب مقاس الكاوتش وهنبعت لك عربية الصيانة فوراً.</p>
+                        <div class="sos-input-group">
+                            <label>أدخل مقاس الكاوتش (اختيارى):</label>
+                            <input type="text" id="sos-tyre-size" placeholder="مثال: R16 205/55">
+                        </div>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(4)">🔧 إرسال فرقة تغيير وتصليح الكاوتش</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🛢️</span>
+                            <h3>سخونة المحرك / نقص الزيت والمياه</h3>
+                        </div>
+                        <p>المحرك سخن أو زيت الزيت أضاء؟ هتوصلك زيوت ومياه تبريد معتمدة فوراً.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(5)">🔥 طلب زيوت ومياه تبريد فورية</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🔋</span>
+                            <h3>العربية مش راضية تدور (بطارية)</h3>
+                        </div>
+                        <p>البطارية نامت فجأة؟ سيارة الإغاثة معها وصلة وكابلات فحص واختبار البطارية.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(6)">⚡ طلب وصلة وصيانة بطارية</button>
+                </div>
+
+                <div class="sos-card" style="border: 2px solid var(--sos-red);">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🚜</span>
+                            <h3>ونش إنقاذ سريع (عطل كامل/حادث)</h3>
+                        </div>
+                        <p>العربية مش قادرة تتحرك تماماً؟ سحب ورفع العربية لأقرب فرع لـ DUCKY MOTORS.</p>
+                    </div>
+                    <button class="btn-sos-action" style="background-color: #000; color: var(--sos-red); border: 2px solid var(--sos-red);" onclick="triggerSosEmergency(7)">🚨 استدعاء ونش إنقاذ فوري</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🔑</span>
+                            <h3>المفتاح اتنسى داخل العربية / مقفولة</h3>
+                        </div>
+                        <p>الأبواب اتقفلت والمفتاح بـ الداخل؟ فنى فتح السيارات الشفرة فى طريق إليك بدون أى تجريح.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(8)">🔓 طلب فنى فتح السيارات بـ الرحمة</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🌾</span>
+                            <h3>العربية غرزت فى رملة / طين</h3>
+                        </div>
+                        <p>السيارة اتزحلقت أو محشورة فى رصيف؟ سيارة الدفع الرباعى والمعدات طالعة لك.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(9)">💪 طلب سيارة سحب وانتشال</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🛑</span>
+                            <h3>عطل فى الفرامل / دواسة البنزين</h3>
+                        </div>
+                        <p>تسريب زيت فرامل أو واير الدبرياج اتصلح؟ توقف جانباً واطلب المساعدة الفورية.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(10)">🛑 إرسال طوارئ هيدروليك وفرامل</button>
+                </div>
+
+                <div class="sos-card">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🌧️</span>
+                            <h3>النور طفى / المساحات عطلت بسبب مطر</h3>
+                        </div>
+                        <p>انعدام الرؤية ليلأً أو بسبب المطر؟ صيانة كهربائية سريعة واستبدال شفرات المساحات.</p>
+                    </div>
+                    <button class="btn-sos-action" onclick="triggerSosEmergency(11)">💡 طلب طوارئ الإضاءة والرؤية</button>
+                </div>
+
+                <div class="sos-card" style="border: 2px solid #25D366;">
+                    <div>
+                        <div class="sos-card-header">
+                            <span style="font-size: 28px;">🚑</span>
+                            <h3>حالة صحية / أزمة طبية لـ السائق</h3>
+                        </div>
+                        <p>احسست بدوخة أو تعب مفاجئ؟ سيتم ربط موقعك وتوجيه الإسعاف والدورية فوراً.</p>
+                    </div>
+                    <button class="btn-sos-action" style="background-color: #25D366;" onclick="triggerSosEmergency(12)">🚑 إرسال نداء إغاثة وإسعاف عاجل</button>
+                </div>
+            <!-- كارت طلب استراحة البطة وطوارئ الطريق -->
+<div class="sos-card" style="border: 2px solid #d4ac0d;">
+    <div>
+        <div class="sos-card-header">
+            <span style="font-size: 28px;"></span>
+            <h3>طوارئ المشروبات والسناكس</h3>
+        </div>
+        <p>عطشان أو محتاج سناك على الطريق؟ اطلب قهوتك ومشروبك المفضل فوراً مع فريق الإنقاذ.</p>
+      <button class="btn-sos-action" style="background-color: #d4ac0d; color: #000; font-weight: bold; width: 100%; cursor: pointer;" onclick="switchSectionAndBubble('snack', 'snack')">
+    ☕ اطلب الآن من استراحة البطة
+</button>
+    </div>
+        </div>
+        </div><!-- end sos-grid -->
+        </div><!-- end section-sos -->
+
+        <!-- SECTION: SAHM EL-KHEIR -->
+        <div id="section-charity" class="page-section">
+            <div class="charity-hero">
+                <h2 class="charity-title"> صندوق سهم الخير والصدقة الجارية 🌾</h2>
+                <p class="charity-subtitle">"«ما نقصت صدقة من مال، وما زاد الله عبداً بعفو إلا عزاً، وما تواضع أحد لله إلا رفعه الله» ." مبادرة DUCKY MOTORS ودعم عملاؤنا الكرام لخلق الأثر على الطريق وفى المستشفيات!</p>
+
+                <div style="background-color: #1a1a1a; border: 1px solid #2ecc71; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 10px;">
+                    <span style="color: #aaa; font-size: 15px;">📊 إجمالى الأسهم والـ مساعدات المقدمة حتى الآن:</span>
+                    <h3 style="color: #2ecc71; font-size: 28px; margin-top: 5px;" id="total-charity-shares">14,250 جنيه</h3>
+                </div>
+            </div>
+
+            <div class="charity-pillars">
+                <div class="pillar-card">
+                    <div>
+                        <h3>🛠️ الشق الأول: طوارئ الطرق لـ الحالات غير المقتدرة</h3>
+                        <ul>
+                            <li>🛵 <strong>دعم عمال الدليفرى:</strong> صيانة واستبدال الفرامل والإطارات مجاناً لـ حمايتهم أثناء أداء عملهم الشاق.</li>
+                            <li>🚗 <strong>كبار السن والسيارات المتهالكة:</strong> إنقاذ وإصلاح السيارات المتهالكة على الطرق دون أى مقابل لـ حماية الآباء والأمهات.</li>
+                            <li>👨‍🦼 <strong>صيانة الكراسى المتحركة الكهربائية:</strong> قسم خاص متفرغ لصيانة وإصلاح كافة الكراسى الكهروميكانيكية لـ مرضى الشلل وذوى الهمم مجاناً بـ الكامل.</li>
+                            <li>🚑 <strong>سيارات الإسعاف الخيرية:</strong> توفير الزيوت والصيانة الفورية لـ سيارات نقل المرضى بـ المجان.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #112414; padding: 10px; border-radius: 8px; text-align: center; color: #2ecc71; font-weight: 700; font-size: 14px; margin-top: 15px;">
+                        تتكفل DUCKY MOTORS بـ 50% من تكلفة الصيانة لـ كل حالة مستحقة
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div>
+                        <h3>🏥 الشق الثانى: دعم مصابى حوادث الطرق بـ مستشفيات الدولة</h3>
+                        <ul>
+                            <li>🩹 <strong>المستلزمات الطبية العاجلة:</strong> توفير الشرائح والمسامير وأجهزة تثبيت العظام الطارئة لـ الحالات التى تصل الأقسام المجانية بـ المستشفيات الحكومية.</li>
+                            <li>💊 <strong>أدوية وأمصال الطوارئ:</strong> شراء الأدوية والمستلزمات فور وصول المصاب لـ غرفة العناية دون انتظار الإجراءات.</li>
+                            <li>🧠 <strong>دعم الجراحات الحرجة:</strong> المساهمة فى تكاليف العمليات الدقيقة الناتجة عن الحوادث غير المقتدرين.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #112414; padding: 10px; border-radius: 8px; text-align: center; color: #2ecc71; font-weight: 700; font-size: 14px; margin-top: 15px;">
+                        يتم التوجيه المباشر بـ التعاون مع الأطباء بـ الأقسام المجانية
+                    </div>
+                </div>
+            </div>
+
+            <div class="donation-box">
+                <h3 style="color: #2ecc71; font-size: 26px; margin-bottom: 10px;"> اشترك بـ "سهم الخير" بـ ضغطة زر</h3>
+                <p style="color: #ccc; font-size: 16px;">المبلغ اختيارى ويزاد على فاتورة صيانتك أو يخصم من حسابك، حتى لو جنيه واحد هتعمل بيه أثر كبير!</p>
+
+                <div class="donation-options">
+                    <button class="donation-btn" onclick="selectDonationAmount(1)">1 جنيه </button>
+                    <button class="donation-btn" onclick="selectDonationAmount(5)">5 جنيه </button>
+                    <button class="donation-btn selected" onclick="selectDonationAmount(10)">10 جنيه </button>
+                    <button class="donation-btn" onclick="selectDonationAmount(50)">50 جنيه </button>
+                </div>
+
+                <div style="max-width: 400px; margin: 0 auto;">
+                    <div class="form-group">
+                        <label style="color: #fff;">أو أدخل مبلغ اختيارى (بـ الجنيه):</label>
+                        <input type="number" id="custom-donation-input" placeholder="مثال: 100" style="text-align: center; font-size: 18px;">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #fff;">رقم عضويتك لـ التأكيد والتسجيل:</label>
+                        <input type="text" id="donation-user-id" placeholder="#DUCK-9942" value="#DUCK-9942" style="text-align: center; font-size: 18px;">
+                    </div>
+                    <button class="btn-submit" style="background-color: #2ecc71; color: #000; font-size: 20px;" onclick="submitDonation()"> تأكيد المساهمة وإصدار إيصال البركة</button>
+                </div>
+
+                <div id="donation-success-msg" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; background-color: #133a18; border: 2px solid #2ecc71; color: #2ecc71; font-weight: 800; font-size: 18px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: الخدمات والأسعار -->
+        <div id="section-services" class="page-section">
+            <div class="menus-wrapper">
+                <div class="menu-box">
+                    <h2>📋 MENU</h2>
+
+                    <details open>
+                        <summary>1. Detailing & Wash</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Exterior Car Wash (غسيل خارجى)</li>
+                                <li>Interior Deep Cleaning (تنظيف داخلى عميق)</li>
+                                <li>Chemical Engine Cleaning (غسيل المحرك بـ الكيماوى)</li>
+                                <li>Polishing & Waxing (تلميع وشمع)</li>
+                            </ul>
+                            <video src="duckybo.mp4" class="service-video" autoplay loop muted playsinline controls></video>
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>2. Diagnostics & Programming</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Computer Diagnostics (فحص  ECU & Control Check )</li>
+                                <li>ECU Programming & Tuning (برمجة كروت وأجهزة)</li>
+                                <li>Electrical Troubleshooting (كشف أعطال الكهرباء)</li>
+                            </ul>
+                            <img src="ducka.jpeg" alt="Diagnostics Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKA';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>3. Mechanical & Engine Repair</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Engine Overhaul & Repair (عمرة وصيانة المحرك)</li>
+                                <li>Brake System Maintenance (صيانة الفرامل)</li>
+                                <li>Suspension & Steering Fix (صيانة العفشة والفتيس)</li>
+                            </ul>
+                            <video src="ducky.mp4" class="service-video" autoplay loop muted playsinline controls></video>
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>4. Oil & Fluids Service</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Engine Oil Change (تغيير زيت المحرك)</li>
+                                <li>Transmission Fluid Change (تغيير زيت الفتيس)</li>
+                                <li>Coolant & Filter Service (تغيير الفلاتر ومياه الـ تبريد)</li>
+                            </ul>
+                            <img src="oil.jpeg" alt="Oil Service Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OIL';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>5. Bodywork & Painting</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Dent Repair & Body Work (سمكرة وتعديل الـ صاج)</li>
+                                <li>Car Painting & Touch-ups (دهان ورش فرن)</li>
+                                <li>Scratch Removal (إزالة الخدوش)</li>
+                            </ul>
+                            <img src="col.jpeg" alt="Bodywork Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=COL';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>6. Spare Parts & Accessories</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Original Spare Parts (قطع غيار أصلية)</li>
+                                <li>Car Accessories (إكسسوارات سيارات)</li>
+                                <li>Batteries & Tyres (بطاريات وإطارات)</li>
+                            </ul>
+                            <img src="acc.jpeg" alt="Accessories Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=ACC';">
+                        </div>
+                    </details>
+                </div>
+
+                <div class="menu-box">
+                    <h2>💰 PRICE</h2>
+
+                    <details open>
+                        <summary>1. Detailing & Wash Prices</summary>
+                        <div class="details-flex">
+                          <ul>
+    <li>Exterior Car Wash (غسيل خارجي): <del class="old-price">300 EGP</del> <span class="new-price">200 EGP</span></li>
+    <li>Interior Deep Cleaning (تنظيف داخلي عميق): <del class="old-price">700 EGP</del> <span class="new-price">500 EGP</span></li>
+    <li>Chemical Engine Cleaning (غسيل المحرك بـ الكيماوي): <del class="old-price">500 EGP</del> <span class="new-price">350 EGP</span></li>
+    <li>Polishing & Waxing (تلميع وشمع): <del class="old-price">1100 EGP</del> <span class="new-price">800 EGP</span></li>
+</ul>
+                            <img src="duckak.jpeg" alt="Duckak Wash Price" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAK';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>2. Diagnostics & Programming Prices</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Computer Diagnostics (فحص ECU & Control Check ): <del class="old-price">600 EGP</del> <span class="new-price">400 EGP</span></li>
+<li>ECU Programming & Tuning (برمجة كروت وأجهزة): <del class="old-price">2000 EGP</del> <span class="new-price">1500 EGP</span></li>
+<li>Electrical Troubleshooting (كشف أعطال الكهرباء): <del class="old-price">700 EGP</del> <span class="new-price">500 EGP</span></li>
+                            </ul>
+                            <img src="duckab.jpeg" alt="Diagnostics Prices Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAB';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>3. Mechanical & Engine Repair Prices</summary>
+                        <div class="details-flex">
+                            <ul>
+                              <li>Engine Overhaul & Repair (عمرة وصيانة المحرك): <del class="old-price">18,000 EGP</del> <span class="new-price">15,000 EGP</span></li>
+<li>Brake System Maintenance (صيانة الفرامل): <del class="old-price">1,000 EGP</del> <span class="new-price">800 EGP</span></li>
+<li>Suspension & Steering Fix (صيانة العفشة والفتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
+                            </ul>
+                            <img src="duckaa.jpeg" alt="Mechanical Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAA';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>4. Oil & Fluids Service Prices</summary>
+                        <div class="details-flex">
+                            <ul>
+                              <li>Engine Oil Change (تغيير زيت المحرك 4L + فلتر): <del class="old-price">1,400 EGP</del> <span class="new-price">1,100 EGP</span></li>
+<li>Transmission Fluid Change (تغيير زيت الفتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
+<li>Coolant & Filter Service (تغيير الـ فلاتر ومياه الـ تبريد): <del class="old-price">600 EGP</del> <span class="new-price">450 EGP</span></li>
+                            </ul>
+                            <img src="oila.jpeg" alt="Oil Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OILA';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>5. Bodywork & Painting Prices</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <li>Dent Repair & Body Work (سمكرة وتعديل الـ صاج): <del class="old-price">2,000 EGP</del> <span class="new-price">1,500 EGP</span></li>
+<li>Car Painting (دهان ورش فرن لـ القطعة): <del class="old-price">1,300 EGP</del> <span class="new-price">1,000 EGP</span></li>
+<li>Scratch Removal (إزالة الخدوش): <del class="old-price">800 EGP</del> <span class="new-price">600 EGP</span></li>
+                            </ul>
+                            <img src="colam.jpeg" alt="Bodywork Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=COLAM';">
+                        </div>
+                    </details>
+
+                    <details open>
+                        <summary>6. Spare Parts & Accessories Prices</summary>
+                        <div class="details-flex">
+                            <ul>
+                                <ul>
+    <li>Original Spare Parts (قطع غيار أصلية): حسب نوع السيارة</li>
+    <li>Car Accessories (إكسسوارات سيارات): تبدأ من <del class="old-price">350 EGP</del> <span class="new-price">250 EGP</span></li>
+    <li>Batteries & Tyres (بطاريات وإطارات): تبدأ من <del class="old-price">3,000 EGP</del> <span class="new-price">2,500 EGP</span></li>
+</ul>
+                            </ul>
+                            <img src="accam.jpeg" alt="Accessories Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=ACCAM';">
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <img src="duck.png" alt="Duck with Wrench" class="bottom-duck-img" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1e1e1e/f1c40f?text=DUCK+WITH+WRENCH';">
+
+            <div class="neon-alert">
+                <h3>⚠️ عرض خاص لـ فترة محدودة!</h3>
+                <p>الباكيدج الكاملة عليها خصم 50% لأول 50 عميل فقط! 🚀</p>
+            </div>
+        </div>
+
+        <!-- SECTION: حسابى -->
+        <div id="section-account" class="page-section">
+            <div id="login-box" class="auth-card">
+                <h2> تسجيل الدخول لـ حسابك🔐</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>اسم المستخدم أو البريد الإلكترونى:</label>
+                        <input type="text" id="username" placeholder="أدخل اسمك" value="مصطفى" required>
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور:</label>
+                        <input type="password" id="password" placeholder="••••••••" value="123456" required>
+                    </div>
+                    <button type="submit" class="btn-submit">تسجيل الدخول</button>
+                </form>
+            </div>
+
+            <div id="dashboard-box" style="display: none;">
+                <div class="user-dashboard">
+                    <div class="user-info">
+                        <h2>مرحباً بك، <span id="user-display-name">مصطفى ابو المجد</span> 🦆</h2>
+                        <p>السيارة: <strong>Toyota Corolla 2022</strong></p>
+                        <p>رقم العضوية: <strong>#DUCK-9942</strong></p>
+                    </div>
+
+                    <div class="points-badge">
+                        🏆 إجمالى النقاط: 350 نقطة
+                    </div>
+
+                    <div style="width: 100%;">
+                        <p style="margin: 5px 0; color: var(--primary-yellow); text-align: right; font-weight: 700;">
+                            🎁 فاضل لك 150 نقطة وتربح <strong>"كشف شامل مجاناً"</strong>!
+                        </p>
+                        <div class="progress-container">
+                            <div class="progress-bar">350 / 500 نقطة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h3>🛠️ سجل صيانة خدماتك السابقة</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>الخدمة المقدمة</th>
+                                    <th>التكلفة</th>
+                                    <th>النقاط المكتسبة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2026/09/15</td>
+                                    <td>تغيير زيت المحرك + فلتر</td>
+                                    <td>1,100 EGP</td>
+                                    <td>+110 نقطة</td>
+                                </tr>
+                                <tr>
+                                    <td>2026/08/01</td>
+                                    <td>غسيل خارجى وتنظيف داخلى عميق</td>
+                                    <td>700 EGP</td>
+                                    <td>+70 نقطة</td>
+                                </tr>
+                                <tr>
+                                    <td>2026/06/10</td>
+                                    <td>فحص فرامل وعفشة كاملة</td>
+                                    <td>800 EGP</td>
+                                    <td>+80 نقطة</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h3>🛒 مشترياتك السابقة من قطع الغيار والإكسسوارات</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>المنتج / قطعة الغيار</th>
+                                    <th>الكمية</th>
+                                    <th>السعر</th>
+                                    <th>النقاط</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2026/09/15</td>
+                                    <td>فلتر زيت أصلى</td>
+                                    <td>1</td>
+                                    <td>250 EGP</td>
+                                    <td>+25 نقطة</td>
+                                </tr>
+                                <tr>
+                                    <td>2026/07/20</td>
+                                    <td>طقم معطر سيارة دكيز</td>
+                                    <td>2</td>
+                                    <td>150 EGP</td>
+                                    <td>+15 نقطة</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-section" style="border: 2px solid var(--primary-yellow); background-color: #1a170c;">
+                    <h3>🎁 مكافآت نقاط البطّة السالكة</h3>
+                    <ul class="rewards-list">
+                        <li>✨ <strong>100 نقطة:</strong> غسيل خارجى مجاناً 🧼</li>
+                        <li>✨ <strong>250 نقطة:</strong> تغيير زيت وفلاتر خصم 50% 🛢️</li>
+                        <li>✨ <strong>500 نقطة:</strong>   Full diagnosis of vehicle مجاناً 💻 (هدية البطّة السالكة)</li>
+                    </ul>
+                </div>
+
+                <button onclick="handleLogout()" class="btn-submit" style="background-color: #e74c3c; color: white; width: auto; padding: 10px 30px;">تسجيل الخروج</button>
+            </div>
+        </div>
+
+        <!-- SECTION: تواصل معنا -->
+        <div id="section-contact" class="page-section">
+            <div class="hero-card">
+                <h2 style="color: var(--primary-yellow); margin-bottom: 15px; font-size: 28px;">يسعدنا تواصلك معنا فى أى وقت!</h2>
+                <p style="font-size: 19px; color: #dddddd;">احجز صيانتك واستفسر عن نقاطك ومكافآتك بنقرة واحدة:</p>
+
+                <br>
+                <a href="https://wa.me/201044503749" target="_blank" class="duck-whatsapp-btn">
+                     تواصل معنا على واتساب 🦆💬
+                </a>
+
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <h4>📍 العنوان</h4>
+                        <p> الفرع الرئيسى التجمع الخامس امام الجامعه الامريكى _الفرع الثانى مدينه نصر شارع عباس العقاد</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>⏰ مواعيد العمل</h4>
+                        <p>يومياً من 10 صباحاً حتى 10 مساءً</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>📞 المبيعات والصيانة</h4>
+                        <p>01044503749</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CHATBOT DUCKY AI -->
+    <div class="chatbot-floating">
+        <button class="chatbot-btn" onclick="toggleChatbot()">🦆</button>
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <span>🤖 شات بوت البطة السفّاحة</span>
+                <span style="cursor: pointer;" onclick="toggleChatbot()">✕</span>
+            </div>
+            <div class="chat-body" id="chat-body">
+                <div class="chat-msg bot"> هالو هالو اهلا بيك يا بطوطتى  أنا البطوطه الـ مطبطبه موجوده دايما عشان اساعدك.. محتاج تسأل عن إيه يا بطه؟ 🦆</div>
+            </div>
+            <div class="chat-options">
+                <button class="chat-opt-btn" onclick="askChatbot('المواعيد')">⏰ مواعيد العمل</button>
+                <button class="chat-opt-btn" onclick="askChatbot('العنوان')">📍 العنوان</button>
+                <button class="chat-opt-btn" onclick="askChatbot('الخصم 50%')">🎁 الخصم 50%</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIVE TOAST NOTIFICATION -->
+    <div class="toast-notification" id="toast-notif">
+        <span style="font-size: 22px;">🎉</span>
+        <span id="toast-msg">العميل #DUCK-4122 حجز صيانة زيوت لـ التو!</span>
+    </div>
+
+    <!-- SOS RESPONSE POPUP MODAL -->
+    <div id="sos-modal" class="sos-response-modal">
+        <div class="sos-modal-content">
+            <span style="font-size: 48px;">🆘🦆</span>
+            <h2 id="sos-modal-title">تم استلام النداءالـ بطوطى الفورى!</h2>
+            <p id="sos-modal-message">رسالة الإغاثة طالعة...</p>
+            <button class="btn-submit" onclick="closeSosModal()">مفهوم، أنا فى الانتظار 👍</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة ©️ DUCKY MOTORS 2026 🦆 - الصيانة السفّاحة</p>
+    </footer>
+
+    <script>
+        let selectedDonation = 10;
+
+        function switchSectionAndBubble(sectionId, popoverId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            const brandHeader = document.querySelector('.brand-container');
+            if (brandHeader) brandHeader.style.display = (sectionId === 'home') ? '' : 'none';
+
+            const targetSection = document.getElementById('section-' + sectionId);
+            const targetButton = document.getElementById('nav-' + sectionId);
+
+            if (targetSection) targetSection.classList.add('active');
+            if (targetButton) targetButton.classList.add('active');
+
+            document.querySelectorAll('.duck-bubble-popover').forEach(pop => {
+                pop.classList.remove('show');
+            });
+
+            const activePopover = document.getElementById('popover-' + popoverId);
+            if (activePopover) {
+                activePopover.classList.add('show');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            switchSectionAndBubble('home', 'nest');
+            calculatePrice();
+            startLiveToasts();
+        });
+
+        function playDuckySound() {
+            var audio = document.getElementById("duckAudio");
+            if(audio) audio.play();
+        }
+
+        /* CALCULATOR LOGIC */
+        function calculatePrice() {
+            const carMultiplier = parseFloat(document.getElementById('calc-car-type').value);
+            const basePrice = parseFloat(document.getElementById('calc-service-type').value);
+            
+            const fullPrice = Math.round(basePrice * carMultiplier);
+            const discountPrice = Math.round(fullPrice * 0.5);
+
+            document.getElementById('calc-price-old').textContent = fullPrice + " EGP";
+            document.getElementById('calc-price-discount').textContent = discountPrice + " EGP";
+        }
+
+        /* BOOKING FORM LOGIC */
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const bookingType = document.getElementById('booking-type').value;
+            let msg = "تم حجز موعدك بـ نجاح وسيتواصل معك موظف الاستقبال لـ لتأكيد! 🚗";
+            if(bookingType === 'butler') {
+                msg = "تم حجز موعدك وتأكيد خيار 'خادم البطة'! سيتصل بك السائق لاستلام السيارة من أمام المنزل. 🏎️💨";
+            }
+            alert(msg);
+        }
+
+        /* CAR SELL FORM LOGIC */
+        function handleCarSellSubmit(e) {
+            e.preventDefault();
+            alert("تم تسجيل بيانات سيارتك بـ نجاح على منصة وساطة DUCKY MOTORS! سيتم مراجعتها وإدراجها بتقرير الكشف الشفاف فوراً. 🚗✨");
+        }
+
+        /* INSPECTION FORM LOGIC */
+        function handleInspectionSubmit(e) {
+            e.preventDefault();
+            alert("تم حجز موعد الكشف الشامل لـ منع النصب بنجاح! يسعدنا استلام السيارة بالمركز لتطبيق فحص الـ 280 نقطة وإصدار التقرير الموثق. 🎯🛑");
+        }
+
+        /* LIVE TRACKER LOGIC */
+        function checkDuckTracker() {
+            const val = document.getElementById('tracker-input').value.trim();
+            if(!val) return;
+            alert(`تم جلب حالة السيارة لـ العضوية (${val}): عربيتك حالياً في مرحلة "الفحص والصيانة 🔧" والمتوقع تسليمها خلال ساعة!`);
+        }
+
+        /* LIVE TOAST NOTIFICATIONS */
+        function startLiveToasts() {
+            const messages = [
+                "العميل #DUCK-4122 حجز صيانة زيوت لـ التو! ",
+                "متبقى 12 مكان فقط فى مسابقة لغز البطة الذهبية! ",
+                "تمت إضافة 500 جنيه جديدة لــ صندوق سهم الخير ",
+                "العميل #DUCK-8901 استلم عربية تويوتا مغسولة ومتربطة! "
+            ];
+            let idx = 0;
+
+            setInterval(() => {
+                const toast = document.getElementById('toast-notif');
+                document.getElementById('toast-msg').textContent = messages[idx];
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+
+                idx = (idx + 1) % messages.length;
+            }, 10000);
+        }
+
+        function submitDuckPuzzle(e) {
+            e.preventDefault();
+            
+            const q1 = document.getElementById('puzzle-q1').value.trim();
+            const q2 = document.getElementById('puzzle-q2').value.trim();
+            const q3 = document.getElementById('puzzle-q3').value.trim().toLowerCase();
+            const userId = document.getElementById('puzzle-user-id').value.trim();
+            const resultBox = document.getElementById('puzzle-result');
+
+            const isQ1Correct = (q1 === "بطه" || q1 === "بطة");
+            const isQ2Correct = (q2 === "100");
+            const isQ3Correct = (q3.includes("فلتر") || q3.includes("الفلتر"));
+
+            if (isQ1Correct && isQ2Correct && isQ3Correct) {
+                const currentTime = new Date().toLocaleTimeString('ar-EG');
+                resultBox.style.display = 'block';
+                resultBox.style.backgroundColor = '#1e4620';
+                resultBox.style.color = '#25D366';
+                resultBox.style.border = '2px solid #25D366';
+                resultBox.innerHTML = `🎉 مبروك يا بطبوط! إجاباتك كلها صحيحة 🦆💥<br> تم تسجيل حل العضوية (<b>${userId}</b>) بتاريخ ووقت: <b>${currentTime}</b> بنجاح! سيتم إعلان الفائزين قريباً.`;
+            } else {
+                resultBox.style.display = 'block';
+                resultBox.style.backgroundColor = '#4a1212';
+                resultBox.style.color = '#ff6b6b';
+                resultBox.style.border = '2px solid #ff6b6b';
+                resultBox.innerHTML = `❌ لـ الأسف يا فنان! فيه إجابة مش مظبوطة.. فكر تانى وركز عشان متضيعش فرصة الاشتراك المدى الحياة! 🦆`;
+            }
+        }
+
+        /* DUAL EMERGENCY SOS ACTION DISPATCHER */
+        function triggerSosEmergency(type) {
+            const modal = document.getElementById('sos-modal');
+            const msgBox = document.getElementById('sos-modal-message');
+            const titleBox = document.getElementById('sos-modal-title');
+
+            let message = "";
+            let title = "🚨 نداء إغاثة من البطة السفّاحة!";
+
+            switch(type) {
+                case 1:
+                    message = "📍 تم تحديد موقعك الجغرافى بنجاح! فرقة الإنقاذ السريع من مركز البطة فى طريقها إليك الآن على الطريق، خليك مكانك ومتخافش! 🦆💨";
+                    break;
+                case 2:
+                    const fuel = document.getElementById('sos-fuel-type').value;
+                    message = `⛽ تم استلام طلب طوارئ الوقود! تم توجيه سيارة الإغاثة بـ حمولة [بنزين ${fuel}] كافية لـ توصيلك لأقرب محطة بنزين!`;
+                    break;
+                case 3:
+                    const evType = document.getElementById('sos-ev-type').value;
+                    message = `⚡ تم إرسال وحدة الشحن المتنقلة الفورية لـ لسيارات الكهربائية بـ مدخل [${evType}] لـ شحن بطاريتك طوارئ فوراً!`;
+                    break;
+                case 4:
+                    const tyreSize = document.getElementById('sos-tyre-size').value || "المقاس القياسى";
+                    message = `🛞 تم توجيه سيارة الصيانة السريعة مع كمبروسر هواء وطقم إطارات بأ مقاس [${tyreSize}] لـ تغيير الكاوتش فى موقعك!`;
+                    break;
+                case 5:
+                    message = "🛢️ فريق الصيانة الدباحة فى الطريق إليك مع جركن زيت أصلية ومياه تبريد معتمدة! بلاش تدور المحرك دلوقتى نهائياً!";
+                    break;
+                case 6:
+                    message = "🔋 فنى الكهرباء اتحرك فوراً بـ جهاز كابلات وصلة البطارية وجهاز الفحص السريع لـ موقعك! دقائق وهتكون على الطريق!";
+                    break;
+                case 7:
+                    title = "🚜 استدعاء ونش إنقاذ عاجل!";
+                    message = "تم إرسال أقرب ونش إنقاذ خاص بـ DUCKY MOTORSإليك فوراً لـ سحب العربية وإيصالها بسلام لـ فرعنا الرئيسى !";
+                    break;
+                case 8:
+                    message = "🔑 فنى فتح السيارات بدون تجريح وضبط الشفرات اتحرك فوراً لـ موقعك، عربيتك هتتفتح فى دقائق بدون أى أضرار!";
+                    break;
+                case 9:
+                    message = "🌾 سيارة الدفع الرباعى والمعدات الخاصة بـ السحب والانتشال فى طريقها إليك فوراً لـ فك الغرزة وإعادتك لـ الأسفلت!";
+                    break;
+                case 10:
+                    message = "🛑 تحذير مهم: اربط فرامل اليد بـ التدريج واهدأ تماماً! فريق الصيانة السريعة ومعدات الهيدروليك اتحركوا لإغاثتك!";
+                    break;
+                case 11:
+                    message = "🌧️ فريق الطوارئ الكهربائية طالع لك بـ لمبات إضاءة وشفرات مساحات بديلة عشان توصل بـ أمان وسعادة!";
+                    break;
+                case 12:
+                    title = "🚑 نداء إغاثة طبية عاجل!";
+                    message = "ألف سلامة عليك يا بطل! تم ربط إحداثياتك الفورية وإبلاغ هيئة الإسعاف وتوجيه أقرب فريق صيانة لـ دعمك فوراً!";
+                    break;
+            }
+
+            titleBox.textContent = title;
+            msgBox.textContent = message;
+            modal.style.display = 'flex';
+        }
+
+        function closeSosModal() {
+            document.getElementById('sos-modal').style.display = 'none';
+        }
+
+        /* DONATION FUNCTIONS */
+        function selectDonationAmount(amount) {
+            selectedDonation = amount;
+            document.querySelectorAll('.donation-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('custom-donation-input').value = '';
+        }
+
+        function submitDonation() {
+            const customVal = document.getElementById('custom-donation-input').value;
+            const finalAmount = customVal ? parseInt(customVal) : selectedDonation;
+            const userId = document.getElementById('donation-user-id').value.trim();
+            const msgBox = document.getElementById('donation-success-msg');
+
+            if (!finalAmount || finalAmount <= 0) {
+                alert("بـ رجاء إدخال أو اختيار مبلغ صحيح لـ سهم الخير.");
+                return;
+            }
+
+            msgBox.style.display = 'block';
+            msgBox.innerHTML = `🌱 تقبل الله منكم الصدقة والبركة!<br>تم تسجيل "سهم الخير" بقيمة <b>(${finalAmount} جنيه)</b> لـ حساب العضوية <b>(${userId})</b> بـ نجاح.<br>سيتم تخصيص هذا السهم لـ دعم طوارئ الطرق وغير المقتدرين. تقبل الله منكم وزادكم من فضله! 🕊️✨`;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username').value.trim();
+            
+            if (usernameInput) {
+                let fullName = usernameInput;
+                if (usernameInput === "مصطفى") {
+                    fullName = "مصطفى ابو المجد";
+                } else if (!usernameInput.includes("ابو المجد")) {
+                    fullName = usernameInput + " ابو المجد";
+                }
+
+                document.getElementById('user-display-name').textContent = fullName;
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('dashboard-box').style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('login-box').style.display = 'block';
+            document.getElementById('dashboard-box').style.display = 'none';
+        }
+    </script>
+</body>
+</html>ٍ
