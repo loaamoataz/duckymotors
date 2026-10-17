@@ -325,7 +325,7 @@ function switchSectionAndBubble(sectionId, popoverId) {
                 ['موازنة أوزان العربية (Corner Weighting)', 1500, 'ok'],
                 ['ظبط زوايا العجل (Alignment)', 600, 'ok'],
                 ['دراى كلين وتنظيف عميق للموتور والصالون', 1800, 'ok']] },
-            { title: '📦 باكيدجات جاهزة', note: 'من غير لخبطة.. اختار باكيدج وخلاص', p: 2, items: [
+            { title: '📦 باكيدجات جاهزة', note: 'من غير لخبطة.. اختار باكيدج وخلاص', p: 2, pkg: false, items: [
                 ['باكيدج الصيف: تكييف + عزل حرارة + تنظيف دورى', 4500, 'ok'],
                 ['باكيدج الشياكة: تنجيد + إضاءة داخلية + تلميع', 13000, 'ok'],
                 ['باكيدج السفر: عزل صوت + فحص شامل + فلتر رياضى', 7000, 'ok']] },
@@ -342,37 +342,7 @@ function switchSectionAndBubble(sectionId, popoverId) {
                 ['مقعد حمام سباحة صغير', 'الثمن: مايوه', 'joke']] }
         ];
 
-        function renderWorkshop() {
-            const grid = document.getElementById('mod-grid');
-            if (!grid) return;
-            const tags = { ok: ['تعديل متاح', 'tag-ok'], lic: ['يحتاج ترخيص', 'tag-lic'], joke: ['فكرة مجنونة', 'tag-joke'] };
-            grid.innerHTML = MOD_DATA.map(c => `
-                <div class="mod-card ${c.crazy ? 'crazy' : ''}">
-                    <h3>${c.title}</h3>
-                    <div class="mod-note">${c.note}</div>
-                    ${c.items.map(i => `
-                        <label class="mod-item">
-                            <span><input type="checkbox" class="mod-chk" data-p="${c.p}" data-v="${typeof i[1] === 'number' ? i[1] : 0}" data-n="${i[0].replace(/"/g, '&quot;')}">${i[0]} <span class="mod-tag ${tags[i[2]][1]}">${tags[i[2]][0]}</span></span>
-                            <span class="mod-price">${typeof i[1] === 'number' ? 'تبدأ من ' + i[1].toLocaleString('en-US') + ' EGP' : i[1]}</span>
-                        </label>`).join('')}
-                </div>`).join('');
-            grid.addEventListener('change', updateCrazyMeter);
-        }
 
-        function updateCrazyMeter() {
-            let score = 0, total = 0, count = 0;
-            document.querySelectorAll('.mod-chk:checked').forEach(c => {
-                score += +c.dataset.p; total += +c.dataset.v; count++;
-            });
-            let level = 'اختار تعديلات وشوف مستوى جنانك 🦆';
-            if (count) {
-                level = score <= 4 ? 'عاقل 😇' : score <= 10 ? 'مجنون نص نص 🤪' : score <= 18 ? 'مجنون رسمى 🔥' : 'بطة متطورة 🦆🚀';
-                level = 'مستوى الجنان: ' + level;
-            }
-            document.getElementById('mm-level').textContent = level;
-            document.getElementById('mm-info').textContent = count ? `${count} تعديل • تقديرى من ${total.toLocaleString('en-US')} EGP` : '';
-            document.getElementById('mm-fill').style.width = Math.min(100, score / 22 * 100) + '%';
-        }
 
         function runStyleQuiz() {
             const use = document.getElementById('q-use').value;
@@ -390,7 +360,7 @@ function switchSectionAndBubble(sectionId, popoverId) {
             const name = document.getElementById('mod-name').value.trim();
             const car = document.getElementById('mod-car').value.trim();
             const idea = document.getElementById('mod-idea').value.trim();
-            const picked = [...document.querySelectorAll('.mod-chk:checked')].map(c => '- ' + c.dataset.n);
+            const picked = modSelectedNames().map(n => '- ' + n);
             if (!idea && !picked.length) { alert('اكتب فكرتك أو اختار تعديل الأول يا بطل 🦆'); return; }
             const msg = `طلب تعديل من الورشة المجنونة 🔥\nالاسم: ${name || '-'}\nالعربية: ${car || '-'}\n` +
                 (picked.length ? `التعديلات المختارة:\n${picked.join('\n')}\n` : '') + (idea ? `الفكرة: ${idea}` : '');
@@ -626,7 +596,9 @@ const SHOP = {
     whatsapp: '201044503749',
     instapay: '01145685611',
     cash: '01044503749',
-    depositRate: 0.2          // نسبة العربون فى الورشة المجنونة
+    depositRate: 0.2,         // نسبة العربون فى الورشة المجنونة
+    packageDiscount: 0.15,    // خصم الباكدج الكامل (قسم كامل)
+    mixDiscount: 0.05         // خصم الاختيار من أكتر من قسم
 };
 const ORDERS_KEY = 'ducky_orders_v1';
 const CHARITY_KEY = 'ducky_charity_v1';
@@ -962,20 +934,6 @@ function checkoutLounge() {
 }
 
 /* الورشة المجنونة: عربون على التعديلات المختارة */
-function openModsCheckout() {
-    const picked = [...document.querySelectorAll('.mod-chk:checked')].filter(c => +c.dataset.v > 0);
-    if (!picked.length) { alert('اختار تعديل ليه سعر الأول يا بطل 🦆 (أفكار "معمل البطة المجنون" للضحك بس)'); return; }
-    const est = picked.reduce((s, c) => s + (+c.dataset.v), 0);
-    const deposit = Math.min(est, Math.max(100, Math.round(est * SHOP.depositRate / 10) * 10));
-    openCheckout({
-        kind: 'mods', title: 'حجز تعديلات الورشة المجنونة',
-        items: picked.map(c => ({ name: c.dataset.n, price: +c.dataset.v, est: true })),
-        total: deposit, deposit: true,
-        note: 'الأسعار تقديرية (إجماليها من ' + money(est) + '). بتدفع عربون ' + Math.round(SHOP.depositRate * 100) + '% دلوقتى، والباقى بعد المعاينة.',
-        details: { name: document.getElementById('mod-name').value.trim() || customerName || '', car: document.getElementById('mod-car').value.trim() },
-        fields: nameFields([{ id: 'car', label: 'نوع العربية وموديلها', max: 60 }])
-    });
-}
 
 /* سهم الخير: تقسيم بين الفاتورة وإنستاباى/كاش */
 function submitDonation() {
@@ -1000,8 +958,168 @@ function submitDonation() {
     });
 }
 
+
+/* ===================== الورشة المجنونة: اختيار تعديلات + باكدج + خطة ===================== */
+const modSel = new Set();                                  // "رقم القسم:رقم البند"
+const modKey = (ci, ii) => ci + ':' + ii;
+const modPriced = it => typeof it[1] === 'number';
+const modAllowPkg = c => !c.crazy && c.pkg !== false && c.items.length > 0 && c.items.every(modPriced);
+const pct = r => Math.round(r * 100);
+
+function modCardTotal(c) { return c.items.reduce((s, i) => s + (modPriced(i) ? i[1] : 0), 0); }
+function modSelectedNames() {
+    return [...modSel].map(k => { const [ci, ii] = k.split(':'); return MOD_DATA[ci].items[ii][0]; });
+}
+
+const MOD_TAGS = { ok: ['تعديل متاح', 'tag-ok'], lic: ['يحتاج ترخيص', 'tag-lic'], joke: ['فكرة مجنونة', 'tag-joke'] };
+
+function modItemHtml(c, ci, ii) {
+    const i = c.items[ii], t = MOD_TAGS[i[2]];
+    return `<div class="mod-item" data-key="${modKey(ci, ii)}">
+        <div class="mod-item-info"><span class="mod-name">${esc(i[0])}</span> <span class="mod-tag ${t[1]}">${t[0]}</span></div>
+        <span class="mod-price">${modPriced(i) ? 'تبدأ من ' + money(i[1]) : esc(i[1])}</span>
+        <button type="button" class="mod-pick" data-click="modToggle" data-args='[${ci},${ii}]' aria-pressed="false">＋ أضف</button>
+    </div>`;
+}
+
+function modCardHtml(c, ci) {
+    let pkg = '';
+    if (modAllowPkg(c)) {
+        const t = modCardTotal(c), p = t - Math.round(t * SHOP.packageDiscount);
+        pkg = `<div class="mod-pkg">
+            <div><b>📦 الباكدج كامل</b><small><s>${money(t)}</s> <b>${money(p)}</b> <span class="nowrap">(خصم ${pct(SHOP.packageDiscount)}%)</span></small></div>
+            <button type="button" class="mod-pick mod-pick-pkg" data-click="modTogglePackage" data-args='[${ci}]' aria-pressed="false">اختار الباكدج</button>
+        </div>`;
+    }
+    return `<div class="mod-card ${c.crazy ? 'crazy' : ''}">
+        <h3>${esc(c.title)}</h3><div class="mod-note">${esc(c.note)}</div>${pkg}
+        ${c.items.map((_, ii) => modItemHtml(c, ci, ii)).join('')}</div>`;
+}
+
+function renderWorkshop() {
+    const grid = document.getElementById('mod-grid'), lab = document.getElementById('mod-lab-row');
+    if (!grid || !lab) return;
+    grid.innerHTML = MOD_DATA.map((c, ci) => c.crazy ? '' : modCardHtml(c, ci)).join('');
+    const crazyIdx = MOD_DATA.findIndex(c => c.crazy);
+    lab.innerHTML = (crazyIdx >= 0 ? modCardHtml(MOD_DATA[crazyIdx], crazyIdx) : '') + `
+        <div class="mod-plan" id="mod-plan">
+            <h3>🧩 خطة التعديل</h3>
+            <div class="mod-meter">
+                <div class="mm-top"><b id="mm-level">اختار تعديلات وشوف مستوى جنانك 🦆</b><span id="mm-info"></span></div>
+                <div class="mm-bar"><div class="mm-fill" id="mm-fill"></div></div>
+            </div>
+            <div id="mod-plan-body"></div>
+            <button type="button" class="mod-book" id="mod-book" data-click="openModsCheckout">احجز التعديلات المختارة وتابع للدفع 💳</button>
+            <button type="button" class="mod-clear" data-click="modClear">مسح الاختيارات</button>
+        </div>`;
+    updatePlan();
+}
+
+function modPlanCalc() {
+    let total = 0, score = 0, count = 0, pkgBase = 0;
+    const lines = [], pkgFull = [], sections = new Set();
+    MOD_DATA.forEach((c, ci) => {
+        const picked = c.items.map((it, ii) => [it, ii]).filter(([, ii]) => modSel.has(modKey(ci, ii)));
+        picked.forEach(() => { count++; score += c.p; });
+        const priced = picked.filter(([it]) => modPriced(it));
+        if (!priced.length) return;
+        const sum = priced.reduce((s, [it]) => s + it[1], 0);
+        total += sum; sections.add(ci);
+        const full = modAllowPkg(c) && priced.length === c.items.length;
+        if (full) { pkgFull.push({ title: c.title, sum, disc: Math.round(sum * SHOP.packageDiscount) }); pkgBase += sum; }
+        priced.forEach(([it]) => lines.push({ name: it[0], price: it[1] }));
+    });
+    const pkgDisc = pkgFull.reduce((s, p) => s + p.disc, 0);
+    const mixDisc = sections.size >= 2 ? Math.round((total - pkgBase) * SHOP.mixDiscount) : 0;
+    return { total, score, count, lines, pkgFull, pkgDisc, mixDisc, sections: sections.size, final: total - pkgDisc - mixDisc };
+}
+
+function updatePlan() {
+    document.querySelectorAll('.mod-item').forEach(row => row.classList.toggle('on', modSel.has(row.dataset.key)));
+    document.querySelectorAll('[data-click="modToggle"]').forEach(btn => {
+        const on = modSel.has(modKey(...JSON.parse(btn.dataset.args)));
+        btn.setAttribute('aria-pressed', String(on));
+        btn.textContent = on ? '✓ مضاف' : '＋ أضف';
+    });
+    document.querySelectorAll('[data-click="modTogglePackage"]').forEach(btn => {
+        const ci = JSON.parse(btn.dataset.args)[0];
+        const on = MOD_DATA[ci].items.every((_, ii) => modSel.has(modKey(ci, ii)));
+        btn.setAttribute('aria-pressed', String(on));
+        btn.textContent = on ? '✓ الباكدج مختار' : 'اختار الباكدج';
+    });
+
+    const q = modPlanCalc();
+    let level = 'اختار تعديلات وشوف مستوى جنانك 🦆';
+    if (q.count) {
+        const s = q.score;
+        level = 'مستوى الجنان: ' + (s <= 4 ? 'عاقل 😇' : s <= 10 ? 'مجنون نص نص 🤪' : s <= 18 ? 'مجنون رسمى 🔥' : 'بطة متطورة 🦆🚀');
+    }
+    document.getElementById('mm-level').textContent = level;
+    document.getElementById('mm-info').textContent = q.count ? `${q.count} تعديل` + (q.total ? ` • تقديرى من ${money(q.total)}` : '') : '';
+    document.getElementById('mm-fill').style.width = Math.min(100, q.score / 22 * 100) + '%';
+
+    let body;
+    if (!q.count) {
+        body = '<p class="mod-plan-empty">دوس "＋ أضف" قدام أى تعديل، أو "اختار الباكدج" للقسم كله، وشوف خطتك وخصمها هنا 🦆</p>';
+    } else {
+        body = '<ul class="mod-lines">' + q.lines.map(l => `<li><span>${esc(l.name)}</span><b>${money(l.price)}</b></li>`).join('') + '</ul>';
+        if (q.total) {
+            body += `<div class="mod-sum"><span>قبل الخصم</span><b>${money(q.total)}</b></div>`;
+            q.pkgFull.forEach(p => { body += `<div class="mod-sum disc"><span>📦 خصم الباكدج ${pct(SHOP.packageDiscount)}%: ${esc(p.title)}</span><b>${money(-p.disc)}</b></div>`; });
+            if (q.mixDisc) body += `<div class="mod-sum disc"><span>🧩 خصم الاختيار من ${q.sections} أقسام (${pct(SHOP.mixDiscount)}%)</span><b>${money(-q.mixDisc)}</b></div>`;
+            body += `<div class="mod-sum final"><span>الإجمالى بعد الخصم (تقديرى)</span><b>${money(q.final)}</b></div>`;
+            body += `<p class="mod-plan-note">الأسعار تقديرية. بتدفع عربون ${pct(SHOP.depositRate)}% وقت الحجز والباقى بعد المعاينة.</p>`;
+        } else {
+            body += '<p class="mod-plan-note">الأفكار المجنونة للضحك بس 😄 ومالهاش سعر. اختار تعديل له سعر عشان تحجز.</p>';
+        }
+    }
+    document.getElementById('mod-plan-body').innerHTML = body;
+    document.getElementById('mod-book').disabled = !(q.final > 0);
+
+    const fl = document.getElementById('mod-float');
+    fl.hidden = !q.count;
+    document.getElementById('mod-float-text').textContent = '🧩 ' + q.count + ' تعديل' + (q.total ? ' • ' + money(q.final) : '');
+}
+
+function modToggle(ci, ii) {
+    const k = modKey(ci, ii);
+    if (modSel.has(k)) modSel.delete(k); else modSel.add(k);
+    updatePlan();
+}
+
+function modTogglePackage(ci) {
+    const keys = MOD_DATA[ci].items.map((_, ii) => modKey(ci, ii));
+    const all = keys.every(k => modSel.has(k));
+    keys.forEach(k => all ? modSel.delete(k) : modSel.add(k));
+    updatePlan();
+}
+
+function modClear() { modSel.clear(); updatePlan(); }
+
+function modGoPlan() { document.getElementById('mod-plan').scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+
+function openModsCheckout() {
+    const q = modPlanCalc();
+    if (!(q.final > 0)) { alert('اختار تعديل ليه سعر الأول يا بطل 🦆 (أفكار "معمل البطة المجنون" للضحك بس)'); return; }
+    const deposit = Math.min(q.final, Math.max(100, Math.round(q.final * SHOP.depositRate / 10) * 10));
+    const items = q.lines.map(l => ({ name: l.name, price: l.price, est: true }))
+        .concat(q.pkgFull.map(p => ({ name: 'خصم الباكدج ' + pct(SHOP.packageDiscount) + '%: ' + p.title, price: -p.disc })))
+        .concat(q.mixDisc ? [{ name: 'خصم الاختيار من ' + q.sections + ' أقسام (' + pct(SHOP.mixDiscount) + '%)', price: -q.mixDisc }] : []);
+    openCheckout({
+        kind: 'mods', title: 'حجز تعديلات الورشة المجنونة',
+        items, total: deposit, deposit: true,
+        note: 'الإجمالى بعد الخصم ' + money(q.final) + ' (تقديرى). بتدفع عربون ' + pct(SHOP.depositRate) + '% دلوقتى، والباقى بعد المعاينة.',
+        details: { name: document.getElementById('mod-name').value.trim() || customerName || '', car: document.getElementById('mod-car').value.trim() },
+        fields: nameFields([{ id: 'car', label: 'نوع العربية وموديلها', max: 60 }])
+    });
+}
+
 /* ===== Event wiring (replaces inline onclick / onchange / onsubmit / onerror) ===== */
 const ACTIONS = {
+    modToggle,
+    modTogglePackage,
+    modClear,
+    modGoPlan,
     openServiceCheckout,
     openModsCheckout,
     checkoutLounge,

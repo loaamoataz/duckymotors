@@ -1651,3 +1651,129 @@ body.modal-open { overflow: hidden; }
     .order-card { flex-direction: column; align-items: stretch; }
     .order-side { justify-items: start; }
 }
+
+
+/* ===================== الورشة المجنونة: الاختيار والباكدج وخطة التعديل ===================== */
+.mod-item { cursor: default; flex-wrap: wrap; align-items: center; row-gap: 8px; padding: 10px 6px; border-radius: 10px; }
+.mod-item.on { background: rgba(180, 76, 255, 0.14); }
+.mod-item-info { flex: 1 1 100%; min-width: 0; text-align: right; }
+.mod-name { font-size: 15px; }
+.mod-item .mod-pick { margin-inline-start: auto; }
+
+.mod-pick {
+    flex: none;
+    min-height: 36px;
+    padding: 6px 12px;
+    border: 2px solid #b44cff;
+    border-radius: 20px;
+    background: transparent;
+    color: #e3b5ff;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+.mod-pick:hover,
+.mod-pick[aria-pressed="true"] { background: #b44cff; color: #000000; }
+
+.mod-pkg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px dashed #ffd700;
+    border-radius: 12px;
+    background: #1d1a0d;
+    text-align: right;
+}
+.mod-pkg small { display: flex; flex-wrap: wrap; gap: 2px 6px; margin-top: 2px; color: #cfcfcf; font-size: 12px; }
+.nowrap { white-space: nowrap; }
+.mod-pkg s { color: #e74c3c; }
+.mod-pkg small b { color: #ffd700; }
+.mod-pick-pkg { border-color: #ffd700; color: #ffd700; }
+.mod-pick-pkg:hover,
+.mod-pick-pkg[aria-pressed="true"] { background: #ffd700; color: #000000; }
+
+.mod-lab-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 22px;
+    margin-top: 22px;
+    text-align: right;
+    align-items: start;
+}
+.mod-plan {
+    padding: 22px;
+    border: 2px solid #b44cff;
+    border-radius: 18px;
+    background: #17101f;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 14px rgba(180, 76, 255, 0.25);
+}
+.mod-plan h3 { margin-bottom: 10px; color: #e3b5ff; font-size: 21px; }
+.mod-plan .mod-meter { max-width: none; margin: 0 0 14px; }
+.mod-plan-empty { color: #a9a9a9; font-size: 14px; line-height: 1.8; }
+.mod-plan-note { margin: 8px 0 0; color: #a9a9a9; font-size: 12px; line-height: 1.7; }
+
+.mod-lines { list-style: none; margin: 0 0 10px; padding: 0; max-height: 240px; overflow-y: auto; }
+.mod-lines li { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #3a2a4a; font-size: 14px; }
+.mod-lines b { color: #ffd700; white-space: nowrap; }
+.mod-sum { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; color: #dddddd; font-size: 14px; }
+.mod-sum.disc { color: #2ecc71; }
+.mod-sum b { white-space: nowrap; }
+.mod-sum.final { margin-top: 6px; padding-top: 10px; border-top: 2px solid #b44cff; color: #ffd700; font-size: 19px; font-weight: 900; }
+
+.mod-book {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #b44cff;
+    color: #000000;
+    font-size: 17px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.mod-book:disabled { opacity: 0.45; cursor: not-allowed; }
+.mod-clear {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    border: 2px solid #555555;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-light);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mod-float {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 92vw;
+    padding: 8px 8px 8px 16px;
+    border: 2px solid #b44cff;
+    border-radius: 30px;
+    background: #17101f;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    color: #ffd700;
+    font-weight: 800;
+    font-size: 14px;
+    white-space: nowrap;
+}
+.mod-float[hidden] { display: none; }
+.mod-float button { padding: 6px 14px; border: none; border-radius: 20px; background: #b44cff; color: #000000; font-weight: 900; cursor: pointer; }
+
+@media (max-width: 768px) {
+    /* الشريط العايم يعدّى فوق زرار البطة بدل ما يغطيه */
+    .mod-float { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+}

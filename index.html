@@ -348,11 +348,8 @@
             <h1 class="mod-title">الورشة المجنونة 🔥</h1>
             <p class="mod-sub">من تعديل خفيف لحد أفكار مجنونة.. كل ده فى مكان واحد 🦆🐣</p>
             <div class="mod-grid" id="mod-grid"></div>
+            <div class="mod-lab-row" id="mod-lab-row"></div>
 
-            <div class="mod-meter">
-                <div class="mm-top"><b id="mm-level">اختار تعديلات وشوف مستوى جنانك 🦆</b><span id="mm-info"></span></div>
-                <div class="mm-bar"><div class="mm-fill" id="mm-fill"></div></div>
-            </div>
 
             <div class="mod-duo">
             <div class="mod-request" id="mod-quiz">
@@ -382,8 +379,12 @@
                 <input type="text" id="mod-car" placeholder="نوع العربية وموديلها">
                 <textarea id="mod-idea" rows="3" placeholder="اكتب فكرتك أو التعديل اللى نفسك فيه.. حتى لو مجنون"></textarea>
                 <button type="button" data-click="sendModRequest">ابعت فكرتك على واتساب 🦆</button>
-                <button type="button" data-click="openModsCheckout">احجز التعديلات المختارة (عربون) 💳</button>
             </div>
+            </div>
+
+            <div class="mod-float" id="mod-float" hidden>
+                <span id="mod-float-text"></span>
+                <button type="button" data-click="modGoPlan">شوف الخطة ↓</button>
             </div>
 
             <p class="mod-legal">⚠️ الأسعار تقديرية وتتغير حسب نوع العربية وحالتها. التعديلات المعلّمة "يحتاج ترخيص" لازم تتوافق مع قوانين المرور قبل التنفيذ، وأفكار "معمل البطة المجنون" للضحك بس 😄</p>
@@ -418,12 +419,36 @@
                     <div class="form-group">
                         <label>اختر الخدمة المطلوبة:</label>
                         <select id="calc-service-type" data-change="calculatePrice">
-                            <option value="200">غسيل خارجى وتلميع (200 EGP)</option>
-                            <option value="1100">تغيير زيت المحرك + فلتر (1,100 EGP)</option>
-                            <option value="500">تنظيف داخلى عميق (500 EGP)</option>
-                            <option value="800">صيانة الفرامل والعفشة (800 EGP)</option>
-                            <option value="1500">برمجة ECU(1,500 EGP)</option>
-                            <option value="1000">رش فرن لـ القطعة (1,000 EGP)</option>
+                            <optgroup label="1. الغسيل والتلميع">
+                                <option value="200">غسيل خارجى (200 EGP)</option>
+                                <option value="500">تنظيف داخلى عميق (500 EGP)</option>
+                                <option value="350">غسيل المحرك بالكيماوى (350 EGP)</option>
+                                <option value="800">تلميع وشمع (800 EGP)</option>
+                            </optgroup>
+                            <optgroup label="2. الفحص والبرمجة">
+                                <option value="400">فحص كمبيوتر ECU (400 EGP)</option>
+                                <option value="1500">برمجة كروت وأجهزة ECU (1,500 EGP)</option>
+                                <option value="500">كشف أعطال الكهرباء (500 EGP)</option>
+                            </optgroup>
+                            <optgroup label="3. الميكانيكا وإصلاح المحرك">
+                                <option value="15000">عمرة وصيانة المحرك (15,000 EGP)</option>
+                                <option value="800">صيانة الفرامل (800 EGP)</option>
+                                <option value="1200">صيانة العفشة والفتيس (1,200 EGP)</option>
+                            </optgroup>
+                            <optgroup label="4. الزيوت والسوائل">
+                                <option value="1100">تغيير زيت المحرك + فلتر (1,100 EGP)</option>
+                                <option value="1200">تغيير زيت الفتيس (1,200 EGP)</option>
+                                <option value="450">تغيير الفلاتر ومياه التبريد (450 EGP)</option>
+                            </optgroup>
+                            <optgroup label="5. السمكرة والدهان">
+                                <option value="1500">سمكرة وتعديل الصاج (1,500 EGP)</option>
+                                <option value="1000">رش فرن لـ القطعة (1,000 EGP)</option>
+                                <option value="600">إزالة الخدوش (600 EGP)</option>
+                            </optgroup>
+                            <optgroup label="6. قطع الغيار والإكسسوارات">
+                                <option value="250">إكسسوارات سيارات - تبدأ من (250 EGP)</option>
+                                <option value="2500">بطاريات وإطارات - تبدأ من (2,500 EGP)</option>
+                            </optgroup>
                         </select>
                     </div>
 
