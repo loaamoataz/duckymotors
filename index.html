@@ -7,1474 +7,55 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-yellow: #f1c40f;
-            --yellow-hover: #d4ac0d;
-            --dark-bg: #121212;
-            --card-dark: #1e1e1e;
-            --card-light: #ffffff;
-            --text-dark: #222222;
-            --text-light: #f5f5f5;
-            --text-muted: #aaaaaa;
-            --whatsapp-green: #25D366;
-            --whatsapp-hover: #1ebc57;
-            --sos-red: #e74c3c;
-            --sos-red-hover: #c0392b;
-            --charity-green: #27ae60;
-            --neon-glow: 0 0 10px #f1c40f, 0 0 20px #f1c40f, 0 0 35px #f1c40f, 0 0 50px #f1c40f;
-            --sos-glow: 0 0 10px #e74c3c, 0 0 20px #e74c3c, 0 0 35px #e74c3c;
-            --charity-glow: 0 0 10px #27ae60, 0 0 20px #27ae60;
-        }
-/* تنسيق موحد لجميع أزرار التنقل العادية */
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod) {
-    background-color: #ffffff !important;
-    background: #ffffff !important;
-    color: #d4ac0d !important;
-    -webkit-text-fill-color: #d4ac0d !important;
-    font-weight: 800 !important;
-    border-radius: 20px !important;
-    border: 3px dashed #000000 !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease !important;
-}
-
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod):hover,
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod).active {
-    background-color: #fcfcfc !important;
-    color: #b7950b !important;
-    border-color: #000000 !important;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
-    transform: translateY(-2px);
-}/* تنسيق القوائم المنبثقة: خلفية بيضاء، كلام ذهبي فخم، وإطار ذهبي أنيق */
-.duck-bubble-popover {
-    background-color: #ffffff !important;
-    background: #ffffff !important;
-    color: #d4ac0d !important;
-    border: 2px solid #000000 !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
-    border-radius: 12px !important;
-}
-.duck-bubble-popover .bubble-text, 
-.duck-bubble-popover span {
-    color: #d4ac0d !important;
-    -webkit-text-fill-color: #d4ac0d !important;
-    font-weight: bold !important;
-}
-
-/* تعديل لون السهم الصغير الموجه للزرار ليطابق الخلفية البيضاء أو الإطار */
-.duck-bubble-popover::after,
-.duck-bubble-popover::before {
-    border-bottom-color: #ffffff !important;
-    border-top-color: #ffffff !important;
-}
-/* تنسيق السعر القديم المشطوب */
-.old-price {
-    text-decoration: line-through !important;
-    color: #e74c3c !important;
-    font-size: 0.85em !important;
-    margin-left: 8px !important;
-    opacity: 0.75;
-}
-
-/* تنسيق السعر الجديد الأصفر النيون المضيء */
-.new-price {
-    color: #b8860b !important;
-    font-weight: 900 !important;
-    font-size: 1.1em !important;
-    text-shadow: none !important;
-}
-/* تأثيرات كريتيف لزرار الواتساب (نبض واهتزاز البطة) */
-.duck-whatsapp-btn {
-    animation: whatsappPulse 2s infinite ease-in-out !important;
-    transition: all 0.3s ease !important;
-}
-
-.duck-whatsapp-btn:hover {
-    transform: translateY(-4px) scale(1.03) !important;
-    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4) !important;
-}
-
-/* حركة اهتزاز الأيقونة أو الإيموجي جوه الزرار عند الوقوف بالماوس */
-.duck-whatsapp-btn:hover img,
-.duck-whatsapp-btn:hover span {
-    animation: duckWiggle 0.5s ease infinite alternate !important;
-}
-
-@keyframes whatsappPulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
-    }
-    70% {
-        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-    }
-}
-
-@keyframes duckWiggle {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(10deg); }
-}
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #171717;
-            color: var(--text-light);
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        nav {
-            background-color: var(--primary-yellow);
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(241, 196, 15, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .nav-item-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        nav button {
-            background: transparent;
-            border: 2px solid transparent;
-            color: #000000;
-            font-weight: 800;
-            font-size: 15px;
-            padding: 8px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        nav button:hover {
-            background-color: #000000;
-            color: var(--primary-yellow);
-            transform: translateY(-2px);
-        }
-
-        nav button.active {
-            background-color: #000000;
-            color: var(--primary-yellow);
-            border-color: #000000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-
-     /* تنسيق زر Golden Duck Challenge بخلفية بيضاء وكلمة سوداء عليها نيون أصفر */
-.nav-btn-challenge {
-    background-color: #ffffff !important;
-    background: #ffffff !important;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-    
-    /* نيون وتوهج أصفر حول الكلمة السوداء */
-    text-shadow: 0 0 5px #ffd700, 0 0 10px #ffea00 !important;
-    
-    font-weight: 900 !important;
-    border-radius: 20px !important;
-    border: 3px dashed #000000 !important;
-    animation: neonPulse 1.8s infinite ease-in-out !important;
-    transition: all 0.3s ease !important;
-}
-
-@keyframes neonPulse {
-    0% {
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-        transform: scale(1);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 215, 0, 0.6);
-        transform: scale(1.03);
-    }
-    100% {
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-        transform: scale(1);
-    }
-}
-
-     .nav-btn-sos {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    color: #e74c3c !important;
-    -webkit-text-fill-color: #e74c3c !important;
-    font-weight: 900 !important;
-    border-radius: 20px !important;
-    border: 3px dashed #e74c3c !important;
-    animation: pulseSos 1.8s infinite ease-in-out !important;
-    transition: all 0.3s ease !important;
-}
-
-@keyframes pulseSos {
-    0% {
-        box-shadow: 0 0 10px rgba(231, 76, 60, 0.7), 0 0 0 0 rgba(231, 76, 60, 0.9);
-        transform: scale(1);
-    }
-    50% {
-        /* إشعاع أحمر قوي بيوسع لبره كأنه موجة رادار */
-        box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 0 14px rgba(231, 76, 60, 0);
-        transform: scale(1.04);
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(231, 76, 60, 0.7), 0 0 0 0 rgba(231, 76, 60, 0);
-        transform: scale(1);
-    }
-}
-
-.nav-btn-sos:hover, .nav-btn-sos.active {
-    background: #ffffff !important;
-    background-color: #fdf2f2 !important;
-    color: #c0392b !important;
-    border-color: #c0392b !important;
-    box-shadow: 0 0 25px rgba(231, 76, 60, 1), 0 0 10px rgba(231, 76, 60, 0.8) !important;
-    transform: translateY(-2px) scale(1.04);
-}
-
-  /* تنسيق زر سهم الخير والصدقة بالنبض الأخضر النيون */
-.nav-btn-charity {
-    background-color: #ffffff !important;
-    color: #2ecc71 !important;
-    font-weight: 900 !important;
-    border-radius: 20px !important;
-    border: 3px dashed #2ecc71 !important;
-    animation: greenNeonPulse 1.8s infinite ease-in-out !important;
-    transition: all 0.3s ease !important;
-}
-
-@keyframes greenNeonPulse {
-    0% {
-        box-shadow: 0 0 8px rgba(46, 204, 113, 0.8);
-        transform: scale(1);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(46, 204, 113, 0.9), 0 0 10px rgba(46, 204, 113, 0.6);
-        transform: scale(1.03);
-    }
-    100% {
-        box-shadow: 0 0 8px rgba(46, 204, 113, 0.8);
-        transform: scale(1);
-    }
-}
-
-.nav-btn-charity:hover, .nav-btn-charity.active {
-    background-color: #f4fbf4 !important;
-    color: #27ae60 !important;
-    border-color: #27ae60 !important;
-    box-shadow: 0 0 20px rgba(46, 204, 113, 0.9), 0 0 8px rgba(46, 204, 113, 0.6) !important;
-    transform: translateY(-2px) scale(1.03);
-}
-        @keyframes pulseSos {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-        }
-
-        .duck-bubble-popover {
-            display: none;
-            position: absolute;
-            top: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #2b2e3a;
-            color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 14px;
-            border: 2px solid var(--primary-yellow);
-            white-space: nowrap;
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.6);
-            align-items: center;
-            gap: 8px;
-            z-index: 1100;
-            animation: popupAnim 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .duck-bubble-popover.sos-bubble {
-            border-color: var(--sos-red);
-            background-color: #3d1414;
-        }
-
-        .duck-bubble-popover.charity-bubble {
-            border-color: #2ecc71;
-            background-color: #122b15;
-        }
-
-        .duck-bubble-popover::before {
-            content: "";
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 0 8px 8px 8px;
-            border-style: solid;
-            border-color: transparent transparent #2b2e3a transparent;
-        }
-
-        .duck-bubble-popover.sos-bubble::before {
-            border-color: transparent transparent #3d1414 transparent;
-        }
-
-        .duck-bubble-popover.charity-bubble::before {
-            border-color: transparent transparent #122b15 transparent;
-        }
-
-        .duck-bubble-popover.show {
-            display: flex;
-        }
-
-        @keyframes popupAnim {
-            0% { opacity: 0; transform: translateX(-50%) scale(0.7); }
-            100% { opacity: 1; transform: translateX(-50%) scale(1); }
-        }
-
-        .bubble-text {
-            font-size: 14px;
-            font-weight: 800;
-            color: var(--primary-yellow);
-        }
-
-        .sos-bubble .bubble-text { color: #ff6b6b; }
-        .charity-bubble .bubble-text { color: #2ecc71; }
-
-        .brand-container {
-            padding: 25px 15px 10px 15px;
-            background: linear-gradient(180deg, #171717 0%, #111111 100%);
-        }
-
-        h1.brand-title {
-            color: #ffffff;
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            text-shadow: var(--neon-glow);
-            margin: 10px 0;
-            display: inline-block;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 15px;
-            width: 100%;
-            flex: 1;
-        }
-
-        #section-snack select[size]:not([size="1"]) { padding: 4px !important; }
-        #section-snack select[size]:not([size="1"]) option { padding: 8px 10px; }
-
-        .nav-break { flex-basis: 100%; height: 0; }
-
-        .nav-btn-mod {
-            background: #ffffff !important;
-            background-color: #ffffff !important;
-            color: #9b2cff !important;
-            -webkit-text-fill-color: #9b2cff !important;
-            font-weight: 900 !important;
-            border-radius: 20px !important;
-            border: 3px dashed #b44cff !important;
-            text-shadow: 0 0 6px rgba(180, 76, 255, 0.55) !important;
-            animation: purpleNeonPulse 1.8s infinite ease-in-out !important;
-            transition: all 0.3s ease !important;
-        }
-        .nav-btn-mod:hover, .nav-btn-mod.active {
-            background-color: #faf4ff !important;
-            color: #7d12e0 !important;
-            -webkit-text-fill-color: #7d12e0 !important;
-            border-color: #8e24e8 !important;
-            box-shadow: 0 0 22px rgba(180, 76, 255, 1), 0 0 10px rgba(180, 76, 255, 0.7) !important;
-            transform: translateY(-2px) scale(1.03);
-        }
-        @keyframes purpleNeonPulse {
-            0%   { box-shadow: 0 0 8px rgba(180, 76, 255, 0.8); transform: scale(1); }
-            50%  { box-shadow: 0 0 22px rgba(180, 76, 255, 1), 0 0 10px rgba(180, 76, 255, 0.6); transform: scale(1.04); }
-            100% { box-shadow: 0 0 8px rgba(180, 76, 255, 0.8); transform: scale(1); }
-        }
-        .duck-bubble-popover.mod-bubble { border-color: #b44cff; background-color: #1c1030; }
-        .duck-bubble-popover.mod-bubble::before { border-color: transparent transparent #1c1030 transparent; }
-        .mod-bubble .bubble-text { color: #d9a3ff; }
-
-        /* ===== الورشة المجنونة ===== */
-        .mod-title { font-size: 46px; font-weight: 900; color: #e3b5ff; margin: 20px 0 5px;
-            text-shadow: 0 0 10px #b44cff, 0 0 25px #b44cff, 0 0 45px #9b2cff; letter-spacing: 1px; }
-        .mod-sub { color: #cfcfcf; font-size: 17px; margin-bottom: 25px; }
-        .mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; text-align: right; }
-        .mod-card { background: #17101f; border: 2px solid #b44cff; border-radius: 18px; padding: 22px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.45), 0 0 14px rgba(180,76,255,0.25); }
-        .mod-card.crazy { border-style: dashed; border-color: #ffd700; background: #1d1a0d; }
-        .mod-card h3 { color: #e3b5ff; font-size: 21px; margin-bottom: 4px; }
-        .mod-card.crazy h3 { color: #ffd700; }
-        .mod-card .mod-note { color: #a9a9a9; font-size: 13px; margin-bottom: 12px; }
-        .mod-item { display: flex; justify-content: space-between; align-items: center; gap: 10px;
-            padding: 9px 0; border-top: 1px dashed #3a2a4a; color: #fff; font-size: 15px; }
-        .mod-item .mod-price { color: #ffd700; font-weight: 800; white-space: nowrap; font-size: 14px; }
-        .mod-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-right: 6px; font-weight: 800; vertical-align: middle; }
-        .tag-ok { background: #123a1c; color: #2ecc71; }
-        .tag-lic { background: #3d2c0a; color: #ffb74d; }
-        .tag-joke { background: #3a1240; color: #ff8aff; }
-        .mod-request { margin: 30px auto 0; max-width: 560px; background: #17101f; border: 2px solid #b44cff;
-            border-radius: 18px; padding: 22px; }
-        .mod-request input, .mod-request textarea, .mod-request select { width: 100%; padding: 12px; margin-top: 10px; background: #0d0813;
-            color: #fff; border: 1px solid #5a3a7a; border-radius: 8px; font-size: 15px; font-family: inherit; }
-        .mod-request button { margin-top: 14px; background: #b44cff; color: #000; font-weight: 900; font-size: 17px;
-            padding: 12px 26px; border: none; border-radius: 10px; cursor: pointer; }
-        .mod-item { cursor: pointer; }
-        .mod-item input { accent-color: #b44cff; margin-left: 8px; transform: scale(1.2); }
-        .mod-meter { position: static; margin: 26px auto 0; width: 100%; max-width: 760px; box-sizing: border-box;
-            background: rgba(13,8,19,0.96); border: 2px solid #b44cff; border-radius: 14px; padding: 10px 14px;
-            box-shadow: 0 0 18px rgba(180,76,255,0.45); }
-        .mm-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; color: #fff; font-size: 14px; }
-        .mm-top b { color: #ffd700; font-size: 17px; }
-        .mm-bar { height: 10px; background: #2a1a3a; border-radius: 6px; margin-top: 8px; overflow: hidden; }
-        .mm-fill { height: 100%; width: 0; background: linear-gradient(90deg, #b44cff, #ffd700); transition: width 0.4s; }
-        #q-result { margin-top: 14px; color: #ffd700; font-weight: 800; line-height: 1.8; }
-        #section-workshop { padding-bottom: 30px; }
-        .mod-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px;
-            max-width: 1100px; margin: 30px auto 0; align-items: stretch; }
-        .mod-duo .mod-request { margin: 0; max-width: none; }
-        @media (max-width: 760px) { .mod-duo { grid-template-columns: 1fr; } }
-        .mod-legal { margin-top: 22px; color: #9a9a9a; font-size: 13px; }
-
-        /* ===== كوبون الخصم الحصرى فى الشات ===== */
-        .chat-msg.bot.coupon-msg { max-width: 100%; padding: 0; background: transparent; }
-        .duck-typing { background: #2b2b2b; border-radius: 10px; padding: 8px 12px; color: #fff; }
-        .coupon { position: relative; background: linear-gradient(135deg, #fff3b0, #ffd700 55%, #f1c40f); color: #1a1a1a;
-            border: 2px dashed #7a5c00; border-radius: 14px; padding: 12px 14px; text-align: center; overflow: hidden;
-            animation: couponPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .coupon::before, .coupon::after { content: ""; position: absolute; top: 50%; width: 16px; height: 16px;
-            background: #2b2b2b; border-radius: 50%; transform: translateY(-50%); }
-        .coupon::before { right: -9px; } .coupon::after { left: -9px; }
-        .coupon::selection { background: transparent; }
-        .coupon .c-head { font-size: 12px; font-weight: 900; letter-spacing: 1px; }
-        .coupon .c-offer { font-size: 17px; font-weight: 900; margin: 6px 0; line-height: 1.5; }
-        .coupon .c-code { display: inline-block; background: #1a1a1a; color: #ffd700; font-weight: 900; letter-spacing: 2px;
-            padding: 3px 12px; border-radius: 8px; font-size: 14px; margin: 4px 0; }
-        .coupon .c-timer { font-size: 13px; font-weight: 800; margin-top: 4px; }
-        .coupon .c-foot { font-size: 11px; margin-top: 6px; opacity: 0.85; }
-        .coupon::marker { content: none; }
-        .coupon .c-shine { position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
-            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.65), transparent);
-            animation: couponShine 2.6s infinite; }
-        @keyframes couponShine { 0% { left: -60%; } 60%, 100% { left: 130%; } }
-        @keyframes couponPop { 0% { transform: scale(0.6) rotate(-4deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
-
-        .page-section {
-            display: none;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .page-section.active {
-            display: block;
-            opacity: 1;
-            transform: none;
-        }
-
-        /* HOME SECTION STYLES */
-        .hero-card {
-            background-color: var(--card-dark);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(241, 196, 15, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-top: 15px;
-        }
-
-        .duck-img-main {
-            display: block;
-            margin: 0 auto 25px auto;
-            max-width: 100%;
-            width: 750px;
-            height: auto;
-            border-radius: 16px;
-            border: 3px solid var(--primary-yellow);
-            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.2);
-            object-fit: cover;
-        }
-
-        .hero-header h2 {
-            font-size: 32px;
-            color: var(--primary-yellow);
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-
-        .hero-header hr {
-            border: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
-            margin: 20px auto;
-            width: 80%;
-        }
-
-        .hero-header h3 {
-            font-size: 24px;
-            color: #ffffff;
-            margin: 10px 0;
-            font-weight: 700;
-        }
-
-        .hero-header h4 {
-            font-size: 22px;
-            color: #e67e22;
-            margin: 12px 0;
-            font-weight: 800;
-        }
-
-        .hero-header p {
-            font-size: 20px;
-            color: var(--primary-yellow);
-            font-weight: 800;
-            margin-top: 15px;
-            letter-spacing: 0.5px;
-        }
-
-        .duck-sound-btn {
-            background-color: var(--primary-yellow);
-            color: #000000;
-            border: none;
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .duck-sound-btn:hover {
-            background-color: var(--yellow-hover);
-            transform: scale(1.06);
-            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.5);
-        }
-
-        /* NEW COMPONENTS STYLES */
-        .interactive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-            text-align: right;
-        }
-
-        .interactive-card {
-            background: var(--card-dark);
-            border: 2px solid var(--primary-yellow);
-            border-radius: 18px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        }
-
-        .interactive-card h3 {
-            color: var(--primary-yellow);
-            font-size: 22px;
-            font-weight: 900;
-            margin-bottom: 15px;
-            border-bottom: 2px dashed var(--primary-yellow);
-            padding-bottom: 10px;
-        }
-
-        .calc-result-box {
-            background-color: #121212;
-            border: 2px solid #2ecc71;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .price-tag {
-            font-size: 26px;
-            font-weight: 900;
-            color: #2ecc71;
-        }
-
-        .price-old {
-            text-decoration: line-through;
-            color: #888;
-            font-size: 16px;
-            margin-right: 10px;
-        }
-
-        .tracker-box {
-            background: var(--card-dark);
-            border: 2px solid var(--primary-yellow);
-            border-radius: 18px;
-            padding: 25px;
-            margin-top: 25px;
-            text-align: right;
-        }
-
-        .tracker-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-            position: relative;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .step-item {
-            flex: 1;
-            min-width: 120px;
-            background: #121212;
-            padding: 15px 10px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            text-align: center;
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-
-        .step-item.completed {
-            border-color: #2ecc71;
-            opacity: 1;
-            background: #112b15;
-            color: #2ecc71;
-        }
-
-        .step-item.active {
-            border-color: var(--primary-yellow);
-            opacity: 1;
-            background: #2b2507;
-            color: var(--primary-yellow);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .ba-card {
-            background: #121212;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-
-        .ba-images {
-            display: flex;
-            position: relative;
-        }
-
-        .ba-img {
-            width: 50%;
-            height: 160px;
-            object-fit: cover;
-        }
-
-        .ba-label {
-            position: absolute;
-            bottom: 5px;
-            padding: 2px 8px;
-            font-size: 12px;
-            font-weight: 800;
-            border-radius: 4px;
-            background: rgba(0,0,0,0.7);
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-            text-align: right;
-        }
-
-        .review-card {
-            background: var(--card-dark);
-            padding: 20px;
-            border-radius: 14px;
-            border: 1px solid #333;
-        }
-
-        .stars { color: #f1c40f; margin-bottom: 8px; }
-
-        .chatbot-floating {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            z-index: 1500;
-        }
-
-        .chatbot-btn {
-            background: var(--primary-yellow);
-            color: #000;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-        }
-
-        .chatbot-btn:hover { transform: scale(1.1); }
-
-        .chat-window {
-            display: none;
-            position: absolute;
-            bottom: 75px;
-            left: 0;
-            width: 320px;
-            background: #1e1e1e;
-            border: 2px solid var(--primary-yellow);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            flex-direction: column;
-            overflow: hidden;
-            text-align: right;
-        }
-
-        .chat-window.show { display: flex; }
-
-        .chat-header {
-            background: var(--primary-yellow);
-            color: #000;
-            padding: 12px;
-            font-weight: 900;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-body {
-            padding: 15px;
-            max-height: 250px;
-            overflow-y: auto;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .chat-msg {
-            padding: 8px 12px;
-            border-radius: 10px;
-            max-width: 85%;
-        }
-
-        .chat-msg.bot { background: #2b2b2b; color: #fff; align-self: flex-start; }
-        .chat-msg.user { background: var(--primary-yellow); color: #000; align-self: flex-end; font-weight: 700; }
-
-        .chat-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            padding: 10px;
-            background: #121212;
-        }
-
-        .chat-opt-btn {
-            background: #2a2a2a;
-            color: #fff;
-            border: 1px solid var(--primary-yellow);
-            padding: 6px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .chat-opt-btn:hover { background: var(--primary-yellow); color: #000; }
-
-        .toast-notification {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #1e1e1e;
-            border: 2px solid #2ecc71;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-            z-index: 1400;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            transform: translateY(150%);
-            transition: transform 0.4s ease;
-        }
-
-        .toast-notification.show { transform: translateY(0); }
-
-        /* STYLES GOLDEN DUCK CHALLENGE */
-        .challenge-hero {
-            background: linear-gradient(135deg, #2b2507 0%, #111111 100%);
-            border: 2px solid var(--primary-yellow);
-            border-radius: 20px;
-            padding: 35px 20px;
-            box-shadow: var(--neon-glow);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .challenge-title { font-size: 36px; font-weight: 900; color: var(--primary-yellow); margin-bottom: 10px; }
-        .challenge-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 20px; }
-
-        .prizes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-            text-align: right;
-        }
-
-        .prize-card {
-            background: var(--card-dark);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .prize-card:hover {
-            border-color: var(--primary-yellow);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(241, 196, 15, 0.2);
-        }
-
-        .prize-card.grand-prize {
-            border: 2px solid var(--primary-yellow);
-            background: linear-gradient(180deg, #2a2408 0%, #1e1e1e 100%);
-            grid-column: 1 / -1;
-            text-align: center;
-        }
-
-        .prize-badge {
-            display: inline-block;
-            background: var(--primary-yellow);
-            color: #000;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .prize-card h3 { color: #ffffff; font-size: 20px; margin-bottom: 8px; }
-        .prize-card p { color: #cccccc; font-size: 15px; line-height: 1.6; }
-
-        .rules-box {
-            background-color: var(--card-dark);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(241, 196, 15, 0.3);
-            text-align: right;
-            margin-top: 30px;
-        }
-
-        .rules-box h3 {
-            color: var(--primary-yellow);
-            font-size: 24px;
-            border-bottom: 2px solid var(--primary-yellow);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .rules-list { list-style: none; padding-right: 15px; }
-        .rules-list li { font-size: 16px; margin: 12px 0; color: #dddddd; position: relative; }
-        .rules-list li::before { content: "📌 "; position: absolute; right: -25px; }
-
-        /* EMERGENCY SOS SECTION STYLES */
-        .sos-hero {
-            background: linear-gradient(135deg, #4a1212 0%, #111111 100%);
-            border: 2px solid var(--sos-red);
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: var(--sos-glow);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .sos-title { font-size: 36px; font-weight: 900; color: #ff6b6b; margin-bottom: 10px; }
-        .sos-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 15px; }
-
-        .sos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            margin: 25px 0;
-            text-align: right;
-        }
-
-        .sos-card {
-            background: var(--card-dark);
-            border-radius: 16px;
-            padding: 22px;
-            border: 1px solid #442222;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .sos-card:hover {
-            border-color: var(--sos-red);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
-        }
-
-        .sos-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .sos-card-header h3 { color: #ffffff; font-size: 19px; font-weight: 800; }
-        .sos-card p { color: #bbbbbb; font-size: 14px; margin-bottom: 15px; line-height: 1.5; }
-
-        .sos-input-group { margin-bottom: 12px; }
-        .sos-input-group label { display: block; font-size: 13px; color: var(--primary-yellow); margin-bottom: 5px; font-weight: 700; }
-        .sos-input-group select, .sos-input-group input {
-            width: 100%;
-            padding: 8px 12px;
-            background-color: #121212;
-            border: 1px solid #555;
-            color: #fff;
-            border-radius: 6px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .btn-sos-action {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--sos-red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-sos-action:hover { background-color: var(--sos-red-hover); }
-
-        .sos-response-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .sos-modal-content {
-            background: #1e1e1e;
-            border: 3px solid var(--sos-red);
-            border-radius: 20px;
-            max-width: 550px;
-            width: 100%;
-            padding: 30px;
-            box-shadow: var(--sos-glow);
-            animation: popupAnim 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
-        }
-
-        .sos-modal-content h2 { color: #ff6b6b; font-size: 26px; margin-bottom: 15px; font-weight: 900; }
-        .sos-modal-content p { font-size: 18px; color: #ffffff; line-height: 1.7; margin-bottom: 25px; font-weight: 700; }
-
-        /* CHARITY STYLES */
-        .charity-hero {
-            background: linear-gradient(135deg, #103317 0%, #111111 100%);
-            border: 2px solid #2ecc71;
-            border-radius: 20px;
-            padding: 35px 20px;
-            box-shadow: var(--charity-glow);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .charity-title { font-size: 36px; font-weight: 900; color: #2ecc71; margin-bottom: 10px; }
-        .charity-subtitle { font-size: 20px; color: #ffffff; font-weight: 700; margin-bottom: 20px; }
-
-        .charity-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-            text-align: right;
-        }
-
-        .pillar-card {
-            background: var(--card-dark);
-            border-radius: 18px;
-            padding: 25px;
-            border: 2px solid rgba(46, 204, 113, 0.3);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pillar-card h3 { color: #2ecc71; font-size: 22px; font-weight: 900; margin-bottom: 15px; border-bottom: 1px dashed #2ecc71; padding-bottom: 8px; }
-        .pillar-card ul { list-style: none; padding-right: 0; }
-        .pillar-card ul li { margin: 12px 0; color: #dddddd; font-size: 16px; line-height: 1.6; }
-
-        .donation-box {
-            background: linear-gradient(180deg, #142016 0%, #1a1a1a 100%);
-            border: 2px solid #2ecc71;
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .donation-options {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .donation-btn {
-            background-color: #2a2a2a;
-            border: 2px solid #2ecc71;
-            color: #fff;
-            font-weight: 800;
-            font-size: 18px;
-            padding: 12px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .donation-btn:hover, .donation-btn.selected {
-            background-color: #2ecc71;
-            color: #000000;
-            transform: scale(1.05);
-        }
-
-        .menus-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            gap: 25px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-        }
-
-        .menu-box {
-            flex: 1;
-            min-width: 320px;
-            background-color: var(--card-dark);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            border: 1px solid rgba(241, 196, 15, 0.2);
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .menu-box h2 {
-            color: var(--primary-yellow);
-            border-bottom: 3px solid var(--primary-yellow);
-            padding-bottom: 12px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-size: 26px;
-            font-weight: 900;
-        }
-
-        details {
-            background-color: #ffffff;
-            border: 1px solid #d9d9d9;
-            border-radius: 10px;
-            padding: 14px 18px;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        details[open] {
-            background-color: #ffffff;
-            border-color: var(--primary-yellow);
-            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.15);
-            min-height: 230px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        summary {
-            font-weight: 800;
-            cursor: pointer;
-            outline: none;
-            color: #000000;
-            font-size: 17px;
-            user-select: none;
-        }
-
-        .menu-box .old-price { display: inline-block; white-space: nowrap; }
-        .menu-box .new-price { display: block; white-space: nowrap; margin-top: 2px; }
-
-        .ar-sub {
-            display: block;
-            font-size: 0.7em;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        summary:hover { color: #b7950b; }
-
-        details ul {
-            list-style: square;
-            padding-right: 20px;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #000000;
-            text-align: right;
-            flex: 1;
-        }
-
-        details ul li { margin: 6px 0; line-height: 1.5; }
-
-        .details-flex {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex: 1;
-            width: 100%;
-        }
-
-        .service-video, .service-img {
-            width: 120px;
-            height: 120px;
-            min-width: 120px;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid var(--primary-yellow);
-            box-shadow: 0 0 10px rgba(241, 196, 15, 0.4);
-        }
-
-        .bottom-duck-img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            border: 2px solid var(--primary-yellow);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-        }
-
-        .neon-alert {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            border: 3px solid var(--primary-yellow);
-            box-shadow: var(--neon-glow);
-            border-radius: 16px;
-            padding: 25px;
-            margin: 20px auto 30px auto;
-            max-width: 800px;
-            text-shadow: 0 0 5px var(--primary-yellow);
-        }
-
-        .neon-alert h3 { margin-bottom: 10px; color: var(--primary-yellow); font-size: 26px; font-weight: 900; }
-        .neon-alert p { font-size: 20px; font-weight: 800; }
-
-        .auth-card {
-            max-width: 450px;
-            margin: 30px auto;
-            background: var(--card-dark);
-            padding: 35px 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            border: 2px solid var(--primary-yellow);
-            text-align: right;
-        }
-
-        .auth-card h2 { margin-bottom: 25px; color: var(--primary-yellow); text-align: center; font-size: 24px; font-weight: 800; }
-
-        .form-group { margin-bottom: 20px; text-align: right; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 15px; color: #ffffff; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #444;
-            background-color: #121212;
-            color: #ffffff;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: var(--primary-yellow);
-            box-shadow: 0 0 8px rgba(241, 196, 15, 0.4);
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary-yellow);
-            color: #000000;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: 900;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-submit:hover { background-color: var(--yellow-hover); transform: translateY(-2px); }
-
-        .user-dashboard {
-            background-color: #0d0d0d;
-            color: #ffffff;
-            border: 2px solid var(--primary-yellow);
-            box-shadow: 0 0 20px rgba(241, 196, 15, 0.25);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            text-align: right;
-        }
-
-        .user-info h2 { color: var(--primary-yellow); margin-bottom: 8px; font-size: 28px; font-weight: 900; }
-        .user-info p { margin: 6px 0; font-size: 17px; color: #dddddd; }
-
-        .points-badge {
-            background-color: var(--primary-yellow);
-            color: #000000;
-            padding: 18px 28px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 24px;
-            box-shadow: var(--neon-glow);
-        }
-
-        .progress-container {
-            width: 100%;
-            background-color: #2a2a2a;
-            border-radius: 12px;
-            margin-top: 15px;
-            overflow: hidden;
-            border: 1px solid var(--primary-yellow);
-        }
-
-        .progress-bar {
-            width: 70%;
-            background: linear-gradient(90deg, #1ebc57, #25D366);
-            height: 24px;
-            text-align: center;
-            color: white;
-            font-size: 14px;
-            line-height: 24px;
-            font-weight: 900;
-        }
-
-        .dashboard-section {
-            background-color: var(--card-dark);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            margin-bottom: 30px;
-            border: 1px solid rgba(241, 196, 15, 0.2);
-            text-align: right;
-        }
-
-        .dashboard-section h3 {
-            color: var(--primary-yellow);
-            border-bottom: 2px solid var(--primary-yellow);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .table-responsive { overflow-x: auto; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            min-width: 600px;
-        }
-
-        table th, table td {
-            border: 1px solid #333333;
-            padding: 12px 15px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        table th { background-color: var(--primary-yellow); color: #000000; font-weight: 900; }
-        table tbody tr { background-color: #1a1a1a; }
-        table tbody tr:nth-child(even) { background-color: #242424; }
-
-        .rewards-list { list-style: none; line-height: 2.3; font-size: 18px; padding-right: 10px; color: #ffffff; }
-
-        .duck-whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background-color: var(--whatsapp-green);
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: 900;
-            padding: 16px 38px;
-            border-radius: 50px;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s ease;
-            margin: 25px 0;
-        }
-
-        .duck-whatsapp-btn:hover {
-            transform: scale(1.06);
-            background-color: var(--whatsapp-hover);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
-        }
-
-        .contact-cards { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .contact-card {
-            background: var(--card-dark);
-            padding: 25px;
-            border-radius: 14px;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-            border-top: 4px solid var(--primary-yellow);
-            border-left: 1px solid rgba(241, 196, 15, 0.2);
-            border-right: 1px solid rgba(241, 196, 15, 0.2);
-        }
-
-        .contact-card h4 { margin-bottom: 10px; font-size: 20px; color: var(--primary-yellow); font-weight: 800; }
-        .contact-card p { color: #dddddd; font-size: 16px; }
-
-        footer {
-            background: #0a0a0a;
-            color: #888888;
-            padding: 20px;
-            margin-top: auto;
-            font-size: 15px;
-            border-top: 2px solid var(--primary-yellow);
-        }
-
-        /* CUSTOM EXTRA SERVICES STYLES */
-        .neon-heading-batota {
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--primary-yellow);
-            text-shadow: var(--neon-glow);
-            margin: 20px 0;
-            letter-spacing: 2px;
-        }
-
-        .extra-hero-img {
-            display: block;
-            margin: 0 auto 30px auto;
-            max-width: 100%;
-            width: 750px;
-            height: auto;
-            border-radius: 16px;
-            border: 3px solid var(--primary-yellow);
-            box-shadow: 0 8px 25px rgba(241, 196, 15, 0.2);
-            object-fit: cover;
-        }
-
-        @media (max-width: 768px) {
-            h1.brand-title { font-size: 32px; }
-            .neon-heading-batota { font-size: 34px; }
-            nav button { font-size: 13px; padding: 6px 12px; }
-            .hero-header h2 { font-size: 24px; }
-            .hero-header h3 { font-size: 18px; }
-            .hero-header p { font-size: 16px; }
-            .duck-whatsapp-btn { font-size: 18px; padding: 12px 25px; }
-            .service-video, .service-img { width: 100%; height: auto; margin-top: 10px; }
-            .chat-window { width: 280px; left: -10px; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <!-- NAVIGATION TABS -->
 <nav>
     <div class="nav-item-wrapper">
-        <button id="nav-home" class="active" onclick="switchSectionAndBubble('home', 'nest')">الرئيسية</button>
+        <button id="nav-home" class="active" data-click="switchSectionAndBubble" data-args='["home", "nest"]'>الرئيسية</button>
         <div class="duck-bubble-popover" id="popover-nest">
             <span class="bubble-text">عش البطة 🦆🏠</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-services" onclick="switchSectionAndBubble('services', 'food')">الخدمات والأسعار</button>
+        <button id="nav-services" data-click="switchSectionAndBubble" data-args='["services", "food"]'>الخدمات والأسعار</button>
         <div class="duck-bubble-popover" id="popover-food">
             <span class="bubble-text">أكل عيش البطة 🦆🍞</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-extra" onclick="switchSectionAndBubble('extra', 'extra')">خدمات إضافية</button>
+        <button id="nav-extra" data-click="switchSectionAndBubble" data-args='["extra", "extra"]'>خدمات إضافية</button>
         <div class="duck-bubble-popover" id="popover-extra">
             <span class="bubble-text">خدمات البطة الإضافية 🦆🛠️</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-workshop" class="nav-btn-mod" onclick="switchSectionAndBubble('workshop', 'mod')">الورشة المجنونة</button>
+        <button id="nav-workshop" class="nav-btn-mod" data-click="switchSectionAndBubble" data-args='["workshop", "mod"]'>الورشة المجنونة</button>
         <div class="duck-bubble-popover mod-bubble" id="popover-mod">
             <span class="bubble-text">البطة بتغير ريشها 🦆🐣</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-contact" onclick="switchSectionAndBubble('contact', 'contact')">تواصل معنا</button>
+        <button id="nav-contact" data-click="switchSectionAndBubble" data-args='["contact", "contact"]'>تواصل معنا</button>
         <div class="duck-bubble-popover" id="popover-contact">
             <span class="bubble-text">كاك معانا! 🦆📞</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-account" onclick="switchSectionAndBubble('account', 'profile')">حسابى / تسجيل الدخول</button>
+        <button id="nav-account" data-click="switchSectionAndBubble" data-args='["account", "profile"]'>حسابى / تسجيل الدخول</button>
         <div class="duck-bubble-popover" id="popover-profile">
             <span class="bubble-text">ملف البطة الشخصى  🦆🪪</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-snack" class="nav-btn-snack" onclick="switchSectionAndBubble('snack', 'snack')">استراحة البطة  </button>
+        <button id="nav-snack" class="nav-btn-snack" data-click="switchSectionAndBubble" data-args='["snack", "snack"]'>استراحة البطة  </button>
         <div class="duck-bubble-popover snack-bubble" id="popover-snack">
             <span class="bubble-text">زغط البطة 🦆🍽️</span>
         </div>
@@ -1483,21 +64,21 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
     <div class="nav-break"></div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-sos" class="nav-btn-sos" onclick="switchSectionAndBubble('sos', 'sos')"> طوارئ الطريق</button>
+        <button id="nav-sos" class="nav-btn-sos" data-click="switchSectionAndBubble" data-args='["sos", "sos"]'> طوارئ الطريق</button>
         <div class="duck-bubble-popover sos-bubble" id="popover-sos">
             <span class="bubble-text">البطة فى أزمة 🦆🚨</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-challenge" class="nav-btn-challenge" onclick="switchSectionAndBubble('challenge', 'challenge')">Golden Duck Challenge</button>
+        <button id="nav-challenge" class="nav-btn-challenge" data-click="switchSectionAndBubble" data-args='["challenge", "challenge"]'>Golden Duck Challenge</button>
         <div class="duck-bubble-popover" id="popover-challenge">
             <span class="bubble-text">أبنائى البطابيط 🦆🐥</span>
         </div>
     </div>
 
     <div class="nav-item-wrapper">
-        <button id="nav-charity" class="nav-btn-charity" onclick="switchSectionAndBubble('charity', 'charity')">سهم الخير والصدقة</button>
+        <button id="nav-charity" class="nav-btn-charity" data-click="switchSectionAndBubble" data-args='["charity", "charity"]'>سهم الخير والصدقة</button>
         <div class="duck-bubble-popover charity-bubble" id="popover-charity">
             <span class="bubble-text">سهم يعمر.. وروح تتنشر 🌾</span>
         </div>
@@ -1514,7 +95,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         <!-- SECTION: الرئيسية (مقتصرة على الكارت الرئيسي حتى زر اسمع صوت البطة) -->
         <div id="section-home" class="page-section active">
             <div class="hero-card">
-                <img src="ducky.jpg" alt="Duck Main" class="duck-img-main" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=DUCKY+MOTORS+CENTER';">
+                <img src="ducky.jpg" alt="Duck Main" class="duck-img-main" data-fallback="https://placehold.co/750x420/1e1e1e/f1c40f?text=DUCKY+MOTORS+CENTER">
 
                 <div class="hero-header">
                     <h2> مركز البطّة لـ صيانة السيارات🦆</h2>
@@ -1525,7 +106,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     <p>هدفنا الأول راحتك وأمان عربيتك</p>
 
                     <div>
-                        <button class="duck-sound-btn" onclick="playDuckySound()">
+                        <button class="duck-sound-btn" data-click="playDuckySound">
                              اسمع صوت البطة🦆
                         </button>
                         <audio id="duckAudio" src="audio.mpeg"></audio>
@@ -1537,23 +118,23 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         </div>
 <!-- SECTION: استراحة البطة -->
 <div id="section-snack" class="page-section">
-    <div class="container" style="direction: rtl; text-align: right; color: #fff;">
+    <div class="container u-1">
         
-        <div class="section-title text-center" style="margin-bottom: 35px; text-align: center;">
-            <h2 style="color: #d4ac0d; font-size: 30px; font-weight: bold;">☕ Duck Lounge<span class="ar-sub">(استراحة البطة)</span></h2>
+        <div class="section-title text-center u-2">
+            <h2 class="u-3">☕ Duck Lounge<span class="ar-sub">(استراحة البطة)</span></h2>
         </div>
 
         <!-- ==================== 1. المأكولات ==================== -->
-        <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🥐 Ducky Bites<span class="ar-sub">(المأكولات)</span></h3>
-            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="lounge-category-block u-4">
+            <h3 class="category-header u-5">🥐 Ducky Bites<span class="ar-sub">(المأكولات)</span></h3>
+            <div class="interactive-grid u-6">
                 
                 <!-- أ. مأكولات غير صحية وسريعة -->
-                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍔 Fast Food & Sandwiches<span class="ar-sub" style="font-size:1em;">(مأكولات سريعة & ساندوتشات)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Sandwiches & Quick Bakery<span class="ar-sub">(ساندوتشات & مخبوزات سريعة)</span></h3>
+                <div class="interactive-card fast-card u-7">
+                    <div class="card-badge fast-tag u-8">🍔 Fast Food & Sandwiches<span class="ar-sub u-9">(مأكولات سريعة & ساندوتشات)</span></div>
+                    <h3 class="u-10">Sandwiches & Quick Bakery<span class="ar-sub">(ساندوتشات & مخبوزات سريعة)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>ساندوتش بانيه دجاج (Chicken Schnitzel Sandwich) - 65 EGP</option>
                         <option>ساندوتش كفتة مشوية (Grilled Kofta Sandwich) - 70 EGP</option>
@@ -1569,11 +150,11 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </div>
 
                 <!-- ب. مأكولات صحية -->
-                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥗 Healthy Food<span class="ar-sub" style="font-size:1em;">(مأكولات صحية)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Club Sandwich & Diet Wrap<span class="ar-sub">(سكلوب ساندوتش & دايت)</span></h3>
+                <div class="interactive-card healthy-card u-12">
+                    <div class="card-badge healthy-tag u-13">🥗 Healthy Food<span class="ar-sub u-9">(مأكولات صحية)</span></div>
+                    <h3 class="u-10">Club Sandwich & Diet Wrap<span class="ar-sub">(سكلوب ساندوتش & دايت)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>سكلوب ساندوتش دايت (توست بني + تركي + شيدر لايت) (Diet Club Sandwich) - 85 EGP</option>
                         <option>راب دجاج مشوي (خبز شوفان + صوص زبادي) (Grilled Chicken Wrap) - 95 EGP</option>
@@ -1586,16 +167,16 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         </div>
 
         <!-- ==================== 2. السناكس والمسليات ==================== -->
-        <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🍿 Quack Snacking<span class="ar-sub">(السناكس والمسليات)</span></h3>
-            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="lounge-category-block u-4">
+            <h3 class="category-header u-5">🍿 Quack Snacking<span class="ar-sub">(السناكس والمسليات)</span></h3>
+            <div class="interactive-grid u-6">
                 
                 <!-- أ. سناكس صحية -->
-                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🌱 Healthy Snacks & Nuts<span class="ar-sub" style="font-size:1em;">(سناكس ومكسرات صحية)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Fit & Healthy Snacks<span class="ar-sub">(سناكس لياقة وصحة)</span></h3>
+                <div class="interactive-card healthy-card u-12">
+                    <div class="card-badge healthy-tag u-13">🌱 Healthy Snacks & Nuts<span class="ar-sub u-9">(سناكس ومكسرات صحية)</span></div>
+                    <h3 class="u-10">Fit & Healthy Snacks<span class="ar-sub">(سناكس لياقة وصحة)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>شيبس الذرة المخبوز أعشاب وجبنة (Baked Corn Chips with Herbs & Cheese) - 30 EGP</option>
                         <option>بروتين بار (Fit & Protein Bar) - 60 EGP</option>
@@ -1606,11 +187,11 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </div>
 
                 <!-- ب. سناكس غير صحية وتسالٍ -->
-                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍿 Munchies & Sweets<span class="ar-sub" style="font-size:1em;">(تسالى وحلويات)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Popcorn & Chips<span class="ar-sub">(فشار & شيبسيات)</span></h3>
+                <div class="interactive-card fast-card u-7">
+                    <div class="card-badge fast-tag u-8">🍿 Munchies & Sweets<span class="ar-sub u-9">(تسالى وحلويات)</span></div>
+                    <h3 class="u-10">Popcorn & Chips<span class="ar-sub">(فشار & شيبسيات)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>فشار سخن بـ الزبدة (Hot Buttered Popcorn) - 25 EGP</option>
                         <option>فشار بـ الجبنة / الجبنة المتبلة (Cheese / Spicy Cheese Popcorn) - 25 EGP</option>
@@ -1626,17 +207,17 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         </div>
 
         <!-- ==================== 3. المشروبات التفصيلية ==================== -->
-        <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">☕ Duck Hydration<span class="ar-sub">(المشروبات)</span></h3>
-            <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div class="lounge-category-block u-4">
+            <h3 class="category-header u-5">☕ Duck Hydration<span class="ar-sub">(المشروبات)</span></h3>
+            <div class="interactive-grid u-14">
                 
                 <!-- أ. المشروبات الساخنة والأعشاب -->
-                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">☕ Hot Drinks & Herbs<span class="ar-sub" style="font-size:1em;">(مشروبات ساخنة وأعشاب)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Coffee, Tea & Herbs<span class="ar-sub">(القهوة & الشاى & الأعشاب)</span></h3>
+                <div class="interactive-card healthy-card u-12">
+                    <div class="card-badge healthy-tag u-13">☕ Hot Drinks & Herbs<span class="ar-sub u-9">(مشروبات ساخنة وأعشاب)</span></div>
+                    <h3 class="u-10">Coffee, Tea & Herbs<span class="ar-sub">(القهوة & الشاى & الأعشاب)</span></h3>
                     
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <select style="width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
+                    <div class="u-15">
+                        <select class="u-16">
                             <option>اختر (Select)</option>
                             <option>قهوة فاتح سادة (Light Roast Coffee, Plain) - 25 EGP</option>
                             <option>قهوة فاتح محوج (Light Roast Spiced Coffee) - 30 EGP</option>
@@ -1659,7 +240,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             <option>قرفة (Cinnamon) - 20 EGP</option>
                         </select>
 
-                        <select style="width: 100%; padding: 8px; background: #111; color: #2ea44f; font-weight: bold; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
+                        <select class="u-17">
                             <option>اختر السكر أو التحلية (Choose Sugar or Sweetener)</option>
                             <option>سادة (بدون سكر) (Plain, No Sugar)</option>
                             <option>على الريحة (Light Sugar)</option>
@@ -1671,11 +252,11 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </div>
 
                 <!-- ب. مشروبات باردة صحية -->
-                <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥤 Healthy Cold Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات باردة صحية)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Mineral Water & Natural Juices<span class="ar-sub">(مياه معدنية & عصائر طبيعية)</span></h3>
+                <div class="interactive-card healthy-card u-12">
+                    <div class="card-badge healthy-tag u-13">🥤 Healthy Cold Drinks<span class="ar-sub u-9">(مشروبات باردة صحية)</span></div>
+                    <h3 class="u-10">Mineral Water & Natural Juices<span class="ar-sub">(مياه معدنية & عصائر طبيعية)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>مياه معدنية صغيرة (Small Mineral Water) - 10 EGP</option>
                         <option>مياه معدنية كبيرة (Large Mineral Water) - 15 EGP</option>
@@ -1688,11 +269,11 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </div>
 
                 <!-- ج. Energy Drinks (إنجليزى ) -->
-                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">⚡ Energy Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات الطاقة)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Energy Drinks<span class="ar-sub">(مشروبات الطاقة)</span></h3>
+                <div class="interactive-card fast-card u-7">
+                    <div class="card-badge fast-tag u-8">⚡ Energy Drinks<span class="ar-sub u-9">(مشروبات الطاقة)</span></div>
+                    <h3 class="u-10">Energy Drinks<span class="ar-sub">(مشروبات الطاقة)</span></h3>
                     
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>Red Bull Original (ريد بول أوريجينال) - 65 EGP</option>
                         <option>Red Bull Sugarfree (ريد بول بدون سكر) - 65 EGP</option>
@@ -1711,11 +292,11 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </div>
 
                 <!-- د. مشروبات باردة غير صحية وآيس كوفى -->
-                <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🧋 Indulgent Cold Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات باردة غير صحية)</span></div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Iced Coffee, Milkshakes & Soft Drinks<span class="ar-sub">(آيس كوفى & ميلك شيك & مشروبات غازية)</span></h3>
+                <div class="interactive-card fast-card u-7">
+                    <div class="card-badge fast-tag u-8">🧋 Indulgent Cold Drinks<span class="ar-sub u-9">(مشروبات باردة غير صحية)</span></div>
+                    <h3 class="u-10">Iced Coffee, Milkshakes & Soft Drinks<span class="ar-sub">(آيس كوفى & ميلك شيك & مشروبات غازية)</span></h3>
 
-                    <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
+                    <select class="u-11">
                         <option>اختر (Select)</option>
                         <option>Ice Coffee Vanilla (آيس كوفى فانيلا) - 40 EGP</option>
                         <option>Ice Coffee Caramel (آيس كوفى كراميل) - 40 EGP</option>
@@ -1734,25 +315,25 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         </div>
 
         <!-- ==================== طلب + ريسيت الحساب ==================== -->
-        <div style="background:#1a1a1a; border:2px solid #d4ac0d; border-radius:14px; padding:20px; text-align:center; margin-top:10px;">
-            <h3 style="color:#ffd700; margin:0 0 12px 0;">🧾 اطلب واحصل على الحساب</h3>
-            <input type="text" id="lounge-customer-name" placeholder="اكتب اسمك / Your name" style="width:100%; max-width:360px; padding:12px; background:#111; color:#fff; border:1px solid #444; border-radius:8px; font-size:16px; text-align:center;">
-            <div style="margin-top:12px;">
-                <select id="lounge-receipt-lang" onchange="renderReceipt()" style="padding:10px; background:#111; color:#fff; border:1px solid #444; border-radius:8px; font-size:15px;">
+        <div class="u-18">
+            <h3 class="u-19">🧾 اطلب واحصل على الحساب</h3>
+            <input type="text" id="lounge-customer-name" placeholder="اكتب اسمك / Your name" class="u-20">
+            <div class="u-21">
+                <select id="lounge-receipt-lang" data-change="renderReceipt" class="u-22">
                     <option value="ar">الريسيت بالعربى</option>
                     <option value="en">Receipt in English</option>
                 </select>
             </div>
-            <div style="margin-top:12px;">
-                <button type="button" onclick="placeLoungeOrder()" style="background:#d4ac0d; color:#000; font-weight:bold; font-size:18px; padding:12px 28px; border:none; border-radius:10px; cursor:pointer;">اطلب الآن 🦆</button>
+            <div class="u-21">
+                <button type="button" data-click="placeLoungeOrder" class="u-23">اطلب الآن 🦆</button>
             </div>
-            <div id="lounge-receipt" style="display:none; margin:20px auto 0; max-width:420px; background:#fff; color:#000; border-radius:10px; padding:20px; text-align:right; box-shadow:0 6px 20px rgba(0,0,0,0.5);"></div>
+            <div id="lounge-receipt" class="u-24"></div>
         </div>
 
         <!-- بنر طوارئ الطريق -->
-        <div class="road-rescue-banner" style="background: linear-gradient(135deg, #d4ac0d, #b38f00); color: #000; padding: 20px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 20px;">
-            <h3 style="margin: 0 0 5px 0; font-size: 20px;">🚨 خدمة توصيل طوارئ الطريق (Duck Rescue Express)</h3>
-            <p style="margin: 0; font-size: 14px;">عطلان على الطريق؟ اختار طلبك بـ التفصيل وهيوصلك طازة مع ونش الطوارئ أو فنى الصيانة!</p>
+        <div class="road-rescue-banner u-25">
+            <h3 class="u-26">🚨 خدمة توصيل طوارئ الطريق (Duck Rescue Express)</h3>
+            <p class="u-27">عطلان على الطريق؟ اختار طلبك بـ التفصيل وهيوصلك طازة مع ونش الطوارئ أو فنى الصيانة!</p>
         </div>
 
     </div>
@@ -1770,7 +351,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 
             <div class="mod-duo">
             <div class="mod-request" id="mod-quiz">
-                <h3 style="color:#e3b5ff; margin:0;">🎯 اختار استايلك</h3>
+                <h3 class="u-28">🎯 اختار استايلك</h3>
                 <select id="q-use">
                     <option value="daily">بستخدم العربية فى: مشاوير يومية</option>
                     <option value="travel">بستخدم العربية فى: سفر وطرق</option>
@@ -1786,16 +367,16 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     <option value="mid">الميزانية: متوسطة</option>
                     <option value="high">الميزانية: مفتوحة</option>
                 </select>
-                <button type="button" onclick="runStyleQuiz()">رشّحلى 🦆</button>
+                <button type="button" data-click="runStyleQuiz">رشّحلى 🦆</button>
                 <div id="q-result"></div>
             </div>
 
             <div class="mod-request">
-                <h3 style="color:#e3b5ff; margin:0;">🛠️ اطلب تعديلك</h3>
+                <h3 class="u-28">🛠️ اطلب تعديلك</h3>
                 <input type="text" id="mod-name" placeholder="اكتب اسمك">
                 <input type="text" id="mod-car" placeholder="نوع العربية وموديلها">
                 <textarea id="mod-idea" rows="3" placeholder="اكتب فكرتك أو التعديل اللى نفسك فيه.. حتى لو مجنون"></textarea>
-                <button type="button" onclick="sendModRequest()">ابعت فكرتك على واتساب 🦆</button>
+                <button type="button" data-click="sendModRequest">ابعت فكرتك على واتساب 🦆</button>
             </div>
             </div>
 
@@ -1809,7 +390,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
             <h1 class="neon-heading-batota">المهندسة بطوطة</h1>
 
             <!-- الصورة موسطنة فى الشاشة وبنفس تنسيق الصورة الرئيسية -->
-            <img src="lilola.jpeg" alt="المهندسة بطوطة" class="extra-hero-img" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=LILOLA+JPEG';">
+            <img src="lilola.jpeg" alt="المهندسة بطوطة" class="extra-hero-img" data-fallback="https://placehold.co/750x420/1e1e1e/f1c40f?text=LILOLA+JPEG">
 
             <!-- GRID: حاسبة التكلفة المباشرة + حجز المواعيد -->
             <div class="interactive-grid">
@@ -1819,7 +400,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     <h3>🧮 حاسبة التكلفة والخصم الفورى</h3>
                     <div class="form-group">
                         <label>نوع السيارة:</label>
-                        <select id="calc-car-type" onchange="calculatePrice()">
+                        <select id="calc-car-type" data-change="calculatePrice">
     <option value="1">سيدان</option>
     <option value="1">هاتشباك</option>
     <option value="1.2">SUV</option>
@@ -1830,7 +411,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 
                     <div class="form-group">
                         <label>اختر الخدمة المطلوبة:</label>
-                        <select id="calc-service-type" onchange="calculatePrice()">
+                        <select id="calc-service-type" data-change="calculatePrice">
                             <option value="200">غسيل خارجى وتلميع (200 EGP)</option>
                             <option value="1100">تغيير زيت المحرك + فلتر (1,100 EGP)</option>
                             <option value="500">تنظيف داخلى عميق (500 EGP)</option>
@@ -1841,7 +422,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     </div>
 
                     <div class="calc-result-box">
-                        <span style="font-size: 14px; color: #aaa;">التكلفة الإجمالية بعد خصم (50%):</span><br>
+                        <span class="u-29">التكلفة الإجمالية بعد خصم (50%):</span><br>
                         <span id="calc-price-discount" class="price-tag">100 EGP</span>
                         <span id="calc-price-old" class="price-old">200 EGP</span>
                     </div>
@@ -1850,7 +431,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 <!-- 2. نظام حجز المواعيد والخادم -->
                 <div class="interactive-card">
                     <h3>📅 حجز موعد صيانة أون لاين</h3>
-                    <form onsubmit="handleBookingSubmit(event)">
+                    <form data-submit="handleBookingSubmit">
                         <div class="form-group">
                             <label>اليوم المفضل:</label>
                             <input type="date" required>
@@ -1862,24 +443,24 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <option value="butler">طلب "خادم البطة" (سائق لاستلام وتسليم السيارة من المنزل) 🏎️</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-submit" style="font-size: 16px;">تأكيد حجز الموعد 🎯</button>
+                        <button type="submit" class="btn-submit u-30">تأكيد حجز الموعد 🎯</button>
                     </form>
                 </div>
 
             </div>
 
             <!-- خدمة الوساطة وسوق السيارات البيع/الشراء والفحص المفتوح -->
-            <div class="tracker-box" style="margin-top: 30px; border-color: var(--primary-yellow);">
-                <h3 style="color: var(--primary-yellow); font-size: 24px; border-bottom: 2px dashed var(--primary-yellow); padding-bottom: 10px;">🚗 سوق السيارات المستعملة والوساطة الموثوقة (خدمة المحبة)</h3>
-                <p style="color: #ddd; font-size: 16px; margin: 12px 0; line-height: 1.6;">
+            <div class="tracker-box u-31">
+                <h3 class="u-32">🚗 سوق السيارات المستعملة والوساطة الموثوقة (خدمة المحبة)</h3>
+                <p class="u-33">
                     عايز تبيع عربيتك بـ أمان وبدون استغلال التجار أو عايز تشترى عربية ومطمن لـ حالتها الفنية؟ مركز <strong>DUCKY MOTORS</strong> بـ يقدملك خدمة عرض عربيتك عندنا بـ كل تفاصيلها وعدد الكيلومترات الموثق وسجل الصيانة.
                 </p>
                 
-                <div class="interactive-grid" style="margin-top: 20px;">
+                <div class="interactive-grid u-34">
                     <!-- نموذج عرض سيارة لـ البيع -->
-                    <div class="interactive-card" style="border-color: #333; background: #121212;">
-                        <h4 style="color: var(--primary-yellow); font-size: 20px; margin-bottom: 15px;">📝 اعرض عربيتك لـ البيع عن طريقنا</h4>
-                        <form onsubmit="handleCarSellSubmit(event)">
+                    <div class="interactive-card u-35">
+                        <h4 class="u-36">📝 اعرض عربيتك لـ البيع عن طريقنا</h4>
+                        <form data-submit="handleCarSellSubmit">
                             <div class="form-group">
                                 <label>نوع السيارة والموديل:</label>
                                 <input type="text" placeholder="مثال: تويوتا كورولا 2020" required>
@@ -1903,17 +484,17 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <label>ملاحظات وتفاصيل إضافية:</label>
                                 <textarea rows="2" placeholder="اكتب حالة الصاج، الفابريكا، الكاوتش، أو أى تفاصيل..."></textarea>
                             </div>
-                            <button type="submit" class="btn-submit" style="font-size: 15px; background-color: var(--primary-yellow);">عرض السيارة فوراً وسحب التقرير 🚀</button>
+                            <button type="submit" class="btn-submit u-37">عرض السيارة فوراً وسحب التقرير 🚀</button>
                         </form>
                     </div>
 
                     <!-- خدمة الكشف لـ السيارات الخارجية لـ منع النصب -->
-                    <div class="interactive-card" style="border-color: #333; background: #121212;">
-                        <h4 style="color: #2ecc71; font-size: 20px; margin-bottom: 15px;">🔍 طلب كشف وفحص شامل لـ غير العملاء</h4>
-                        <p style="color: #ccc; font-size: 14px; margin-bottom: 15px; line-height: 1.6;">
+                    <div class="interactive-card u-35">
+                        <h4 class="u-38">🔍 طلب كشف وفحص شامل لـ غير العملاء</h4>
+                        <p class="u-39">
                             حتى لو مش عميل عندنا وجايب عربية تشتريها من بره، تقدر تشترى ودماغك مرتاحة هات العربية والمالك ونكشفلك عليها بـ 280 نقطة فحص كاملة (موتور، فتيس، شاسيه، كهرباء، وصاج) ونوثقهالك بـ الجدول العام لـ منع النصب.
                         </p>
-                        <form onsubmit="handleInspectionSubmit(event)">
+                        <form data-submit="handleInspectionSubmit">
                             <div class="form-group">
                                 <label>اسم المشترى / طالب الكشف:</label>
                                 <input type="text" placeholder="أدخل اسمك" required>
@@ -1926,16 +507,16 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <label>تاريخ موعد الفحص المقترح:</label>
                                 <input type="date" required>
                             </div>
-                            <button type="submit" class="btn-submit" style="font-size: 15px; background-color: #2ecc71; color: #000;">حجز موعد كشف منع النصب 🎯</button>
+                            <button type="submit" class="btn-submit u-40">حجز موعد كشف منع النصب 🎯</button>
                         </form>
                     </div>
                 </div>
             </div>
 
             <!-- جدول مرجعى عام لـ السيارات المنفذ عليها الكشف لـ منع النصب -->
-            <div class="dashboard-section" style="margin-top: 30px; border: 2px solid var(--primary-yellow);">
-                <h3 style="color: var(--primary-yellow); font-size: 22px;">📊 السجل المرجعى  العام لـ السيارات التي تم الكشف عليها (شفافية كاملة لـ منع النصب)</h3>
-                <p style="color: #bbb; font-size: 14px; margin-bottom: 15px;">جدول موثق مفتوح لـ جميع الراغبين فى شراء السيارات لـ التحقق من تاريخ وقراءة عداد الكيلومترات والحالة الفنية الفعلية لـ السيارة قبل الشراء:</p>
+            <div class="dashboard-section u-41">
+                <h3 class="u-42">📊 السجل المرجعى  العام لـ السيارات التي تم الكشف عليها (شفافية كاملة لـ منع النصب)</h3>
+                <p class="u-43">جدول موثق مفتوح لـ جميع الراغبين فى شراء السيارات لـ التحقق من تاريخ وقراءة عداد الكيلومترات والحالة الفنية الفعلية لـ السيارة قبل الشراء:</p>
                 
                 <div class="table-responsive">
                     <table>
@@ -1955,7 +536,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <td>#DUCK-CAR-8011</td>
                                 <td>65,000 كم</td>
                                 <td>2026/09/20</td>
-                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم بـ الكامل ✔️</span></td>
+                                <td><span class="u-44">منتظم بـ الكامل ✔️</span></td>
                                 <td>فابريكا بـ الكامل، موتور 95%، تم تغيير زيت وفلاتر بـ الفرع.</td>
                             </tr>
                             <tr>
@@ -1963,7 +544,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <td>#DUCK-CAR-3390</td>
                                 <td>112,000 كم</td>
                                 <td>2026/08/15</td>
-                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم ✔️</span></td>
+                                <td><span class="u-44">منتظم ✔️</span></td>
                                 <td>رش خارجى نظافة عدا السقف، عفشة بـ حالة ممتازة، محرك 88%.</td>
                             </tr>
                             <tr>
@@ -1971,7 +552,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <td>#DUCK-CAR-9912</td>
                                 <td>42,000 كم</td>
                                 <td>2026/07/10</td>
-                                <td><span style="color: #2ecc71; font-weight: 800;">منتظم بـ الكامل ✔️</span></td>
+                                <td><span class="u-44">منتظم بـ الكامل ✔️</span></td>
                                 <td>حالة الزيرو، لا توجد أى ملحوظات، جاهزة لـ نقل الملكية.</td>
                             </tr>
                             <tr>
@@ -1979,7 +560,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <td>#DUCK-CAR-1145</td>
                                 <td>148,000 كم</td>
                                 <td>2026/05/02</td>
-                                <td><span style="color: #e67e22; font-weight: 800;">غير منتظم ⚠️</span></td>
+                                <td><span class="u-45">غير منتظم ⚠️</span></td>
                                 <td>ملاحظة: تلاعب سابق بـ العداد الخارجى، الشاسيه سليم، المحرك بحاجة لـ صيانة فرامل.</td>
                             </tr>
                         </tbody>
@@ -1989,89 +570,89 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 
             <!-- 3. تتبع حالة الصيانة المباشرة -->
             <div class="tracker-box">
-                <h3 style="color: var(--primary-yellow); font-size: 22px;">🚗 تتبع حالة صيانة عربيتك (Live Duck Tracker)</h3>
-                <p style="color: #ccc; font-size: 14px;">أدخل رقم عضويتك لـ معرفة المرحلة الحالية لـ سيارتك فى المركز:</p>
-                <div style="display: flex; gap: 10px; margin-top: 10px; max-width: 450px;">
-                    <input type="text" id="tracker-input" placeholder="#DUCK-9942" value="#DUCK-9942" style="padding: 10px; border-radius: 8px; border: 1px solid #444; background: #121212; color: #fff; flex: 1;">
-                    <button onclick="checkDuckTracker()" class="btn-submit" style="width: auto; padding: 10px 20px; font-size: 15px;">استعلام</button>
+                <h3 class="u-42">🚗 تتبع حالة صيانة عربيتك (Live Duck Tracker)</h3>
+                <p class="u-46">أدخل رقم عضويتك لـ معرفة المرحلة الحالية لـ سيارتك فى المركز:</p>
+                <div class="u-47">
+                    <input type="text" id="tracker-input" placeholder="#DUCK-9942" value="#DUCK-9942" class="u-48">
+                    <button class="btn-submit u-49" data-click="checkDuckTracker">استعلام</button>
                 </div>
 
                 <div class="tracker-steps" id="tracker-steps-container">
                     <div class="step-item completed">
-                        <div style="font-size: 20px;">📥</div>
+                        <div class="u-50">📥</div>
                         <strong>1. الاستلام</strong>
                     </div>
                     <div class="step-item active">
-                        <div style="font-size: 20px;">🔧</div>
+                        <div class="u-50">🔧</div>
                         <strong>2. الفحص والصيانة</strong>
                     </div>
                     <div class="step-item">
-                        <div style="font-size: 20px;">🧼</div>
+                        <div class="u-50">🧼</div>
                         <strong>3. الغسيل والتلميع</strong>
                     </div>
                     <div class="step-item">
-                        <div style="font-size: 20px;">✨</div>
+                        <div class="u-50">✨</div>
                         <strong>4. جاهزة لـ التسليم</strong>
                     </div>
                 </div>
             </div>
 
             <!-- 4. معرض أعمال قبل وبعد -->
-            <div style="margin-top: 35px; text-align: right;">
-                <h3 style="color: var(--primary-yellow); font-size: 24px; border-bottom: 2px solid var(--primary-yellow); padding-bottom: 8px; display: inline-block;">📸 معرض أعمال البطة (قبل وبعد)</h3>
+            <div class="u-51">
+                <h3 class="u-52">📸 معرض أعمال البطة (قبل وبعد)</h3>
                 
                 <div class="gallery-grid">
                     <div class="ba-card">
                         <div class="ba-images">
-                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (الشحوم)</span>
+                            <span class="ba-label u-53">قبل (الشحوم)</span>
                             <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Engine">
-                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد الكيماوى</span>
+                            <span class="ba-label u-54">بعد الكيماوى</span>
                             <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Engine">
                         </div>
-                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">تنظيف وغسيل المحرك بـ الكيماوى</p>
+                        <p class="u-55">تنظيف وغسيل المحرك بـ الكيماوى</p>
                     </div>
 
                     <div class="ba-card">
                         <div class="ba-images">
-                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (الخدوش)</span>
+                            <span class="ba-label u-53">قبل (الخدوش)</span>
                             <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Body">
-                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد الدهان</span>
+                            <span class="ba-label u-54">بعد الدهان</span>
                             <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Body">
                         </div>
-                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">دهان ورش فرن وإزالة الخدوش</p>
+                        <p class="u-55">دهان ورش فرن وإزالة الخدوش</p>
                     </div>
 
                     <div class="ba-card">
                         <div class="ba-images">
-                            <span class="ba-label" style="right: 5px; color: #ff6b6b;">قبل (البقع)</span>
+                            <span class="ba-label u-53">قبل (البقع)</span>
                             <img src="https://placehold.co/200x160/331111/ff6b6b?text=BEFORE" class="ba-img" alt="Before Interior">
-                            <span class="ba-label" style="left: 5px; color: #2ecc71;">بعد التنظيف</span>
+                            <span class="ba-label u-54">بعد التنظيف</span>
                             <img src="https://placehold.co/200x160/113311/2ecc71?text=AFTER" class="ba-img" alt="After Interior">
                         </div>
-                        <p style="padding: 10px; font-size: 14px; text-align: center; font-weight: 700;">تنظيف داخلى عميق لـ الصالون</p>
+                        <p class="u-55">تنظيف داخلى عميق لـ الصالون</p>
                     </div>
                 </div>
             </div>
 
             <!-- 5. آراء العملاء ولوحة الشرف -->
-            <div style="margin-top: 35px;">
-                <h3 style="color: var(--primary-yellow); font-size: 24px; text-align: right;">⭐ تقييمات أبطال البطة & لوحة الشرف</h3>
+            <div class="u-56">
+                <h3 class="u-57">⭐ تقييمات أبطال البطة & لوحة الشرف</h3>
                 <div class="reviews-grid">
                     <div class="review-card">
                         <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">"خدمة ممتازة وسريعة، وخادم البطة خد العربية ورجعها زى الفل!"</p>
-                        <strong style="color: var(--primary-yellow); font-size: 15px;">- أ. أحمد توفيق (#DUCK-8812)</strong>
+                        <p class="u-58">"خدمة ممتازة وسريعة، وخادم البطة خد العربية ورجعها زى الفل!"</p>
+                        <strong class="u-59">- أ. أحمد توفيق (#DUCK-8812)</strong>
                     </div>
 
                     <div class="review-card">
                         <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p style="font-size: 14px; color: #ddd; margin-bottom: 8px;">"عمرة المحرك اتعملت بجد بـ احترافية، والأسعار بعد خصم الـ 50% ممتازة."</p>
-                        <strong style="color: var(--primary-yellow); font-size: 15px;">- مهندس/ محمود حسن (#DUCK-3310)</strong>
+                        <p class="u-58">"عمرة المحرك اتعملت بجد بـ احترافية، والأسعار بعد خصم الـ 50% ممتازة."</p>
+                        <strong class="u-59">- مهندس/ محمود حسن (#DUCK-3310)</strong>
                     </div>
 
-                    <div class="review-card" style="border: 2px solid #2ecc71; background: #122b15;">
-                        <h4 style="color: #2ecc71; margin-bottom: 5px;"> بطل صندوق الخير لـ هذا الشهر🏆</h4>
-                        <p style="font-size: 14px; color: #fff;">العضو <strong>#DUCK-9942</strong> ساهم بـ 15 سهم خير لدعم طوارئ الطرق والحالات الحرجة! 🌱</p>
+                    <div class="review-card u-60">
+                        <h4 class="u-61"> بطل صندوق الخير لـ هذا الشهر🏆</h4>
+                        <p class="u-62">العضو <strong>#DUCK-9942</strong> ساهم بـ 15 سهم خير لدعم طوارئ الطرق والحالات الحرجة! 🌱</p>
                     </div>
                 </div>
             </div>
@@ -2083,7 +664,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
             <div class="challenge-hero">
                 <h2 class="challenge-title">🏆 مسابقة لغز البطة الذهبية 🦆👑</h2>
                 <p class="challenge-subtitle">أهلاً بكم يا أبنائى البطابيط! حل اللغز واكسب صيانة مجانية شاملة طول حياتك!</p>
-                <div style="font-size: 18px; color: var(--primary-yellow); font-weight: 800;">
+                <div class="u-63">
                     🎯 المسابقة مخصصة حصرياً لأول 50 عميل فقط!
                 </div>
             </div>
@@ -2091,8 +672,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
             <div class="prizes-grid">
                 <div class="prize-card grand-prize">
                     <span class="prize-badge">👑 المركز الأول (بطل البطة الذهبية)</span>
-                    <h3 style="font-size: 26px; color: var(--primary-yellow);">اشتراك جولد فرى مجانى مدى الحياة! 🎉</h3>
-                    <p style="font-size: 18px; color: #fff;">صيانة كاملة لـ شاسيه سيارتك مجاناً لـ الأبد (زيت، فلاتر، فحص كمبيوتر، غسيل وتلميع بدون أى تكلفة مدى الحياة)!</p>
+                    <h3 class="u-64">اشتراك جولد فرى مجانى مدى الحياة! 🎉</h3>
+                    <p class="u-65">صيانة كاملة لـ شاسيه سيارتك مجاناً لـ الأبد (زيت، فلاتر، فحص كمبيوتر، غسيل وتلميع بدون أى تكلفة مدى الحياة)!</p>
                 </div>
 
                 <div class="prize-card">
@@ -2161,35 +742,35 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </ul>
             </div>
 
-            <div class="rules-box" style="border: 2px solid var(--primary-yellow); background-color: #1a180c; margin-top: 30px;">
-                <h3 style="text-align: center; color: var(--primary-yellow); font-size: 28px;">🧩 شاشة حل لغز البطة الذهبية</h3>
-                <p style="text-align: center; color: #ccc; margin-bottom: 20px;">جاوب على الأسئلة التلاتة بسرعة عشان تسجل وقتك بـ الثانية وتكون من أول 10 فائزين!</p>
+            <div class="rules-box u-66">
+                <h3 class="u-67">🧩 شاشة حل لغز البطة الذهبية</h3>
+                <p class="u-68">جاوب على الأسئلة التلاتة بسرعة عشان تسجل وقتك بـ الثانية وتكون من أول 10 فائزين!</p>
 
-                <form id="duck-puzzle-form" onsubmit="submitDuckPuzzle(event)">
+                <form id="duck-puzzle-form" data-submit="submitDuckPuzzle">
                     <div class="form-group">
-                        <label style="color: var(--primary-yellow); font-size: 17px;">1️⃣ اجمع أول حروف من (بطاطس - طماطم - هدية) عشان تطلع كلمة السر:</label>
+                        <label class="u-69">1️⃣ اجمع أول حروف من (بطاطس - طماطم - هدية) عشان تطلع كلمة السر:</label>
                         <input type="text" id="puzzle-q1" placeholder="اكتب الكلمة هنا..." required>
                     </div>
 
                     <div class="form-group">
-                        <label style="color: var(--primary-yellow); font-size: 17px;">2️⃣ غسيل العربية بـ 200 جنيه، بعد خصم الـ 50% بتاعة العرض هتدفع كام؟</label>
+                        <label class="u-69">2️⃣ غسيل العربية بـ 200 جنيه، بعد خصم الـ 50% بتاعة العرض هتدفع كام؟</label>
                         <input type="number" id="puzzle-q2" placeholder="أدخل المبلغ بالأرقام..." required>
                     </div>
 
                     <div class="form-group">
-                        <label style="color: var(--primary-yellow); font-size: 17px;">3️⃣ شيء يركب معاك فى العربية، يحميك من الصيانة الدباحة وبيتغير مع الزيت.. إيه هو؟</label>
+                        <label class="u-69">3️⃣ شيء يركب معاك فى العربية، يحميك من الصيانة الدباحة وبيتغير مع الزيت.. إيه هو؟</label>
                         <input type="text" id="puzzle-q3" placeholder="اكتب إجابتك هنا..." required>
                     </div>
 
                     <div class="form-group">
-                        <label style="color: #fff; font-size: 16px;">🪪 أدخل رقم عضويتك (مثال: DUCK-9942):</label>
+                        <label class="u-70">🪪 أدخل رقم عضويتك (مثال: DUCK-9942):</label>
                         <input type="text" id="puzzle-user-id" placeholder="#DUCK-0000" required>
                     </div>
 
-                    <button type="submit" class="btn-submit" style="font-size: 20px; background-color: var(--primary-yellow);"> إرسال الحل وتسجيل الوقت بـ الثانية🚀</button>
+                    <button type="submit" class="btn-submit u-71"> إرسال الحل وتسجيل الوقت بـ الثانية🚀</button>
                 </form>
 
-                <div id="puzzle-result" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 18px; text-align: center;"></div>
+                <div id="puzzle-result" class="u-72"></div>
             </div>
         </div>
 
@@ -2198,7 +779,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
             <div class="sos-hero">
                 <h2 class="sos-title"> طوارئ الطريق - البطة فى أزمة! 🦆🚨</h2>
                 <p class="sos-subtitle">اتزنقت فى صحرا؟ العربية وقفت فوراً؟ متقلقش فرقة الإنقاذ السريع جاية لك فوراً!</p>
-                <span style="background: var(--sos-red); color: white; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 15px;">
+                <span class="u-73">
                     ⚡ خدمة إنقاذ وإغاثة سريعة على مدار 24 ساعة
                 </span>
             </div>
@@ -2207,18 +788,18 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">📍</span>
+                            <span class="u-74">📍</span>
                             <h3>تائه / مش عارف تحدد لوكيشن</h3>
                         </div>
                         <p>لو فى طريق صحراوى أو مجهول ومش عارف عنوانك، اضغط لـ تحديد إحداثياتك الفورية.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(1)">📌إرسال موقعى الجغرافى الفورى</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[1]'>📌إرسال موقعى الجغرافى الفورى</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">⛽</span>
+                            <span class="u-74">⛽</span>
                             <h3>البنزين خلص على الطريق</h3>
                         </div>
                         <p>حدد نوع البنزين وهيجيب لك الدليفرى الوقود الكافى لـ الوصول لأقرب محطة.</p>
@@ -2232,13 +813,13 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             </select>
                         </div>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(2)">⛽ إرسال دليفرى بنزين عاجل</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[2]'>⛽ إرسال دليفرى بنزين عاجل</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">⚡</span>
+                            <span class="u-74">⚡</span>
                             <h3>نفاد شحن السيارة الكهربائية</h3>
                         </div>
                         <p>شاحن سريع متنقل يوصل لك فى موقعك لـ شحن البطارية طوارئ.</p>
@@ -2251,13 +832,13 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             </select>
                         </div>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(3)">🔋 طلب شاحن متنقل عاجل</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[3]'>🔋 طلب شاحن متنقل عاجل</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🛞</span>
+                            <span class="u-74">🛞</span>
                             <h3>عطل / فرقعة فى الكاوتش</h3>
                         </div>
                         <p>الفردة فرقعت أو نامت؟ اكتب مقاس الكاوتش وهنبعت لك عربية الصيانة فوراً.</p>
@@ -2266,105 +847,105 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             <input type="text" id="sos-tyre-size" placeholder="مثال: R16 205/55">
                         </div>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(4)">🔧 إرسال فرقة تغيير وتصليح الكاوتش</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[4]'>🔧 إرسال فرقة تغيير وتصليح الكاوتش</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🛢️</span>
+                            <span class="u-74">🛢️</span>
                             <h3>سخونة المحرك / نقص الزيت والمياه</h3>
                         </div>
                         <p>المحرك سخن أو زيت الزيت أضاء؟ هتوصلك زيوت ومياه تبريد معتمدة فوراً.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(5)">🔥 طلب زيوت ومياه تبريد فورية</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[5]'>🔥 طلب زيوت ومياه تبريد فورية</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🔋</span>
+                            <span class="u-74">🔋</span>
                             <h3>العربية مش راضية تدور (بطارية)</h3>
                         </div>
                         <p>البطارية نامت فجأة؟ سيارة الإغاثة معها وصلة وكابلات فحص واختبار البطارية.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(6)">⚡ طلب وصلة وصيانة بطارية</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[6]'>⚡ طلب وصلة وصيانة بطارية</button>
                 </div>
 
-                <div class="sos-card" style="border: 2px solid var(--sos-red);">
+                <div class="sos-card u-75">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🚜</span>
+                            <span class="u-74">🚜</span>
                             <h3>ونش إنقاذ سريع (عطل كامل/حادث)</h3>
                         </div>
                         <p>العربية مش قادرة تتحرك تماماً؟ سحب ورفع العربية لأقرب فرع لـ DUCKY MOTORS.</p>
                     </div>
-                    <button class="btn-sos-action" style="background-color: #000; color: var(--sos-red); border: 2px solid var(--sos-red);" onclick="triggerSosEmergency(7)">🚨 استدعاء ونش إنقاذ فوري</button>
+                    <button class="btn-sos-action u-76" data-click="triggerSosEmergency" data-args='[7]'>🚨 استدعاء ونش إنقاذ فوري</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🔑</span>
+                            <span class="u-74">🔑</span>
                             <h3>المفتاح اتنسى داخل العربية / مقفولة</h3>
                         </div>
                         <p>الأبواب اتقفلت والمفتاح بـ الداخل؟ فنى فتح السيارات الشفرة فى طريق إليك بدون أى تجريح.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(8)">🔓 طلب فنى فتح السيارات بـ الرحمة</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[8]'>🔓 طلب فنى فتح السيارات بـ الرحمة</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🌾</span>
+                            <span class="u-74">🌾</span>
                             <h3>العربية غرزت فى رملة / طين</h3>
                         </div>
                         <p>السيارة اتزحلقت أو محشورة فى رصيف؟ سيارة الدفع الرباعى والمعدات طالعة لك.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(9)">💪 طلب سيارة سحب وانتشال</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[9]'>💪 طلب سيارة سحب وانتشال</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🛑</span>
+                            <span class="u-74">🛑</span>
                             <h3>عطل فى الفرامل / دواسة البنزين</h3>
                         </div>
                         <p>تسريب زيت فرامل أو واير الدبرياج اتصلح؟ توقف جانباً واطلب المساعدة الفورية.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(10)">🛑 إرسال طوارئ هيدروليك وفرامل</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[10]'>🛑 إرسال طوارئ هيدروليك وفرامل</button>
                 </div>
 
                 <div class="sos-card">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🌧️</span>
+                            <span class="u-74">🌧️</span>
                             <h3>النور طفى / المساحات عطلت بسبب مطر</h3>
                         </div>
                         <p>انعدام الرؤية ليلأً أو بسبب المطر؟ صيانة كهربائية سريعة واستبدال شفرات المساحات.</p>
                     </div>
-                    <button class="btn-sos-action" onclick="triggerSosEmergency(11)">💡 طلب طوارئ الإضاءة والرؤية</button>
+                    <button class="btn-sos-action" data-click="triggerSosEmergency" data-args='[11]'>💡 طلب طوارئ الإضاءة والرؤية</button>
                 </div>
 
-                <div class="sos-card" style="border: 2px solid #25D366;">
+                <div class="sos-card u-77">
                     <div>
                         <div class="sos-card-header">
-                            <span style="font-size: 28px;">🚑</span>
+                            <span class="u-74">🚑</span>
                             <h3>حالة صحية / أزمة طبية لـ السائق</h3>
                         </div>
                         <p>أحسست بدوخة أو تعب مفاجئ؟ سيتم ربط موقعك وتوجيه الإسعاف والدورية فوراً.</p>
                     </div>
-                    <button class="btn-sos-action" style="background-color: #25D366;" onclick="triggerSosEmergency(12)">🚑 إرسال نداء إغاثة وإسعاف عاجل</button>
+                    <button class="btn-sos-action u-78" data-click="triggerSosEmergency" data-args='[12]'>🚑 إرسال نداء إغاثة وإسعاف عاجل</button>
                 </div>
             <!-- كارت طلب استراحة البطة وطوارئ الطريق -->
-<div class="sos-card" style="border: 2px solid #d4ac0d;">
+<div class="sos-card u-79">
     <div>
         <div class="sos-card-header">
-            <span style="font-size: 28px;"></span>
+            <span class="u-74"></span>
             <h3>طوارئ المشروبات والسناكس</h3>
         </div>
         <p>عطشان أو محتاج سناك على الطريق؟ اطلب قهوتك ومشروبك المفضل فوراً مع فريق الإنقاذ.</p>
-      <button class="btn-sos-action" style="background-color: #d4ac0d; color: #000; font-weight: bold; width: 100%; cursor: pointer;" onclick="switchSectionAndBubble('snack', 'snack')">
+      <button class="btn-sos-action u-80" data-click="switchSectionAndBubble" data-args='["snack", "snack"]'>
     ☕ اطلب الآن من استراحة البطة
 </button>
     </div>
@@ -2378,9 +959,9 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 <h2 class="charity-title"> صندوق سهم الخير والصدقة الجارية 🌾</h2>
                 <p class="charity-subtitle">"«ما نقصت صدقة من مال، وما زاد الله عبداً بعفو إلا عزاً، وما تواضع أحد لله إلا رفعه الله» ." مبادرة DUCKY MOTORS ودعم عملاؤنا الكرام لخلق الأثر على الطريق وفى المستشفيات!</p>
 
-                <div style="background-color: #1a1a1a; border: 1px solid #2ecc71; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 10px;">
-                    <span style="color: #aaa; font-size: 15px;">📊 إجمالى الأسهم والـ مساعدات المقدمة حتى الآن:</span>
-                    <h3 style="color: #2ecc71; font-size: 28px; margin-top: 5px;" id="total-charity-shares">14,250 جنيه</h3>
+                <div class="u-81">
+                    <span class="u-82">📊 إجمالى الأسهم والـ مساعدات المقدمة حتى الآن:</span>
+                    <h3 id="total-charity-shares" class="u-83">14,250 جنيه</h3>
                 </div>
             </div>
 
@@ -2395,7 +976,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             <li>🚑 <strong>سيارات الإسعاف الخيرية:</strong> توفير الزيوت والصيانة الفورية لـ سيارات نقل المرضى بـ المجان.</li>
                         </ul>
                     </div>
-                    <div style="background: #112414; padding: 10px; border-radius: 8px; text-align: center; color: #2ecc71; font-weight: 700; font-size: 14px; margin-top: 15px;">
+                    <div class="u-84">
                         تتكفل DUCKY MOTORS بـ 50% من تكلفة الصيانة لـ كل حالة مستحقة
                     </div>
                 </div>
@@ -2409,48 +990,48 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                             <li>🧠 <strong>دعم الجراحات الحرجة:</strong> المساهمة فى تكاليف العمليات الدقيقة الناتجة عن الحوادث غير المقتدرين.</li>
                         </ul>
                     </div>
-                    <div style="background: #112414; padding: 10px; border-radius: 8px; text-align: center; color: #2ecc71; font-weight: 700; font-size: 14px; margin-top: 15px;">
+                    <div class="u-84">
                         يتم التوجيه المباشر بـ التعاون مع الأطباء بـ الأقسام المجانية
                     </div>
                 </div>
             </div>
 
             <div class="donation-box">
-                <h3 style="color: #2ecc71; font-size: 26px; margin-bottom: 10px;"> اشترك بـ "سهم الخير" بـ ضغطة زر</h3>
-                <p style="color: #ccc; font-size: 16px;">المبلغ اختيارى ويزاد على فاتورة صيانتك أو يخصم من حسابك، حتى لو جنيه واحد هتعمل بيه أثر كبير!</p>
+                <h3 class="u-85"> اشترك بـ "سهم الخير" بـ ضغطة زر</h3>
+                <p class="u-86">المبلغ اختيارى ويزاد على فاتورة صيانتك أو يخصم من حسابك، حتى لو جنيه واحد هتعمل بيه أثر كبير!</p>
 
                 <div class="donation-options">
-                    <button class="donation-btn" onclick="selectDonationAmount(1)">1 جنيه </button>
-                    <button class="donation-btn" onclick="selectDonationAmount(5)">5 جنيه </button>
-                    <button class="donation-btn selected" onclick="selectDonationAmount(10)">10 جنيه </button>
-                    <button class="donation-btn" onclick="selectDonationAmount(50)">50 جنيه </button>
+                    <button class="donation-btn" data-click="selectDonationAmount" data-args='[1]'>1 جنيه </button>
+                    <button class="donation-btn" data-click="selectDonationAmount" data-args='[5]'>5 جنيه </button>
+                    <button class="donation-btn selected" data-click="selectDonationAmount" data-args='[10]'>10 جنيه </button>
+                    <button class="donation-btn" data-click="selectDonationAmount" data-args='[50]'>50 جنيه </button>
                 </div>
 
-                <div style="max-width: 400px; margin: 0 auto;">
+                <div class="u-87">
                     <div class="form-group">
-                        <label style="color: #fff;">أو أدخل مبلغ اختيارى (بـ الجنيه):</label>
-                        <input type="number" id="custom-donation-input" placeholder="مثال: 100" style="text-align: center; font-size: 18px;">
+                        <label class="u-88">أو أدخل مبلغ اختيارى (بـ الجنيه):</label>
+                        <input type="number" id="custom-donation-input" placeholder="مثال: 100" class="u-89">
                     </div>
                     <div class="form-group">
-                        <label style="color: #fff;">رقم عضويتك لـ التأكيد والتسجيل:</label>
-                        <input type="text" id="donation-user-id" placeholder="#DUCK-9942" value="#DUCK-9942" style="text-align: center; font-size: 18px;">
+                        <label class="u-88">رقم عضويتك لـ التأكيد والتسجيل:</label>
+                        <input type="text" id="donation-user-id" placeholder="#DUCK-9942" value="#DUCK-9942" class="u-89">
                     </div>
-                    <button class="btn-submit" style="background-color: #2ecc71; color: #000; font-size: 20px;" onclick="submitDonation()"> تأكيد المساهمة وإصدار إيصال البركة</button>
+                    <button class="btn-submit u-90" data-click="submitDonation"> تأكيد المساهمة وإصدار إيصال البركة</button>
                 </div>
 
-                <div id="donation-success-msg" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; background-color: #133a18; border: 2px solid #2ecc71; color: #2ecc71; font-weight: 800; font-size: 18px;">
+                <div id="donation-success-msg" class="u-91">
                 </div>
             </div>
 
-            <div style="background:#112414; border:2px solid #2ecc71; border-radius:14px; padding:22px; margin-top:25px; text-align:center;">
-                <h3 style="color:#2ecc71; font-size:24px; margin:0 0 12px 0;"> فضلا نرجو الـ دعاء لأصحاب أسهم الخير </h3>
-                <p style="color:#fff; font-size:18px; line-height:2; margin:0;">
+            <div class="u-92">
+                <h3 class="u-93"> فضلا نرجو الـ دعاء لأصحاب أسهم الخير </h3>
+                <p class="u-94">
                     اللهم اجزِ خيراً كل من ساهم فى نشر هذا العلم والعمل والخير، وتقبّل منا ومنهم وعنهم صدقاتهم، وبارك اللهم لنا ولهم، واجعل هذا العمل خالصا لك وفى ميزان حسناتنا وحسناتهم.
                 </p>
-                <p style="color:#ffd700; font-size:20px; font-weight:900; line-height:2; margin:12px 0 0 0;">
+                <p class="u-95">
                     مصطفى محمود أبو المجد &nbsp;•&nbsp;  معتز عبدالغنى المخيمر&nbsp;•&nbsp;  يوسف أيمن صلاح 
                 </p>
-                <p style="color:#fff; font-size:17px; line-height:2; margin:8px 0 0 0;">
+                <p class="u-96">
                  اللهم اغفر لنا ولهم واجعل اللهم خير الجزاء لنا ولهم آمين يا رب العالمين .
                 </p>
             </div>
@@ -2483,7 +1064,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <li>ECU Programming & Tuning (برمجة كروت وأجهزة)</li>
                                 <li>Electrical Troubleshooting (كشف أعطال الكهرباء)</li>
                             </ul>
-                            <img src="ducka.jpeg" alt="Diagnostics Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKA';">
+                            <img src="ducka.jpeg" alt="Diagnostics Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKA">
                         </div>
                     </details>
 
@@ -2507,7 +1088,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <li>Transmission Fluid Change (تغيير زيت الـ فتيس)</li>
                                 <li>Coolant & Filter Service (تغيير الـ فلاتر ومياه الـ تبريد)</li>
                             </ul>
-                            <img src="oil.jpeg" alt="Oil Service Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OIL';">
+                            <img src="oil.jpeg" alt="Oil Service Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=OIL">
                         </div>
                     </details>
 
@@ -2519,7 +1100,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <li>Car Painting & Touch-ups (دهان ورش فرن)</li>
                                 <li>Scratch Removal (إزالة الخدوش)</li>
                             </ul>
-                            <img src="col.jpeg" alt="Bodywork Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=COL';">
+                            <img src="col.jpeg" alt="Bodywork Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=COL">
                         </div>
                     </details>
 
@@ -2531,7 +1112,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                                 <li>Car Accessories (إكسسوارات سيارات)</li>
                                 <li>Batteries & Tyres (بطاريات وإطارات)</li>
                             </ul>
-                            <img src="acc.jpeg" alt="Accessories Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=ACC';">
+                            <img src="acc.jpeg" alt="Accessories Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=ACC">
                         </div>
                     </details>
                 </div>
@@ -2548,7 +1129,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
     <li>Chemical Engine Cleaning (غسيل المحرك بـ الكيماوى): <del class="old-price">500 EGP</del> <span class="new-price">350 EGP</span></li>
     <li>Polishing & Waxing (تلميع وشمع): <del class="old-price">1100 EGP</del> <span class="new-price">800 EGP</span></li>
 </ul>
-                            <img src="duckak.jpeg" alt="Duckak Wash Price" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAK';">
+                            <img src="duckak.jpeg" alt="Duckak Wash Price" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAK">
                         </div>
                     </details>
 
@@ -2560,7 +1141,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 <li>ECU Programming & Tuning (برمجة كروت وأجهزة): <del class="old-price">2000 EGP</del> <span class="new-price">1500 EGP</span></li>
 <li>Electrical Troubleshooting (كشف أعطال الكهرباء): <del class="old-price">700 EGP</del> <span class="new-price">500 EGP</span></li>
                             </ul>
-                            <img src="duckab.jpeg" alt="Diagnostics Prices Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAB';">
+                            <img src="duckab.jpeg" alt="Diagnostics Prices Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAB">
                         </div>
                     </details>
 
@@ -2572,7 +1153,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 <li>Brake System Maintenance (صيانة الـ فرامل): <del class="old-price">1,000 EGP</del> <span class="new-price">800 EGP</span></li>
 <li>Suspension & Steering Fix (صيانة الـ عفشة والـ فتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
                             </ul>
-                            <img src="duckaa.jpeg" alt="Mechanical Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAA';">
+                            <img src="duckaa.jpeg" alt="Mechanical Price Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAA">
                         </div>
                     </details>
 
@@ -2584,7 +1165,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 <li>Transmission Fluid Change (تغيير زيت الـ فتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
 <li>Coolant & Filter Service (تغيير الـ فلاتر ومياه الـ تبريد): <del class="old-price">600 EGP</del> <span class="new-price">450 EGP</span></li>
                             </ul>
-                            <img src="oila.jpeg" alt="Oil Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OILA';">
+                            <img src="oila.jpeg" alt="Oil Price Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=OILA">
                         </div>
                     </details>
 
@@ -2596,7 +1177,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 <li>Car Painting (دهان ورش فرن لـ القطعة): <del class="old-price">1,300 EGP</del> <span class="new-price">1,000 EGP</span></li>
 <li>Scratch Removal (إزالة الخدوش): <del class="old-price">800 EGP</del> <span class="new-price">600 EGP</span></li>
                             </ul>
-                            <img src="colam.jpeg" alt="Bodywork Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=COLAM';">
+                            <img src="colam.jpeg" alt="Bodywork Price Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=COLAM">
                         </div>
                     </details>
 
@@ -2610,13 +1191,13 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
     <li>Batteries & Tyres (بطاريات وإطارات): تبدأ من <del class="old-price">3,000 EGP</del> <span class="new-price">2,500 EGP</span></li>
 </ul>
                             </ul>
-                            <img src="accam.jpeg" alt="Accessories Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=ACCAM';">
+                            <img src="accam.jpeg" alt="Accessories Price Duck" class="service-img" data-fallback="https://placehold.co/140x140/1e1e1e/f1c40f?text=ACCAM">
                         </div>
                     </details>
                 </div>
             </div>
 
-            <img src="duck.png" alt="Duck with Wrench" class="bottom-duck-img" onerror="this.onerror=null; this.src='https://placehold.co/400x400/1e1e1e/f1c40f?text=DUCK+WITH+WRENCH';">
+            <img src="duck.png" alt="Duck with Wrench" class="bottom-duck-img" data-fallback="https://placehold.co/400x400/1e1e1e/f1c40f?text=DUCK+WITH+WRENCH">
 
             <div class="neon-alert">
                 <h3>⚠️ عرض خاص لـ فترة محدودة!</h3>
@@ -2628,7 +1209,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         <div id="section-account" class="page-section">
             <div id="login-box" class="auth-card">
                 <h2> تسجيل الدخول لـ حسابك🔐</h2>
-                <form onsubmit="handleLogin(event)">
+                <form data-submit="handleLogin">
                     <div class="form-group">
                         <label>اكتب اسمك:</label>
                         <input type="text" id="username" placeholder="أدخل اسمك" required>
@@ -2641,7 +1222,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                 </form>
             </div>
 
-            <div id="dashboard-box" style="display: none;">
+            <div id="dashboard-box" class="u-97">
                 <div class="user-dashboard">
                     <div class="user-info">
                         <h2>مرحباً بك، <span id="user-display-name">مصطفى أبو المجد</span> 🦆</h2>
@@ -2653,8 +1234,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                         🏆 إجمالى النقاط: 350 نقطة
                     </div>
 
-                    <div style="width: 100%;">
-                        <p style="margin: 5px 0; color: var(--primary-yellow); text-align: right; font-weight: 700;">
+                    <div class="u-98">
+                        <p class="u-99">
                             🎁 فاضل لك 150 نقطة وتربح <strong>"كشف شامل مجاناً"</strong>!
                         </p>
                         <div class="progress-container">
@@ -2732,7 +1313,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     </div>
                 </div>
 
-                <div class="dashboard-section" style="border: 2px solid var(--primary-yellow); background-color: #1a170c;">
+                <div class="dashboard-section u-100">
                     <h3>🎁 مكافآت نقاط البطّة السالكة</h3>
                     <ul class="rewards-list">
                         <li>✨ <strong>100 نقطة:</strong> غسيل خارجى مجاناً 🧼</li>
@@ -2741,15 +1322,15 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
                     </ul>
                 </div>
 
-                <button onclick="handleLogout()" class="btn-submit" style="background-color: #e74c3c; color: white; width: auto; padding: 10px 30px;">تسجيل الخروج</button>
+                <button class="btn-submit u-101" data-click="handleLogout">تسجيل الخروج</button>
             </div>
         </div>
 
         <!-- SECTION: تواصل معنا -->
         <div id="section-contact" class="page-section">
             <div class="hero-card">
-                <h2 style="color: var(--primary-yellow); margin-bottom: 15px; font-size: 28px;">يسعدنا تواصلك معنا فى أى وقت!</h2>
-                <p style="font-size: 19px; color: #dddddd;">احجز صيانتك واستفسر عن نقاطك ومكافآتك بـ نقرة واحدة:</p>
+                <h2 class="u-102">يسعدنا تواصلك معنا فى أى وقت!</h2>
+                <p class="u-103">احجز صيانتك واستفسر عن نقاطك ومكافآتك بـ نقرة واحدة:</p>
 
                 <br>
                 <a href="https://wa.me/201044503749" target="_blank" class="duck-whatsapp-btn">
@@ -2777,36 +1358,36 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
 
     <!-- CHATBOT DUCKY AI -->
     <div class="chatbot-floating">
-        <button class="chatbot-btn" onclick="toggleChatbot()">🦆</button>
+        <button class="chatbot-btn" data-click="toggleChatbot">🦆</button>
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
                 <span>🤖 شات بوت البطة السفّاحة</span>
-                <span style="cursor: pointer;" onclick="toggleChatbot()">✕</span>
+                <span data-click="toggleChatbot" class="u-104">✕</span>
             </div>
             <div class="chat-body" id="chat-body">
                 <div class="chat-msg bot"> هالو هالو أهلاً بيك يا بطوطتى  أنا البطوطة الـ مطبطبة موجودة دايما عشان أساعدك.. محتاج تسأل عن إيه يا بطة؟ 🦆</div>
             </div>
             <div class="chat-options">
-                <button class="chat-opt-btn" onclick="askChatbot('المواعيد')">⏰ مواعيد العمل</button>
-                <button class="chat-opt-btn" onclick="askChatbot('العنوان')">📍 العنوان</button>
-                <button class="chat-opt-btn" onclick="askChatbot('الخصم الحصرى')">🎁 الخصم الحصرى</button>
+                <button class="chat-opt-btn" data-click="askChatbot" data-args='["المواعيد"]'>⏰ مواعيد العمل</button>
+                <button class="chat-opt-btn" data-click="askChatbot" data-args='["العنوان"]'>📍 العنوان</button>
+                <button class="chat-opt-btn" data-click="askChatbot" data-args='["الخصم الحصرى"]'>🎁 الخصم الحصرى</button>
             </div>
         </div>
     </div>
 
     <!-- LIVE TOAST NOTIFICATION -->
     <div class="toast-notification" id="toast-notif">
-        <span style="font-size: 22px;">🎉</span>
+        <span class="u-105">🎉</span>
         <span id="toast-msg"></span>
     </div>
 
     <!-- SOS RESPONSE POPUP MODAL -->
     <div id="sos-modal" class="sos-response-modal">
         <div class="sos-modal-content">
-            <span style="font-size: 48px;">🆘🦆</span>
+            <span class="u-106">🆘🦆</span>
             <h2 id="sos-modal-title">تم استلام النداءالـ بطوطى الفورى!</h2>
             <p id="sos-modal-message">رسالة الإغاثة طالعة...</p>
-            <button class="btn-submit" onclick="closeSosModal()">مفهوم، أنا فى الانتظار 👍</button>
+            <button class="btn-submit" data-click="closeSosModal">مفهوم، أنا فى الانتظار 👍</button>
         </div>
     </div>
 
@@ -2814,650 +1395,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.
         <p>جميع الحقوق محفوظة ©️ DUCKY MOTORS 2026 🦆 - الصيانة السفّاحة</p>
     </footer>
 
-    <script>
-        let selectedDonation = 10;
-        let customerName = '';
-        let charityTotal = 14250;
-
-        function switchSectionAndBubble(sectionId, popoverId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            const buttons = document.querySelectorAll('nav button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-
-            const brandHeader = document.querySelector('.brand-container');
-            if (brandHeader) brandHeader.style.display = (sectionId === 'home') ? '' : 'none';
-
-            const targetSection = document.getElementById('section-' + sectionId);
-            const targetButton = document.getElementById('nav-' + sectionId);
-
-            if (targetSection) targetSection.classList.add('active');
-            if (targetButton) targetButton.classList.add('active');
-
-            document.querySelectorAll('.duck-bubble-popover').forEach(pop => {
-                pop.classList.remove('show');
-            });
-
-            const activePopover = document.getElementById('popover-' + popoverId);
-            if (activePopover) {
-                activePopover.classList.add('show');
-            }
-
-            if (sectionId !== 'charity') {
-                const toast = document.getElementById('toast-notif');
-                if (toast) toast.classList.remove('show');
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            switchSectionAndBubble('home', 'nest');
-            renderWorkshop();
-            initLoungeDropdowns();
-            initOpenPairs();
-            calculatePrice();
-            startLiveToasts();
-        });
-
-        function playDuckySound() {
-            var audio = document.getElementById("duckAudio");
-            if(audio) audio.play();
-        }
-
-        /* CALCULATOR LOGIC */
-        function calculatePrice() {
-            const carMultiplier = parseFloat(document.getElementById('calc-car-type').value);
-            const basePrice = parseFloat(document.getElementById('calc-service-type').value);
-            
-            const fullPrice = Math.round(basePrice * carMultiplier);
-            const discountPrice = Math.round(fullPrice * 0.5);
-
-            document.getElementById('calc-price-old').textContent = fullPrice + " EGP";
-            document.getElementById('calc-price-discount').textContent = discountPrice + " EGP";
-        }
-
-        /* BOOKING FORM LOGIC */
-        function handleBookingSubmit(e) {
-            e.preventDefault();
-            const bookingType = document.getElementById('booking-type').value;
-            let msg = "تم حجز موعدك بـ نجاح وسيتواصل معك موظف الاستقبال لـ لتأكيد! 🚗";
-            if(bookingType === 'butler') {
-                msg = "تم حجز موعدك وتأكيد خيار 'خادم البطة'! سيتصل بك السائق لاستلام السيارة من أمام المنزل. 🏎️💨";
-            }
-            alert(msg);
-        }
-
-        /* CAR SELL FORM LOGIC */
-        function handleCarSellSubmit(e) {
-            e.preventDefault();
-            alert("تم تسجيل بيانات سيارتك بـ نجاح على منصة وساطة DUCKY MOTORS! سيتم مراجعتها وإدراجها بتقرير الكشف الشفاف فوراً. 🚗✨");
-        }
-
-        /* INSPECTION FORM LOGIC */
-        function handleInspectionSubmit(e) {
-            e.preventDefault();
-            alert("تم حجز موعد الكشف الشامل لـ منع النصب بنجاح! يسعدنا استلام السيارة بالمركز لتطبيق فحص الـ 280 نقطة وإصدار التقرير الموثق. 🎯🛑");
-        }
-
-        /* LIVE TRACKER LOGIC */
-        function checkDuckTracker() {
-            const val = document.getElementById('tracker-input').value.trim();
-            if(!val) return;
-            alert(`تم جلب حالة السيارة لـ العضوية (${val}): عربيتك حالياً في مرحلة "الفحص والصيانة 🔧" والمتوقع تسليمها خلال ساعة!`);
-        }
-
-        /* LIVE TOAST NOTIFICATIONS */
-        function startLiveToasts() {
-            const amounts = [5, 10, 20, 25, 50, 75, 100, 150, 200];
-
-            setInterval(() => {
-                const charity = document.getElementById('section-charity');
-                if (!charity || !charity.classList.contains('active')) return;
-
-                const amount = amounts[Math.floor(Math.random() * amounts.length)];
-                const donor = '#DUCK-' + (1000 + Math.floor(Math.random() * 9000));
-
-                charityTotal += amount;
-                updateCharityTotal();
-
-                const toast = document.getElementById('toast-notif');
-                document.getElementById('toast-msg').textContent =
-                    `العميل ${donor} تبرع بـ ${amount} جنيه لـ سهم الخير 🌾`;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 5000);
-            }, 60000);
-        }
-
-        function updateCharityTotal() {
-            const el = document.getElementById('total-charity-shares');
-            if (el) el.textContent = charityTotal.toLocaleString('en-US') + ' جنيه';
-        }
-
-        function submitDuckPuzzle(e) {
-            e.preventDefault();
-            
-            const q1 = document.getElementById('puzzle-q1').value.trim();
-            const q2 = document.getElementById('puzzle-q2').value.trim();
-            const q3 = document.getElementById('puzzle-q3').value.trim().toLowerCase();
-            const userId = document.getElementById('puzzle-user-id').value.trim();
-            const resultBox = document.getElementById('puzzle-result');
-
-            const isQ1Correct = (q1 === "بطة" || q1 === "بطة");
-            const isQ2Correct = (q2 === "100");
-            const isQ3Correct = (q3.includes("فلتر") || q3.includes("الفلتر"));
-
-            if (isQ1Correct && isQ2Correct && isQ3Correct) {
-                const currentTime = new Date().toLocaleTimeString('ar-EG');
-                resultBox.style.display = 'block';
-                resultBox.style.backgroundColor = '#1e4620';
-                resultBox.style.color = '#25D366';
-                resultBox.style.border = '2px solid #25D366';
-                resultBox.innerHTML = `🎉 مبروك يا بطبوط! إجاباتك كلها صحيحة 🦆💥<br> تم تسجيل حل العضوية (<b>${userId}</b>) بتاريخ ووقت: <b>${currentTime}</b> بنجاح! سيتم إعلان الفائزين قريباً.`;
-            } else {
-                resultBox.style.display = 'block';
-                resultBox.style.backgroundColor = '#4a1212';
-                resultBox.style.color = '#ff6b6b';
-                resultBox.style.border = '2px solid #ff6b6b';
-                resultBox.innerHTML = `❌ لـ الأسف يا فنان! فيه إجابة مش مظبوطة.. فكر تانى وركز عشان متضيعش فرصة الاشتراك المدى الحياة! 🦆`;
-            }
-        }
-
-        /* DUAL EMERGENCY SOS ACTION DISPATCHER */
-        function triggerSosEmergency(type) {
-            const modal = document.getElementById('sos-modal');
-            const msgBox = document.getElementById('sos-modal-message');
-            const titleBox = document.getElementById('sos-modal-title');
-
-            let message = "";
-            let title = "🚨 نداء إغاثة من البطة السفّاحة!";
-
-            switch(type) {
-                case 1:
-                    message = "📍 تم تحديد موقعك الجغرافى بنجاح! فرقة الإنقاذ السريع من مركز البطة فى طريقها إليك الآن على الطريق، خليك مكانك ومتخافش! 🦆💨";
-                    break;
-                case 2:
-                    const fuel = document.getElementById('sos-fuel-type').value;
-                    message = `⛽ تم استلام طلب طوارئ الوقود! تم توجيه سيارة الإغاثة بـ حمولة [بنزين ${fuel}] كافية لـ توصيلك لأقرب محطة بنزين!`;
-                    break;
-                case 3:
-                    const evType = document.getElementById('sos-ev-type').value;
-                    message = `⚡ تم إرسال وحدة الشحن المتنقلة الفورية لـ لسيارات الكهربائية بـ مدخل [${evType}] لـ شحن بطاريتك طوارئ فوراً!`;
-                    break;
-                case 4:
-                    const tyreSize = document.getElementById('sos-tyre-size').value || "المقاس القياسى";
-                    message = `🛞 تم توجيه سيارة الصيانة السريعة مع كمبروسر هواء وطقم إطارات بأ مقاس [${tyreSize}] لـ تغيير الكاوتش فى موقعك!`;
-                    break;
-                case 5:
-                    message = "🛢️ فريق الصيانة الدباحة فى الطريق إليك مع جركن زيت أصلية ومياه تبريد معتمدة! بلاش تدور المحرك دلوقتى نهائياً!";
-                    break;
-                case 6:
-                    message = "🔋 فنى الكهرباء اتحرك فوراً بـ جهاز كابلات وصلة البطارية وجهاز الفحص السريع لـ موقعك! دقائق وهتكون على الطريق!";
-                    break;
-                case 7:
-                    title = "🚜 استدعاء ونش إنقاذ عاجل!";
-                    message = "تم إرسال أقرب ونش إنقاذ خاص بـ DUCKY MOTORSإليك فوراً لـ سحب العربية وإيصالها بسلام لـ فرعنا الرئيسى !";
-                    break;
-                case 8:
-                    message = "🔑 فنى فتح السيارات بدون تجريح وضبط الشفرات اتحرك فوراً لـ موقعك، عربيتك هتتفتح فى دقائق بدون أى أضرار!";
-                    break;
-                case 9:
-                    message = "🌾 سيارة الدفع الرباعى والمعدات الخاصة بـ السحب والانتشال فى طريقها إليك فوراً لـ فك الغرزة وإعادتك لـ الأسفلت!";
-                    break;
-                case 10:
-                    message = "🛑 تحذير مهم: اربط فرامل اليد بـ التدريج واهدأ تماماً! فريق الصيانة السريعة ومعدات الهيدروليك اتحركوا لإغاثتك!";
-                    break;
-                case 11:
-                    message = "🌧️ فريق الطوارئ الكهربائية طالع لك بـ لمبات إضاءة وشفرات مساحات بديلة عشان توصل بـ أمان وسعادة!";
-                    break;
-                case 12:
-                    title = "🚑 نداء إغاثة طبية عاجل!";
-                    message = "ألف سلامة عليك يا بطل! تم ربط إحداثياتك الفورية وإبلاغ هيئة الإسعاف وتوجيه أقرب فريق صيانة لـ دعمك فوراً!";
-                    break;
-            }
-
-            titleBox.textContent = title;
-            msgBox.textContent = message;
-            modal.style.display = 'flex';
-        }
-
-        function closeSosModal() {
-            document.getElementById('sos-modal').style.display = 'none';
-        }
-
-        /* DONATION FUNCTIONS */
-        function selectDonationAmount(amount) {
-            selectedDonation = amount;
-            document.querySelectorAll('.donation-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            document.getElementById('custom-donation-input').value = '';
-        }
-
-        function submitDonation() {
-            const customVal = document.getElementById('custom-donation-input').value;
-            const finalAmount = customVal ? parseInt(customVal) : selectedDonation;
-            const userId = document.getElementById('donation-user-id').value.trim();
-            const msgBox = document.getElementById('donation-success-msg');
-
-            if (!finalAmount || finalAmount <= 0) {
-                alert("بـ رجاء إدخال أو اختيار مبلغ صحيح لـ سهم الخير.");
-                return;
-            }
-
-            charityTotal += finalAmount;
-            updateCharityTotal();
-
-            msgBox.style.display = 'block';
-            msgBox.innerHTML = `🌱 تقبل الله منكم الصدقة والبركة!<br>تم تسجيل "سهم الخير" بقيمة <b>(${finalAmount} جنيه)</b> لـ حساب العضوية <b>(${userId})</b> بـ نجاح.<br>سيتم تخصيص هذا السهم لـ دعم طوارئ الطرق وغير المقتدرين. تقبل الله منكم وزادكم من فضله! 🕊️✨`;
-        }
-
-        /* LOUNGE DROPDOWNS: always expand downward */
-        function initLoungeDropdowns() {
-            document.querySelectorAll('#section-snack select').forEach(sel => {
-                const collapse = () => { sel.size = 1; };
-                sel.addEventListener('mousedown', e => {
-                    if (sel.size <= 1) {
-                        e.preventDefault();
-                        sel._openedAt = Date.now();
-                        sel.size = Math.min(sel.options.length, 7);
-                        sel.focus();
-                    }
-                });
-                sel.addEventListener('click', e => {
-                    if (sel.size > 1 && e.target.tagName === 'OPTION' && Date.now() - (sel._openedAt || 0) > 300) {
-                        collapse();
-                        sel.blur();
-                    }
-                });
-                sel.addEventListener('change', () => { collapse(); sel.blur(); });
-                sel.addEventListener('blur', collapse);
-                sel.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Enter') collapse(); });
-            });
-        }
-
-        /* لما سكشن وقدامه سكشن بنفس الرقم يتفتحوا مع بعض، يبقوا بنفس الحجم */
-        function syncOpenPairs() {
-            const boxes = document.querySelectorAll('#section-services .menu-box');
-            if (boxes.length < 2) return;
-            const a = boxes[0].querySelectorAll(':scope > details');
-            const b = boxes[1].querySelectorAll(':scope > details');
-            a.forEach((d, i) => { d.style.minHeight = ''; if (b[i]) b[i].style.minHeight = ''; });
-            a.forEach((d, i) => {
-                const o = b[i];
-                if (o && d.open && o.open) {
-                    const h = Math.max(d.offsetHeight, o.offsetHeight);
-                    d.style.minHeight = h + 'px';
-                    o.style.minHeight = h + 'px';
-                }
-            });
-        }
-
-        function initOpenPairs() {
-            const sec = document.getElementById('section-services');
-            if (!sec) return;
-            sec.querySelectorAll('details').forEach(d => d.addEventListener('toggle', () => {
-                syncOpenPairs();
-                setTimeout(syncOpenPairs, 400);
-            }));
-            sec.querySelectorAll('img').forEach(i => i.addEventListener('load', syncOpenPairs));
-            sec.querySelectorAll('video').forEach(v => v.addEventListener('loadedmetadata', syncOpenPairs));
-            window.addEventListener('resize', syncOpenPairs);
-        }
-
-        /* WORKSHOP DATA: [الاسم, السعر (رقم أو نص), النوع] */
-        const MOD_DATA = [
-            { title: '💰 Stage 0.5 - باكيدج الميزانية', note: 'تحسين بسيط وسريع بسعر رمزى', p: 1, items: [
-                ['تنظيف بوابة الهواء + فلتر رياضى + ظبط ضغط الإطارات', 1800, 'ok']] },
-            { title: '⚡ Stage 1 - أداء خفيف', note: 'زيادة بسيطة فى القوة من غير تغيير كبير', p: 1, items: [
-                ['ريماب ECU Stage 1', 4500, 'ok'],
-                ['فلتر هواء عالى التدفق', 1200, 'ok'],
-                ['تنظيف دورة الهواء والـ بخاخات', 900, 'ok']] },
-            { title: '🔥 Stage 2 - أداء متوسط', note: 'لو  عايز بطتك  تطير على الطريق السريع', p: 2, items: [
-                ['ريماب ECU Stage 2', 9000, 'lic'],
-                ['عادم رياضى (Sport Exhaust)', 6500, 'lic'],
-                ['إنتركولر محسّن', 8000, 'lic'],
-                ['مبرد زيت إضافى + رادياتير ألومنيوم', 7500, 'ok']] },
-            { title: '🚀 Stage 3 - أداء عالى', note: 'لـ المجانين بس.. قوة حقيقية وتجهيز كامل', p: 4, items: [
-                ['ريماب ECU مخصص (Custom Tune)', 18000, 'lic'],
-                ['تيربو أكبر (Big Turbo)', 25000, 'lic'],
-                ['نظام وقود محسّن (طلمبة + بخاخات)', 8500, 'lic'],
-                ['دبرياج مقوّى (Performance Clutch)', 9000, 'ok'],
-                ['بساتم وبيل مطروقة (Forged)', 40000, 'lic'],
-                ['حقن ميثانول + ماء (Water-Methanol)', 12000, 'lic'],
-                ['كيت وقود كحولى (Flex Fuel E85)', 15000, 'lic'],
-                ['أنبوب تفريغ التيربو (Screamer Pipe) - للمضمار بس', 6000, 'lic']] },
-            { title: '🏁 العفشة والفرامل والثبات', note: 'ثبات أكتر وفرامل أقوى', p: 2, items: [
-                ['عفشة منخفضة (Coilovers)', 9500, 'lic'],
-                ['عفشة هوائية ذكية (Air Suspension)', 22000, 'lic'],
-                ['بارات تثبيت (Strut Bars)', 2200, 'ok'],
-                ['قضبان ثبات (Sway Bars)', 3500, 'ok'],
-                ['طقم فرامل رياضية كامل (BBK)', 12000, 'ok']] },
-            { title: '🎨 الشكل والستايل', note: 'خلّى عربيتك تلفت الأنظار', p: 1, items: [
-                ['تغليف كامل بـ الورق (Wrap)', 18000, 'lic'],
-                ['دهان ماتّ / لامع', 12000, 'lic'],
-                ['حماية لـ الدهان (PPF)', 15000, 'ok'],
-                ['جنوط رياضية', 7000, 'ok'],
-                ['جنوط بـ تغيّر لونها (Chameleon)', 9000, 'ok'],
-                ['تلوين الـ كاليبرز', 1500, 'ok'],
-                ['كابوت وسبويلر كربون فايبر', 20000, 'lic']] },
-            { title: '💡 الإضاءة', note: 'إضاءة تنوّر وتفرّح', p: 1, items: [
-                ['كشافات LED عالية الكفاءة', 2000, 'lic'],
-                ['كشافات ليزر / ماتريكس (Retrofit)', 12000, 'lic'],
-                ['إضاءة داخلية RGB', 1200, 'ok'],
-                ['إضاءة ترحيب بـ شعار البطة على الأرض', 1500, 'ok'],
-                ['نيون تحت العربية (Underglow)', 1800, 'lic']] },
-            { title: '🛋️ الداخل والراحة', note: 'كابينة أحلامك', p: 1, items: [
-                ['تنجيد جلد كامل', 10000, 'ok'],
-                ['غطاء طارة مخصص', 800, 'ok'],
-                ['دريكسيون رياضى بـ لمبات تغيير السرعات', 7500, 'ok'],
-                ['عزل صوت وحرارة شامل (Dynamat)', 6500, 'ok'],
-                ['فاميه عزل حرارى', 3500, 'lic'],
-                ['رسم جرافيتى على التابلوه أو السقف', 5000, 'ok']] },
-            { title: '📱 تكنولوجيا الكابينة', note: 'شاشة وموبايل وخرائط بسهولة', p: 1, items: [
-                ['شاشة Apple CarPlay / Android Auto', 5500, 'ok'],
-                ['عرض السرعة على الزجاج (HUD)', 4500, 'ok'],
-                ['لوحة عدادات رقمية', 6000, 'ok']] },
-            { title: '🔊 الصوت', note: 'سيستم يخلى الشارع كله يسمعك', p: 1, items: [
-                ['سيستم صوت كامل', 5000, 'ok'],
-                ['سب ووفر وأمبلفاير', 3500, 'ok'],
-                ['عازل صوت لـ الأبواب', 2500, 'ok']] },
-            { title: '🔬 خدمات القياس والضبط', note: 'اعرف قوة عربيتك الحقيقية', p: 0, items: [
-                ['قياس القوة الحقيقية على الداينو (Dyno)', 2500, 'ok'],
-                ['موازنة أوزان العربية (Corner Weighting)', 1500, 'ok'],
-                ['ظبط زوايا العجل (Alignment)', 600, 'ok'],
-                ['دراى كلين وتنظيف عميق للموتور والصالون', 1800, 'ok']] },
-            { title: '📦 باكيدجات جاهزة', note: 'من غير لخبطة.. اختار باكيدج وخلاص', p: 2, items: [
-                ['باكيدج الصيف: تكييف + عزل حرارة + تنظيف دورى', 4500, 'ok'],
-                ['باكيدج الشياكة: تنجيد + إضاءة داخلية + تلميع', 13000, 'ok'],
-                ['باكيدج السفر: عزل صوت + فحص شامل + فلتر رياضى', 7000, 'ok']] },
-            { title: '🦆🚀 معمل البطة المجنون', note: 'أفكار للضحك بس.. لسه مش موجودة 😄', crazy: true, p: 3, items: [
-                ['كلاكس بيقول "كواك"', 'الثمن: ضحكة', 'joke'],
-                ['كلاكس البطة الزعلانة (Angry Duck Horn)', 'الثمن: ضحكة', 'joke'],
-                ['زرار الـ نيترو الوهمى (صوت ونور بس!)', 'الثمن: شوية دلع', 'joke'],
-                ['دخان شكمان ملون (قوس قزح)', 'الثمن: مفاجأة', 'joke'],
-                ['حساس ركن بطة بتتريق عليك', 'الثمن: كرامتك', 'joke'],
-                ['فرقعة الـ شكمان الصوتية (Pop & Bangs)', 'الثمن: ضحكة', 'joke'],
-                ['عجلات على شكل أقدام بطة', 'الثمن: شوية دلع', 'joke'],
-                ['عادم يطلّع فقاعات صابون', 'الثمن: كيس مناديل', 'joke'],
-                ['زرار الطيران (لسه تحت التجربة)', 'الثمن: بطة تانية', 'joke'],
-                ['مقعد حمام سباحة صغير', 'الثمن: مايوه', 'joke']] }
-        ];
-
-        function renderWorkshop() {
-            const grid = document.getElementById('mod-grid');
-            if (!grid) return;
-            const tags = { ok: ['تعديل متاح', 'tag-ok'], lic: ['يحتاج ترخيص', 'tag-lic'], joke: ['فكرة مجنونة', 'tag-joke'] };
-            grid.innerHTML = MOD_DATA.map(c => `
-                <div class="mod-card ${c.crazy ? 'crazy' : ''}">
-                    <h3>${c.title}</h3>
-                    <div class="mod-note">${c.note}</div>
-                    ${c.items.map(i => `
-                        <label class="mod-item">
-                            <span><input type="checkbox" class="mod-chk" data-p="${c.p}" data-v="${typeof i[1] === 'number' ? i[1] : 0}" data-n="${i[0].replace(/"/g, '&quot;')}">${i[0]} <span class="mod-tag ${tags[i[2]][1]}">${tags[i[2]][0]}</span></span>
-                            <span class="mod-price">${typeof i[1] === 'number' ? 'تبدأ من ' + i[1].toLocaleString('en-US') + ' EGP' : i[1]}</span>
-                        </label>`).join('')}
-                </div>`).join('');
-            grid.addEventListener('change', updateCrazyMeter);
-        }
-
-        function updateCrazyMeter() {
-            let score = 0, total = 0, count = 0;
-            document.querySelectorAll('.mod-chk:checked').forEach(c => {
-                score += +c.dataset.p; total += +c.dataset.v; count++;
-            });
-            let level = 'اختار تعديلات وشوف مستوى جنانك 🦆';
-            if (count) {
-                level = score <= 4 ? 'عاقل 😇' : score <= 10 ? 'مجنون نص نص 🤪' : score <= 18 ? 'مجنون رسمى 🔥' : 'بطة متطورة 🦆🚀';
-                level = 'مستوى الجنان: ' + level;
-            }
-            document.getElementById('mm-level').textContent = level;
-            document.getElementById('mm-info').textContent = count ? `${count} تعديل • تقديرى من ${total.toLocaleString('en-US')} EGP` : '';
-            document.getElementById('mm-fill').style.width = Math.min(100, score / 22 * 100) + '%';
-        }
-
-        function runStyleQuiz() {
-            const use = document.getElementById('q-use').value;
-            const want = document.getElementById('q-want').value;
-            const bud = document.getElementById('q-bud').value;
-            let rec;
-            if (want === 'comfort') rec = 'باكيدج الصيف (تكييف + عزل حرارة + تنظيف دورى)';
-            else if (want === 'speed') rec = bud === 'low' ? 'Stage 0.5 - باكيدج الميزانية' : bud === 'mid' ? 'Stage 1 + بارات تثبيت (Strut Bars)' : 'Stage 2 + طقم فرامل رياضية (BBK)';
-            else rec = bud === 'low' ? 'إضاءة داخلية RGB + تلميع' : bud === 'mid' ? 'باكيدج الشياكة (تنجيد + إضاءة داخلية + تلميع)' : 'تغليف كامل (Wrap) + جنوط رياضية + إضاءة ترحيب بـ شعار البطة';
-            const extra = use === 'travel' ? ' ويفضل تضيف عزل الصوت والحرارة لراحة السفر.' : use === 'show' ? ' وضيف لمسة من معمل البطة المجنون 🦆😄' : '';
-            document.getElementById('q-result').textContent = '🎯 ترشيحنا ليك: ' + rec + '.' + extra;
-        }
-
-        function sendModRequest() {
-            const name = document.getElementById('mod-name').value.trim();
-            const car = document.getElementById('mod-car').value.trim();
-            const idea = document.getElementById('mod-idea').value.trim();
-            const picked = [...document.querySelectorAll('.mod-chk:checked')].map(c => '- ' + c.dataset.n);
-            if (!idea && !picked.length) { alert('اكتب فكرتك أو اختار تعديل الأول يا بطل 🦆'); return; }
-            const msg = `طلب تعديل من الورشة المجنونة 🔥\nالاسم: ${name || '-'}\nالعربية: ${car || '-'}\n` +
-                (picked.length ? `التعديلات المختارة:\n${picked.join('\n')}\n` : '') + (idea ? `الفكرة: ${idea}` : '');
-            window.open('https://wa.me/201044503749?text=' + encodeURIComponent(msg), '_blank');
-        }
-
-        /* EXCLUSIVE DAILY OFFER */
-        const DAILY_OFFERS = [
-            'خصم 50 جنيه على الغسيل الخارجى',
-            'خصم 100 جنيه على التنظيف الداخلى العميق',
-            'خصم 75 جنيه على غسيل المحرك بالكيماوى',
-            'خصم 150 جنيه على التلميع والشمع',
-            'فحص الكمبيوتر بنص السعر',
-            'فحص فرامل مجانى مع أى صيانة',
-            'مشروب مجانى من استراحة البطة مع أى خدمة',
-            'خصم 15% على تغيير الزيت والفلتر',
-            'غسيل خارجى هدية مع أى فحص أو برمجة',
-            'خصم 20% على إكسسوارات السيارات',
-            'فحص شامل قبل السفر مجاناً'
-        ];
-
-        function dayIndex(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); }
-
-        function todaysOffer() {
-            const now = new Date();
-            return {
-                text: DAILY_OFFERS[dayIndex(now) % DAILY_OFFERS.length],
-                code: 'DUCK-' + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0')
-            };
-        }
-
-        function updateCouponTimers() {
-            const now = new Date();
-            const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-            const s = Math.max(0, Math.floor((end - now) / 1000));
-            const p = n => String(n).padStart(2, '0');
-            const txt = `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`;
-            document.querySelectorAll('.c-timer-val').forEach(el => el.textContent = txt);
-        }
-        setInterval(updateCouponTimers, 1000);
-
-        function showExclusiveOffer() {
-            const body = document.getElementById('chat-body');
-            const typing = document.createElement('div');
-            typing.className = 'chat-msg bot duck-typing';
-            typing.textContent = '🦆 البطة بتفتح صندوق عرض النهاردة... 🎁';
-            body.appendChild(typing);
-            body.scrollTop = body.scrollHeight;
-
-            setTimeout(() => {
-                const o = todaysOffer();
-                typing.className = 'chat-msg bot coupon-msg';
-                typing.innerHTML = `
-                    <div class="coupon">
-                        <div class="c-shine"></div>
-                        <div class="c-head">🎁 عرض النهاردة الحصرى 🎁</div>
-                        <div class="c-offer">${o.text}</div>
-                        <div class="c-code">${o.code}</div>
-                        <div class="c-timer">⏳ ينتهى بعد <span class="c-timer-val">--:--:--</span></div>
-                        <div class="c-foot">فوق العروض الموجودة أصلاً • بكرة عرض مفاجأة 🤫🦆</div>
-                    </div>`;
-                updateCouponTimers();
-                body.scrollTop = body.scrollHeight;
-            }, 1300);
-        }
-
-        /* CHATBOT */
-        let currentChatAudio = null;
-
-        function stopChatSound() {
-            if (currentChatAudio) {
-                currentChatAudio.pause();
-                currentChatAudio.currentTime = 0;
-                currentChatAudio = null;
-            }
-        }
-
-        function playChatSound(file) {
-            stopChatSound();
-            try {
-                currentChatAudio = new Audio(file);
-                const p = currentChatAudio.play();
-                if (p && p.catch) p.catch(() => {});
-            } catch (e) {}
-        }
-
-        function toggleChatbot() {
-            const win = document.getElementById('chat-window');
-            win.classList.toggle('show');
-            if (win.classList.contains('show')) {
-                playChatSound('hi.oga');
-            } else {
-                stopChatSound();
-            }
-        }
-
-        function askChatbot(topic) {
-            const answers = {
-                'المواعيد': 'مواعيد العمل يومياً من 10 صباحاً حتى 10 مساءً ⏰🦆',
-                'العنوان': 'الفرع الرئيسى: التجمع الخامس أمام الجامعة الأمريكية. الفرع الثانى: مدينة نصر شارع عباس العقاد 📍🦆',
-            };
-            const sounds = { 'المواعيد': 'time.oga', 'العنوان': 'address.oga' };
-            const body = document.getElementById('chat-body');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chat-msg user';
-            userMsg.textContent = topic;
-            body.appendChild(userMsg);
-
-            if (topic === 'الخصم الحصرى') {
-                body.scrollTop = body.scrollHeight;
-                stopChatSound();
-                showExclusiveOffer();
-                return;
-            }
-
-            const botMsg = document.createElement('div');
-            botMsg.className = 'chat-msg bot';
-            botMsg.textContent = answers[topic] || 'مش فاهمة قصدك يا بطوطتى، جرّب أحد الأزرار تحت 🦆';
-            body.appendChild(botMsg);
-
-            body.scrollTop = body.scrollHeight;
-            if (sounds[topic]) playChatSound(sounds[topic]);
-        }
-
-        /* LOUNGE ORDER RECEIPT */
-        let lastLoungeOrder = null;
-
-        function splitName(n) {
-            const hasAr = s => /[\u0600-\u06FF]/.test(s);
-            const m = n.match(/^(.*)\(([^()]*)\)\s*$/);
-            if (m) {
-                const main = m[1].trim(), par = m[2].trim();
-                if (hasAr(main) && !hasAr(par) && /[A-Za-z]/.test(par)) return { ar: main, en: par };
-                if (!hasAr(main) && /[A-Za-z]/.test(main) && hasAr(par)) return { ar: par, en: main };
-            }
-            return { ar: n, en: n };
-        }
-
-        function placeLoungeOrder() {
-            const name = document.getElementById('lounge-customer-name').value.trim();
-            const items = [];
-            let total = 0;
-
-            document.querySelectorAll('#section-snack select').forEach(sel => {
-                if (sel.selectedIndex <= 0) return;
-                const txt = sel.options[sel.selectedIndex].text.trim();
-                const m = txt.match(/^(.*)\s-\s(\d+)\s*EGP$/);
-                if (m) {
-                    items.push({ name: m[1].trim(), price: parseInt(m[2], 10) });
-                    total += parseInt(m[2], 10);
-                }
-            });
-
-            if (!name) { alert('من فضلك اكتب اسمك الأول. / Please enter your name first.'); return; }
-            if (!items.length) { alert('اختار طلب واحد على الأقل من القوائم. / Please choose at least one item.'); return; }
-
-            const now = new Date();
-            lastLoungeOrder = { name, items, total, now, orderNo: 'DL-' + String(now.getTime()).slice(-6) };
-            renderReceipt();
-            document.getElementById('lounge-receipt').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function renderReceipt() {
-            if (!lastLoungeOrder) return;
-            const o = lastLoungeOrder;
-            const en = document.getElementById('lounge-receipt-lang').value === 'en';
-            const receipt = document.getElementById('lounge-receipt');
-            const L = en
-                ? { sub: 'Duck Lounge - Receipt', name: 'Name', no: 'Order No.', date: 'Date', total: 'Total', thanks: 'Thank you for visiting Duck Lounge 🦆💛' }
-                : { sub: 'استراحة البطة - إيصال الحساب', name: 'الاسم', no: 'رقم الطلب', date: 'التاريخ', total: 'الإجمالى', thanks: 'شكراً لزيارتك استراحة البطة 🦆💛' };
-            const loc = en ? 'en-GB' : 'ar-EG';
-            const safeName = o.name.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-
-            const rows = o.items.map(it => {
-                const nm = splitName(it.name)[en ? 'en' : 'ar'];
-                return `<tr><td style="padding:4px 0;">${nm}</td><td style="padding:4px 0; text-align:${en ? 'right' : 'left'}; white-space:nowrap;">${it.price} EGP</td></tr>`;
-            }).join('');
-
-            receipt.style.direction = en ? 'ltr' : 'rtl';
-            receipt.style.textAlign = en ? 'left' : 'right';
-            receipt.innerHTML = `
-                <div style="text-align:center; border-bottom:2px dashed #000; padding-bottom:10px; margin-bottom:10px;">
-                    <h3 style="margin:0; color:#000;">🦆 DUCKY MOTORS</h3>
-                    <div style="font-size:14px;">${L.sub}</div>
-                </div>
-                <div style="font-size:14px; margin-bottom:8px;">
-                    <div>${L.name}: <b>${safeName}</b></div>
-                    <div>${L.no}: <b>${o.orderNo}</b></div>
-                    <div>${L.date}: ${o.now.toLocaleDateString(loc)} - ${o.now.toLocaleTimeString(loc, {hour:'2-digit', minute:'2-digit'})}</div>
-                </div>
-                <table style="width:100%; font-size:14px; border-top:1px dashed #000; border-bottom:1px dashed #000; margin:8px 0;">${rows}</table>
-                <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:900;">
-                    <span>${L.total}</span><span>${o.total} EGP</span>
-                </div>
-                <div style="text-align:center; margin-top:12px; font-size:13px;">${L.thanks}</div>
-            `;
-            receipt.style.display = 'block';
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const name = document.getElementById('username').value.trim();
-            if (!name) return;
-
-            // رقم عضوية ثابت لكل اسم
-            let h = 0;
-            for (let k = 0; k < name.length; k++) h = (h * 31 + name.charCodeAt(k)) % 9000;
-            const memberId = '#DUCK-' + (1000 + h);
-
-            customerName = name;
-            document.getElementById('user-display-name').textContent = name;
-            document.getElementById('user-member-id').textContent = memberId;
-            document.getElementById('donation-user-id').value = memberId;
-            const orderName = document.getElementById('lounge-customer-name');
-            if (orderName && !orderName.value) orderName.value = name;
-
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('dashboard-box').style.display = 'block';
-        }
-
-        function handleLogout() {
-            document.getElementById('login-box').style.display = 'block';
-            document.getElementById('dashboard-box').style.display = 'none';
-        }
-    </script>
+    <script src="script.js" defer></script>
 </body>
-</html>ٍ
+</html>
