@@ -11,7 +11,9 @@
 </head>
 <body>
 <!-- NAVIGATION TABS -->
-<nav>
+<nav id="main-nav">
+    <button type="button" id="nav-toggle" class="nav-toggle" data-click="toggleNav" aria-expanded="false" aria-controls="main-nav">☰ القائمة</button>
+
     <div class="nav-item-wrapper">
         <button id="nav-home" class="active" data-click="switchSectionAndBubble" data-args='["home", "nest"]'>الرئيسية</button>
         <div class="duck-bubble-popover" id="popover-nest">
@@ -327,6 +329,9 @@
             <div class="u-21">
                 <button type="button" data-click="placeLoungeOrder" class="u-23">اطلب الآن 🦆</button>
             </div>
+            <div class="u-21">
+                <button type="button" data-click="checkoutLounge" class="u-23">ادفع أونلاين أو على الفاتورة 💳</button>
+            </div>
             <div id="lounge-receipt" class="u-24"></div>
         </div>
 
@@ -377,6 +382,7 @@
                 <input type="text" id="mod-car" placeholder="نوع العربية وموديلها">
                 <textarea id="mod-idea" rows="3" placeholder="اكتب فكرتك أو التعديل اللى نفسك فيه.. حتى لو مجنون"></textarea>
                 <button type="button" data-click="sendModRequest">ابعت فكرتك على واتساب 🦆</button>
+                <button type="button" data-click="openModsCheckout">احجز التعديلات المختارة (عربون) 💳</button>
             </div>
             </div>
 
@@ -426,6 +432,7 @@
                         <span id="calc-price-discount" class="price-tag">100 EGP</span>
                         <span id="calc-price-old" class="price-old">200 EGP</span>
                     </div>
+                    <button type="button" class="btn-submit u-30" data-click="openServiceCheckout">احجز الخدمة دى أونلاين 🎯</button>
                 </div>
 
                 <!-- 2. نظام حجز المواعيد والخادم -->
@@ -434,7 +441,7 @@
                     <form data-submit="handleBookingSubmit">
                         <div class="form-group">
                             <label>اليوم المفضل:</label>
-                            <input type="date" required>
+                            <input type="date" id="booking-date" required>
                         </div>
                         <div class="form-group">
                             <label>طريقة الخدمة:</label>
@@ -443,7 +450,7 @@
                                 <option value="butler">طلب "خادم البطة" (سائق لاستلام وتسليم السيارة من المنزل) 🏎️</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-submit u-30">تأكيد حجز الموعد 🎯</button>
+                        <button type="submit" class="btn-submit u-30">تابع للدفع والتأكيد 🎯</button>
                     </form>
                 </div>
 
@@ -573,7 +580,7 @@
                 <h3 class="u-42">🚗 تتبع حالة صيانة عربيتك (Live Duck Tracker)</h3>
                 <p class="u-46">أدخل رقم عضويتك لـ معرفة المرحلة الحالية لـ سيارتك فى المركز:</p>
                 <div class="u-47">
-                    <input type="text" id="tracker-input" placeholder="#DUCK-9942" value="#DUCK-9942" class="u-48">
+                    <input type="text" id="tracker-input" placeholder="#DUCK-9942" value="" maxlength="20" class="u-48">
                     <button class="btn-submit u-49" data-click="checkDuckTracker">استعلام</button>
                 </div>
 
@@ -998,7 +1005,7 @@
 
             <div class="donation-box">
                 <h3 class="u-85"> اشترك بـ "سهم الخير" بـ ضغطة زر</h3>
-                <p class="u-86">المبلغ اختيارى ويزاد على فاتورة صيانتك أو يخصم من حسابك، حتى لو جنيه واحد هتعمل بيه أثر كبير!</p>
+                <p class="u-86">المبلغ اختيارى، وانت اللى بتختار تدفعه: على فاتورة صيانتك، أو إنستاباى، أو كاش، أو تقسمه بينهم. حتى لو جنيه واحد هتعمل بيه أثر كبير!</p>
 
                 <div class="donation-options">
                     <button class="donation-btn" data-click="selectDonationAmount" data-args='[1]'>1 جنيه </button>
@@ -1013,10 +1020,10 @@
                         <input type="number" id="custom-donation-input" placeholder="مثال: 100" class="u-89">
                     </div>
                     <div class="form-group">
-                        <label class="u-88">رقم عضويتك لـ التأكيد والتسجيل:</label>
+                        <label class="u-88">رقم عضويتك (اختيارى):</label>
                         <input type="text" id="donation-user-id" placeholder="#DUCK-9942" value="#DUCK-9942" class="u-89">
                     </div>
-                    <button class="btn-submit u-90" data-click="submitDonation"> تأكيد المساهمة وإصدار إيصال البركة</button>
+                    <button class="btn-submit u-90" data-click="submitDonation"> تابع للدفع 💚</button>
                 </div>
 
                 <div id="donation-success-msg" class="u-91">
@@ -1322,6 +1329,12 @@
                     </ul>
                 </div>
 
+                <div class="dashboard-section">
+                    <h3>🧾 طلباتى أونلاين</h3>
+                    <div id="order-history" class="order-history"></div>
+                    <button type="button" class="co-btn-secondary" data-click="clearOrders">مسح السجل</button>
+                </div>
+
                 <button class="btn-submit u-101" data-click="handleLogout">تسجيل الخروج</button>
             </div>
         </div>
@@ -1388,6 +1401,14 @@
             <h2 id="sos-modal-title">تم استلام النداءالـ بطوطى الفورى!</h2>
             <p id="sos-modal-message">رسالة الإغاثة طالعة...</p>
             <button class="btn-submit" data-click="closeSosModal">مفهوم، أنا فى الانتظار 👍</button>
+        </div>
+    </div>
+
+    <!-- نافذة الدفع والحجز -->
+    <div id="checkout-modal" class="checkout-modal" data-click="coBackdrop">
+        <div class="co-dialog" role="dialog" aria-modal="true" aria-labelledby="co-title" tabindex="-1">
+            <button type="button" class="co-close" data-click="closeCheckout" aria-label="إغلاق">✕</button>
+            <div id="checkout-body"></div>
         </div>
     </div>
 

@@ -2,7 +2,17 @@
         let customerName = '';
         let charityTotal = 14250;
 
-        function switchSectionAndBubble(sectionId, popoverId) {
+        function toggleNav(force) {
+    const nav = document.getElementById('main-nav');
+    const btn = document.getElementById('nav-toggle');
+    const open = typeof force === 'boolean' ? force : !nav.classList.contains('open');
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? '✕ إغلاق القائمة' : '☰ القائمة';
+}
+
+function switchSectionAndBubble(sectionId, popoverId) {
+    toggleNav(false);
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(sec => sec.classList.remove('active'));
 
@@ -42,6 +52,7 @@
             initOpenPairs();
             calculatePrice();
             startLiveToasts();
+            renderOrderHistory();
         });
 
         function playDuckySound() {
@@ -50,27 +61,8 @@
         }
 
         /* CALCULATOR LOGIC */
-        function calculatePrice() {
-            const carMultiplier = parseFloat(document.getElementById('calc-car-type').value);
-            const basePrice = parseFloat(document.getElementById('calc-service-type').value);
-            
-            const fullPrice = Math.round(basePrice * carMultiplier);
-            const discountPrice = Math.round(fullPrice * 0.5);
-
-            document.getElementById('calc-price-old').textContent = fullPrice + " EGP";
-            document.getElementById('calc-price-discount').textContent = discountPrice + " EGP";
-        }
 
         /* BOOKING FORM LOGIC */
-        function handleBookingSubmit(e) {
-            e.preventDefault();
-            const bookingType = document.getElementById('booking-type').value;
-            let msg = "تم حجز موعدك بـ نجاح وسيتواصل معك موظف الاستقبال لـ لتأكيد! 🚗";
-            if(bookingType === 'butler') {
-                msg = "تم حجز موعدك وتأكيد خيار 'خادم البطة'! سيتصل بك السائق لاستلام السيارة من أمام المنزل. 🏎️💨";
-            }
-            alert(msg);
-        }
 
         /* CAR SELL FORM LOGIC */
         function handleCarSellSubmit(e) {
@@ -217,23 +209,6 @@
             document.getElementById('custom-donation-input').value = '';
         }
 
-        function submitDonation() {
-            const customVal = document.getElementById('custom-donation-input').value;
-            const finalAmount = customVal ? parseInt(customVal) : selectedDonation;
-            const userId = document.getElementById('donation-user-id').value.trim();
-            const msgBox = document.getElementById('donation-success-msg');
-
-            if (!finalAmount || finalAmount <= 0) {
-                alert("بـ رجاء إدخال أو اختيار مبلغ صحيح لـ سهم الخير.");
-                return;
-            }
-
-            charityTotal += finalAmount;
-            updateCharityTotal();
-
-            msgBox.style.display = 'block';
-            msgBox.innerHTML = `🌱 تقبل الله منكم الصدقة والبركة!<br>تم تسجيل "سهم الخير" بقيمة <b>(${finalAmount} جنيه)</b> لـ حساب العضوية <b>(${userId})</b> بـ نجاح.<br>سيتم تخصيص هذا السهم لـ دعم طوارئ الطرق وغير المقتدرين. تقبل الله منكم وزادكم من فضله! 🕊️✨`;
-        }
 
         /* LOUNGE DROPDOWNS: always expand downward */
         function initLoungeDropdowns() {
@@ -419,7 +394,7 @@
             if (!idea && !picked.length) { alert('اكتب فكرتك أو اختار تعديل الأول يا بطل 🦆'); return; }
             const msg = `طلب تعديل من الورشة المجنونة 🔥\nالاسم: ${name || '-'}\nالعربية: ${car || '-'}\n` +
                 (picked.length ? `التعديلات المختارة:\n${picked.join('\n')}\n` : '') + (idea ? `الفكرة: ${idea}` : '');
-            window.open('https://wa.me/201044503749?text=' + encodeURIComponent(msg), '_blank');
+            openWhatsApp(msg);
         }
 
         /* EXCLUSIVE DAILY OFFER */
@@ -635,6 +610,7 @@
 
             document.getElementById('login-box').style.display = 'none';
             document.getElementById('dashboard-box').style.display = 'block';
+            renderOrderHistory();
         }
 
         function handleLogout() {
@@ -644,8 +620,403 @@
     
 
 
+
+/* ===================== إعدادات المركز (مكان واحد للأرقام) ===================== */
+const SHOP = {
+    whatsapp: '201044503749',
+    instapay: '01145685611',
+    cash: '01044503749',
+    depositRate: 0.2          // نسبة العربون فى الورشة المجنونة
+};
+const ORDERS_KEY = 'ducky_orders_v1';
+const CHARITY_KEY = 'ducky_charity_v1';
+
+/* ===================== أدوات صغيرة ===================== */
+function esc(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+const money = n => '\u200E' + Number(n).toLocaleString('en-US') + ' EGP\u200E';   // علامة اتجاه عشان الرقم ما ينعكسش فى النص العربى
+function storeGet(key, fallback) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
+}
+function storeSet(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* التخزين غير متاح */ }
+}
+function normDigits(s) { return String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)); }
+function openWhatsApp(text) {
+    window.open('https://wa.me/' + SHOP.whatsapp + '?text=' + encodeURIComponent(text), '_blank', 'noopener');
+}
+charityTotal = storeGet(CHARITY_KEY, charityTotal);
+
+const METHODS = {
+    invoice:  { icon: '🧾', label: 'على الفاتورة (دفع يدوى فى المركز)' },
+    instapay: { icon: '📲', label: 'إنستاباى', number: SHOP.instapay },
+    cash:     { icon: '💵', label: 'كاش (محفظة إلكترونية)', number: SHOP.cash }
+};
+
+/* ===================== نافذة الدفع الموحدة ===================== */
+let co = null;
+let coReturnFocus = null;
+
+function openCheckout(cfg) {
+    co = Object.assign({ step: 'details', title: '', items: [], total: 0, note: '', fields: [], details: {},
+                         split: false, invoicePart: 0, method: 'invoice', error: '', onDone: null }, cfg);
+    if (co.split) { co.invoicePart = co.total; co.method = 'instapay'; }
+    if (!co.fields.length) co.step = 'pay';
+    coReturnFocus = document.activeElement;
+    document.getElementById('checkout-modal').classList.add('show');
+    document.body.classList.add('modal-open');
+    renderCheckout();
+    document.querySelector('#checkout-modal .co-dialog').focus();
+}
+
+function closeCheckout() {
+    if (!co) return;
+    document.getElementById('checkout-modal').classList.remove('show');
+    document.body.classList.remove('modal-open');
+    co = null;
+    if (coReturnFocus && coReturnFocus.focus) coReturnFocus.focus();
+}
+
+function coBackdrop(el, e) { if (e && e.target === el) closeCheckout(); }
+
+function coStepsHtml() {
+    const names = co.fields.length ? ['البيانات', 'الدفع', 'التأكيد'] : ['الدفع', 'التأكيد'];
+    const cur = names.indexOf({ details: 'البيانات', pay: 'الدفع', done: 'التأكيد' }[co.step]);
+    return '<div class="co-steps">' + names.map((n, i) => `<span class="${i === cur ? 'on' : ''}">${i + 1}. ${n}</span>`).join('') + '</div>';
+}
+
+function coFieldHtml(f) {
+    const v = co.details[f.id] !== undefined ? co.details[f.id] : (f.value || '');
+    const attrs = [f.required ? 'required' : '', f.min ? `min="${esc(f.min)}"` : '', f.inputmode ? `inputmode="${f.inputmode}"` : '',
+                   f.placeholder ? `placeholder="${esc(f.placeholder)}"` : '', `maxlength="${f.max || 60}"`].filter(Boolean).join(' ');
+    if (f.type === 'select') {
+        return `<label class="co-field"><span>${esc(f.label)}</span><select id="co-f-${f.id}">` +
+            f.options.map(o => `<option value="${esc(o[0])}"${o[0] === v ? ' selected' : ''}>${esc(o[1])}</option>`).join('') + '</select></label>';
+    }
+    return `<label class="co-field"><span>${esc(f.label)}${f.required ? ' *' : ''}</span><input id="co-f-${f.id}" type="${f.type || 'text'}" value="${esc(v)}" ${attrs}></label>`;
+}
+
+function coSummaryHtml() {
+    return '<ul class="co-items">' + co.items.map(i =>
+        `<li><span>${esc(i.name)}</span><b>${i.price ? (i.est ? 'من ' : '') + money(i.price) : ''}</b></li>`).join('') + '</ul>' +
+        (co.note ? `<p class="co-note">${esc(co.note)}</p>` : '') +
+        `<div class="co-total"><span>${co.split || co.deposit ? 'المطلوب' : 'الإجمالى'}</span><span>${money(co.total)}</span></div>`;
+}
+
+function coMethodsHtml() {
+    const keys = co.split ? ['instapay', 'cash'] : ['invoice', 'instapay', 'cash'];
+    return '<div class="co-methods" role="radiogroup" aria-label="طريقة الدفع">' + keys.map(k =>
+        `<label class="co-method"><input type="radio" name="co-method" value="${k}" data-change="coPickMethod"${co.method === k ? ' checked' : ''}>` +
+        `<span>${METHODS[k].icon} ${METHODS[k].label}</span></label>`).join('') + '</div>';
+}
+
+function coOnlineAmount() { return co.split ? co.total - co.invoicePart : (co.method === 'invoice' ? 0 : co.total); }
+
+function coPayInfoHtml() {
+    const amt = coOnlineAmount();
+    const m = METHODS[co.method];
+    if (!m || !m.number || amt <= 0) return '';
+    return `<div class="co-pay-info">حوّل <b>${money(amt)}</b> على ${m.icon} ${esc(m.label)}:
+        <div class="co-number"><bdi>${esc(m.number)}</bdi>
+            <button type="button" class="co-copy" data-click="coCopy" data-args='["${m.number}"]'>نسخ</button></div>
+        <small>بعد التحويل اضغط "تأكيد الطلب"، وابعتلنا صورة التحويل على واتساب برقم الطلب.</small></div>`;
+}
+
+function coSplitHtml() {
+    return `<div class="co-split">
+        <p class="co-split-title">قسّم المبلغ زى ما تحب:</p>
+        <div class="co-presets">
+            <button type="button" data-click="coPreset" data-args='["all-invoice"]'>كله على الفاتورة</button>
+            <button type="button" data-click="coPreset" data-args='["half"]'>نص ونص</button>
+            <button type="button" data-click="coPreset" data-args='["all-online"]'>كله دلوقتى</button>
+        </div>
+        <label class="co-field"><span>الجزء اللى يتضاف على الفاتورة (EGP)</span>
+            <input id="co-invoice-part" type="number" min="0" max="${co.total}" step="1" inputmode="numeric" value="${co.invoicePart}" data-input="coSplitInput"></label>
+        <p class="co-split-sum">🧾 على الفاتورة: <b id="co-sum-inv"></b> &nbsp;•&nbsp; 📲 أونلاين دلوقتى: <b id="co-sum-online"></b></p>
+        <div id="co-method-wrap">${coMethodsHtml()}</div>
+    </div>`;
+}
+
+function renderCheckout() {
+    if (!co) return;
+    const body = document.getElementById('checkout-body');
+    let html = `<h2 class="co-title" id="co-title">${esc(co.title)}</h2>` + coStepsHtml();
+
+    if (co.step === 'details') {
+        html += '<form data-submit="coDetailsNext" novalidate>' + co.fields.map(coFieldHtml).join('') +
+            (co.error ? `<p class="co-error" role="alert">${esc(co.error)}</p>` : '') +
+            '<button type="submit" class="btn-submit">التالى: الدفع ←</button></form>';
+    } else if (co.step === 'pay') {
+        html += coSummaryHtml() + (co.split ? coSplitHtml() : coMethodsHtml()) + '<div id="co-info"></div>' +
+            (co.error ? `<p class="co-error" role="alert">${esc(co.error)}</p>` : '') +
+            '<div class="co-actions"><button type="button" class="btn-submit" data-click="coConfirm">تأكيد الطلب ✅</button>' +
+            (co.fields.length ? '<button type="button" class="co-btn-secondary" data-click="coBack">→ رجوع</button>' : '') + '</div>';
+    } else {
+        html += coReceiptHtml(co.order);
+    }
+    body.innerHTML = html;
+    if (co.step === 'pay') coRefreshPay();
+}
+
+function coRefreshPay() {
+    const info = document.getElementById('co-info');
+    if (info) info.innerHTML = coPayInfoHtml();
+    if (co.split) {
+        document.getElementById('co-sum-inv').textContent = money(co.invoicePart);
+        document.getElementById('co-sum-online').textContent = money(co.total - co.invoicePart);
+        document.getElementById('co-method-wrap').hidden = (co.total - co.invoicePart) <= 0;
+    }
+}
+
+function coPickMethod(el) { co.method = el.value; coRefreshPay(); }
+
+function coPreset(kind) {
+    co.invoicePart = kind === 'all-invoice' ? co.total : kind === 'half' ? Math.floor(co.total / 2) : 0;
+    document.getElementById('co-invoice-part').value = co.invoicePart;
+    coRefreshPay();
+}
+
+function coSplitInput(el) {
+    let v = parseInt(normDigits(el.value), 10);
+    if (isNaN(v) || v < 0) v = 0;
+    co.invoicePart = Math.min(v, co.total);
+    coRefreshPay();
+}
+
+function coBack() { co.step = 'details'; co.error = ''; renderCheckout(); }
+
+function coDetailsNext(e) {
+    e.preventDefault();
+    co.error = '';
+    for (const f of co.fields) {
+        const el = document.getElementById('co-f-' + f.id);
+        co.details[f.id] = el ? el.value.trim() : '';
+    }
+    for (const f of co.fields) {
+        const v = co.details[f.id];
+        if (f.required && !v) { co.error = 'من فضلك املا: ' + f.label; break; }
+        if (f.id === 'phone' && v) {
+            co.details.phone = normDigits(v);
+            if (!/^01[0125]\d{8}$/.test(co.details.phone)) { co.error = 'رقم الموبايل لازم يكون 11 رقم ويبدأ بـ 01'; break; }
+        }
+    }
+    if (co.error) { renderCheckout(); return; }
+    co.step = 'pay';
+    renderCheckout();
+}
+
+function coCopy(number, btn) {
+    const done = () => { btn.textContent = 'اتنسخ ✓'; setTimeout(() => { btn.textContent = 'نسخ'; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(number).then(done, () => {});
+    } else {
+        const t = document.createElement('textarea'); t.value = number; document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); done(); } catch (err) {} t.remove();
+    }
+}
+
+function coConfirm() {
+    co.error = '';
+    if (!(co.total > 0)) { co.error = 'المبلغ لازم يكون أكبر من صفر'; renderCheckout(); return; }
+    const payments = [];
+    if (co.split) {
+        const inv = Math.min(Math.max(co.invoicePart, 0), co.total), online = co.total - inv;
+        if (inv > 0) payments.push({ method: 'invoice', amount: inv });
+        if (online > 0) payments.push({ method: co.method, amount: online });
+    } else {
+        payments.push({ method: co.method, amount: co.total });
+    }
+    const extra = co.fields.filter(f => f.id !== 'name' && f.id !== 'phone' && co.details[f.id]).map(f => ({
+        label: f.label,
+        value: f.type === 'select' ? ((f.options.find(o => o[0] === co.details[f.id]) || [])[1] || co.details[f.id]) : co.details[f.id]
+    }));
+    const order = {
+        id: 'DK-' + String(Date.now()).slice(-6),
+        kind: co.kind, title: co.title, name: co.details.name || '', phone: co.details.phone || '',
+        extra, items: co.items, total: co.total, payments,
+        status: payments.some(p => p.method !== 'invoice') ? 'pending' : 'invoice',
+        ts: Date.now()
+    };
+    const orders = storeGet(ORDERS_KEY, []);
+    orders.unshift(order);
+    storeSet(ORDERS_KEY, orders.slice(0, 30));
+    if (co.onDone) co.onDone(order);
+    renderOrderHistory();
+    co.order = order;
+    co.step = 'done';
+    renderCheckout();
+}
+
+function statusLabel(s) { return s === 'pending' ? 'بانتظار تأكيد التحويل ⏳' : 'تتحاسب على الفاتورة 🧾'; }
+
+function coReceiptHtml(o) {
+    return `<div class="co-receipt">
+        <div class="co-ok">✅</div>
+        <h3>تم تسجيل طلبك!</h3>
+        <p>رقم الطلب: <b>${esc(o.id)}</b></p>
+        <ul class="co-items">${o.items.map(i => `<li><span>${esc(i.name)}</span><b>${i.price ? (i.est ? 'من ' : '') + money(i.price) : ''}</b></li>`).join('')}</ul>
+        ${o.extra.map(x => `<p class="co-line">${esc(x.label)}: <b>${esc(x.value)}</b></p>`).join('')}
+        ${o.payments.map(p => `<p class="co-line">${METHODS[p.method].icon} ${esc(METHODS[p.method].label)}: <b>${money(p.amount)}</b></p>`).join('')}
+        <div class="co-total"><span>الإجمالى</span><span>${money(o.total)}</span></div>
+        <p class="co-note">الحالة: ${statusLabel(o.status)}${o.status === 'pending' ? '<br>ابعت صورة التحويل على واتساب برقم الطلب عشان نأكد.' : ''}</p>
+        <div class="co-actions">
+            <button type="button" class="co-wa" data-click="coWhatsapp">ابعت التأكيد على واتساب 💬</button>
+            <button type="button" class="co-btn-secondary" data-click="closeCheckout">تمام</button>
+        </div></div>`;
+}
+
+function coWhatsapp() {
+    const o = co && co.order;
+    if (!o) return;
+    const lines = [`طلب جديد من موقع DUCKY MOTORS 🦆`, `رقم الطلب: ${o.id}`, `النوع: ${o.title}`];
+    if (o.name) lines.push(`الاسم: ${o.name}`);
+    if (o.phone) lines.push(`الموبايل: ${o.phone}`);
+    o.extra.forEach(x => lines.push(`${x.label}: ${x.value}`));
+    lines.push('البنود:');
+    o.items.forEach(i => lines.push(`- ${i.name}${i.price ? ' — ' + (i.est ? 'من ' : '') + money(i.price) : ''}`));
+    lines.push(`الإجمالى: ${money(o.total)}`);
+    lines.push('الدفع: ' + o.payments.map(p => `${METHODS[p.method].label} ${money(p.amount)}`).join(' + '));
+    if (o.status === 'pending') lines.push('حوّلت المبلغ، وهبعت صورة التحويل 👇');
+    openWhatsApp(lines.join('\n'));
+}
+
+/* ===================== سجل الطلبات فى حساب العميل ===================== */
+function renderOrderHistory() {
+    const box = document.getElementById('order-history');
+    if (!box) return;
+    const orders = storeGet(ORDERS_KEY, []);
+    if (!orders.length) { box.innerHTML = '<p class="order-empty">مفيش طلبات لسه. أى حجز أو دفع هتعمله هيظهر هنا 🦆</p>'; return; }
+    box.innerHTML = '<ul class="order-list">' + orders.map(o =>
+        `<li class="order-card"><div><b>${esc(o.title)}</b><small>${esc(o.id)} • ${esc(new Date(o.ts).toLocaleDateString('ar-EG'))}</small></div>
+         <div class="order-side"><b>${money(o.total)}</b><span class="badge badge-${esc(o.status)}">${statusLabel(o.status)}</span></div></li>`).join('') + '</ul>';
+}
+
+function clearOrders() {
+    if (!storeGet(ORDERS_KEY, []).length) return;
+    if (confirm('تمسح سجل الطلبات من الجهاز ده؟')) { storeSet(ORDERS_KEY, []); renderOrderHistory(); }
+}
+
+/* ===================== ربط الأقسام بنافذة الدفع ===================== */
+function nameFields(extra) {
+    return [{ id: 'name', label: 'الاسم', required: true, value: customerName || '', max: 60 },
+            { id: 'phone', label: 'رقم الموبايل (واتساب)', required: true, type: 'tel', inputmode: 'numeric', placeholder: '01xxxxxxxxx', max: 11 }].concat(extra || []);
+}
+
+/* حاسبة التكلفة + حجز الخدمة */
+function calcQuote() {
+    const carSel = document.getElementById('calc-car-type'), svcSel = document.getElementById('calc-service-type');
+    const full = Math.round(parseFloat(svcSel.value) * parseFloat(carSel.value));
+    return {
+        full, price: Math.round(full * 0.5),
+        service: svcSel.options[svcSel.selectedIndex].text.replace(/\s*\([^)]*EGP\)\s*$/, '').trim(),
+        car: carSel.options[carSel.selectedIndex].text.trim()
+    };
+}
+
+function calculatePrice() {
+    const q = calcQuote();
+    document.getElementById('calc-price-old').textContent = q.full + ' EGP';
+    document.getElementById('calc-price-discount').textContent = q.price + ' EGP';
+}
+
+function todayStr() {
+    const d = new Date(), p = n => String(n).padStart(2, '0');
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+}
+
+function openServiceCheckout(prefill) {
+    const pre = (prefill && prefill.date !== undefined) ? prefill : {};
+    const q = calcQuote();
+    openCheckout({
+        kind: 'service', title: 'حجز خدمة أونلاين',
+        items: [{ name: q.service + ' — ' + q.car, price: q.price }],
+        total: q.price,
+        note: 'السعر بعد خصم 50% (السعر الأصلى ' + money(q.full) + ').',
+        details: pre.date ? { date: pre.date, mode: pre.mode } : {},
+        fields: nameFields([
+            { id: 'date', label: 'اليوم المفضل', type: 'date', required: true, min: todayStr(), max: 10 },
+            { id: 'mode', label: 'طريقة الخدمة', type: 'select', options: [['branch', 'هحضر للفرع 🚗'], ['butler', 'خادم البطة (استلام وتسليم من البيت) 🏎️']] }
+        ])
+    });
+}
+
+function handleBookingSubmit(e) {
+    e.preventDefault();
+    openServiceCheckout({ date: document.getElementById('booking-date').value, mode: document.getElementById('booking-type').value });
+}
+
+/* استراحة البطة */
+function checkoutLounge() {
+    lastLoungeOrder = null;
+    placeLoungeOrder();            // بيراجع الاختيارات الحالية ويطلّع الريسيت
+    const o = lastLoungeOrder;
+    if (!o) return;
+    openCheckout({
+        kind: 'lounge', title: 'طلب استراحة البطة',
+        items: o.items.map(i => ({ name: splitName(i.name).ar, price: i.price })),
+        total: o.total,
+        details: { name: o.name },
+        fields: [{ id: 'name', label: 'الاسم', required: true, max: 60 }]
+    });
+}
+
+/* الورشة المجنونة: عربون على التعديلات المختارة */
+function openModsCheckout() {
+    const picked = [...document.querySelectorAll('.mod-chk:checked')].filter(c => +c.dataset.v > 0);
+    if (!picked.length) { alert('اختار تعديل ليه سعر الأول يا بطل 🦆 (أفكار "معمل البطة المجنون" للضحك بس)'); return; }
+    const est = picked.reduce((s, c) => s + (+c.dataset.v), 0);
+    const deposit = Math.min(est, Math.max(100, Math.round(est * SHOP.depositRate / 10) * 10));
+    openCheckout({
+        kind: 'mods', title: 'حجز تعديلات الورشة المجنونة',
+        items: picked.map(c => ({ name: c.dataset.n, price: +c.dataset.v, est: true })),
+        total: deposit, deposit: true,
+        note: 'الأسعار تقديرية (إجماليها من ' + money(est) + '). بتدفع عربون ' + Math.round(SHOP.depositRate * 100) + '% دلوقتى، والباقى بعد المعاينة.',
+        details: { name: document.getElementById('mod-name').value.trim() || customerName || '', car: document.getElementById('mod-car').value.trim() },
+        fields: nameFields([{ id: 'car', label: 'نوع العربية وموديلها', max: 60 }])
+    });
+}
+
+/* سهم الخير: تقسيم بين الفاتورة وإنستاباى/كاش */
+function submitDonation() {
+    const customVal = document.getElementById('custom-donation-input').value;
+    const amount = customVal ? parseInt(normDigits(customVal), 10) : selectedDonation;
+    const memberId = document.getElementById('donation-user-id').value.trim().slice(0, 20);
+    if (!amount || amount <= 0 || amount > 100000) { alert('من فضلك اختار أو اكتب مبلغ صحيح (من 1 لحد 100,000 جنيه).'); return; }
+    openCheckout({
+        kind: 'donation', title: 'سهم الخير والصدقة 🌾',
+        items: [{ name: 'سهم الخير' + (memberId ? ' — عضوية ' + memberId : ''), price: amount }],
+        total: amount, split: true,
+        details: { name: customerName || '' },
+        fields: [{ id: 'name', label: 'الاسم (اختيارى)', max: 60 }],
+        onDone: order => {
+            charityTotal += amount;
+            storeSet(CHARITY_KEY, charityTotal);
+            updateCharityTotal();
+            const msg = document.getElementById('donation-success-msg');
+            msg.textContent = '🌱 تقبل الله منكم! تم تسجيل سهم الخير بقيمة ' + money(amount) + ' (رقم الطلب ' + order.id + ').';
+            msg.style.display = 'block';
+        }
+    });
+}
+
 /* ===== Event wiring (replaces inline onclick / onchange / onsubmit / onerror) ===== */
 const ACTIONS = {
+    openServiceCheckout,
+    openModsCheckout,
+    checkoutLounge,
+    closeCheckout,
+    coBackdrop,
+    coPickMethod,
+    coPreset,
+    coSplitInput,
+    coBack,
+    coDetailsNext,
+    coCopy,
+    coConfirm,
+    coWhatsapp,
+    clearOrders,
+    toggleNav,
     askChatbot,
     calculatePrice,
     checkDuckTracker,
@@ -683,6 +1054,10 @@ document.addEventListener('change', e => {
     const el = e.target.closest('[data-change]');
     if (el) runAction('change', el, e);
 });
+document.addEventListener('input', e => {
+    const el = e.target.closest('[data-input]');
+    if (el) runAction('input', el, e);
+});
 document.addEventListener('submit', e => {
     const el = e.target.closest('[data-submit]');
     if (el) runAction('submit', el, e);
@@ -694,3 +1069,5 @@ document.querySelectorAll('img[data-fallback]').forEach(img => {
     img.addEventListener('error', useFallback, { once: true });
     if (img.complete && img.naturalWidth === 0) useFallback();   // already failed before this script ran
 });
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleNav(false); closeCheckout(); } });
