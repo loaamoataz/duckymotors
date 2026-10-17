@@ -27,7 +27,7 @@
             --charity-glow: 0 0 10px #27ae60, 0 0 20px #27ae60;
         }
 /* تنسيق موحد لجميع أزرار التنقل العادية */
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge) {
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod) {
     background-color: #ffffff !important;
     background: #ffffff !important;
     color: #d4ac0d !important;
@@ -39,8 +39,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge) {
     transition: all 0.3s ease !important;
 }
 
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):hover,
-nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).active {
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod):hover,
+nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge):not(.nav-btn-mod).active {
     background-color: #fcfcfc !important;
     color: #b7950b !important;
     border-color: #000000 !important;
@@ -377,6 +377,104 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
             flex: 1;
         }
 
+        #section-snack select[size]:not([size="1"]) { padding: 4px !important; }
+        #section-snack select[size]:not([size="1"]) option { padding: 8px 10px; }
+
+        .nav-break { flex-basis: 100%; height: 0; }
+
+        .nav-btn-mod {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #9b2cff !important;
+            -webkit-text-fill-color: #9b2cff !important;
+            font-weight: 900 !important;
+            border-radius: 20px !important;
+            border: 3px dashed #b44cff !important;
+            text-shadow: 0 0 6px rgba(180, 76, 255, 0.55) !important;
+            animation: purpleNeonPulse 1.8s infinite ease-in-out !important;
+            transition: all 0.3s ease !important;
+        }
+        .nav-btn-mod:hover, .nav-btn-mod.active {
+            background-color: #faf4ff !important;
+            color: #7d12e0 !important;
+            -webkit-text-fill-color: #7d12e0 !important;
+            border-color: #8e24e8 !important;
+            box-shadow: 0 0 22px rgba(180, 76, 255, 1), 0 0 10px rgba(180, 76, 255, 0.7) !important;
+            transform: translateY(-2px) scale(1.03);
+        }
+        @keyframes purpleNeonPulse {
+            0%   { box-shadow: 0 0 8px rgba(180, 76, 255, 0.8); transform: scale(1); }
+            50%  { box-shadow: 0 0 22px rgba(180, 76, 255, 1), 0 0 10px rgba(180, 76, 255, 0.6); transform: scale(1.04); }
+            100% { box-shadow: 0 0 8px rgba(180, 76, 255, 0.8); transform: scale(1); }
+        }
+        .duck-bubble-popover.mod-bubble { border-color: #b44cff; background-color: #1c1030; }
+        .duck-bubble-popover.mod-bubble::before { border-color: transparent transparent #1c1030 transparent; }
+        .mod-bubble .bubble-text { color: #d9a3ff; }
+
+        /* ===== الورشة المجنونة ===== */
+        .mod-title { font-size: 46px; font-weight: 900; color: #e3b5ff; margin: 20px 0 5px;
+            text-shadow: 0 0 10px #b44cff, 0 0 25px #b44cff, 0 0 45px #9b2cff; letter-spacing: 1px; }
+        .mod-sub { color: #cfcfcf; font-size: 17px; margin-bottom: 25px; }
+        .mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; text-align: right; }
+        .mod-card { background: #17101f; border: 2px solid #b44cff; border-radius: 18px; padding: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.45), 0 0 14px rgba(180,76,255,0.25); }
+        .mod-card.crazy { border-style: dashed; border-color: #ffd700; background: #1d1a0d; }
+        .mod-card h3 { color: #e3b5ff; font-size: 21px; margin-bottom: 4px; }
+        .mod-card.crazy h3 { color: #ffd700; }
+        .mod-card .mod-note { color: #a9a9a9; font-size: 13px; margin-bottom: 12px; }
+        .mod-item { display: flex; justify-content: space-between; align-items: center; gap: 10px;
+            padding: 9px 0; border-top: 1px dashed #3a2a4a; color: #fff; font-size: 15px; }
+        .mod-item .mod-price { color: #ffd700; font-weight: 800; white-space: nowrap; font-size: 14px; }
+        .mod-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-right: 6px; font-weight: 800; vertical-align: middle; }
+        .tag-ok { background: #123a1c; color: #2ecc71; }
+        .tag-lic { background: #3d2c0a; color: #ffb74d; }
+        .tag-joke { background: #3a1240; color: #ff8aff; }
+        .mod-request { margin: 30px auto 0; max-width: 560px; background: #17101f; border: 2px solid #b44cff;
+            border-radius: 18px; padding: 22px; }
+        .mod-request input, .mod-request textarea, .mod-request select { width: 100%; padding: 12px; margin-top: 10px; background: #0d0813;
+            color: #fff; border: 1px solid #5a3a7a; border-radius: 8px; font-size: 15px; font-family: inherit; }
+        .mod-request button { margin-top: 14px; background: #b44cff; color: #000; font-weight: 900; font-size: 17px;
+            padding: 12px 26px; border: none; border-radius: 10px; cursor: pointer; }
+        .mod-item { cursor: pointer; }
+        .mod-item input { accent-color: #b44cff; margin-left: 8px; transform: scale(1.2); }
+        .mod-meter { position: static; margin: 26px auto 0; width: 100%; max-width: 760px; box-sizing: border-box;
+            background: rgba(13,8,19,0.96); border: 2px solid #b44cff; border-radius: 14px; padding: 10px 14px;
+            box-shadow: 0 0 18px rgba(180,76,255,0.45); }
+        .mm-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; color: #fff; font-size: 14px; }
+        .mm-top b { color: #ffd700; font-size: 17px; }
+        .mm-bar { height: 10px; background: #2a1a3a; border-radius: 6px; margin-top: 8px; overflow: hidden; }
+        .mm-fill { height: 100%; width: 0; background: linear-gradient(90deg, #b44cff, #ffd700); transition: width 0.4s; }
+        #q-result { margin-top: 14px; color: #ffd700; font-weight: 800; line-height: 1.8; }
+        #section-workshop { padding-bottom: 30px; }
+        .mod-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px;
+            max-width: 1100px; margin: 30px auto 0; align-items: stretch; }
+        .mod-duo .mod-request { margin: 0; max-width: none; }
+        @media (max-width: 760px) { .mod-duo { grid-template-columns: 1fr; } }
+        .mod-legal { margin-top: 22px; color: #9a9a9a; font-size: 13px; }
+
+        /* ===== كوبون الخصم الحصرى فى الشات ===== */
+        .chat-msg.bot.coupon-msg { max-width: 100%; padding: 0; background: transparent; }
+        .duck-typing { background: #2b2b2b; border-radius: 10px; padding: 8px 12px; color: #fff; }
+        .coupon { position: relative; background: linear-gradient(135deg, #fff3b0, #ffd700 55%, #f1c40f); color: #1a1a1a;
+            border: 2px dashed #7a5c00; border-radius: 14px; padding: 12px 14px; text-align: center; overflow: hidden;
+            animation: couponPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .coupon::before, .coupon::after { content: ""; position: absolute; top: 50%; width: 16px; height: 16px;
+            background: #2b2b2b; border-radius: 50%; transform: translateY(-50%); }
+        .coupon::before { right: -9px; } .coupon::after { left: -9px; }
+        .coupon::selection { background: transparent; }
+        .coupon .c-head { font-size: 12px; font-weight: 900; letter-spacing: 1px; }
+        .coupon .c-offer { font-size: 17px; font-weight: 900; margin: 6px 0; line-height: 1.5; }
+        .coupon .c-code { display: inline-block; background: #1a1a1a; color: #ffd700; font-weight: 900; letter-spacing: 2px;
+            padding: 3px 12px; border-radius: 8px; font-size: 14px; margin: 4px 0; }
+        .coupon .c-timer { font-size: 13px; font-weight: 800; margin-top: 4px; }
+        .coupon .c-foot { font-size: 11px; margin-top: 6px; opacity: 0.85; }
+        .coupon::marker { content: none; }
+        .coupon .c-shine { position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.65), transparent);
+            animation: couponShine 2.6s infinite; }
+        @keyframes couponShine { 0% { left: -60%; } 60%, 100% { left: 130%; } }
+        @keyframes couponPop { 0% { transform: scale(0.6) rotate(-4deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+
         .page-section {
             display: none;
             opacity: 0;
@@ -387,7 +485,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         .page-section.active {
             display: block;
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
 
         /* HOME SECTION STYLES */
@@ -1042,6 +1140,16 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
             user-select: none;
         }
 
+        .menu-box .old-price { display: inline-block; white-space: nowrap; }
+        .menu-box .new-price { display: block; white-space: nowrap; margin-top: 2px; }
+
+        .ar-sub {
+            display: block;
+            font-size: 0.7em;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
         summary:hover { color: #b7950b; }
 
         details ul {
@@ -1323,7 +1431,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 <body>
 <!-- NAVIGATION TABS -->
 <nav>
-    <!-- الرئيسية -->
     <div class="nav-item-wrapper">
         <button id="nav-home" class="active" onclick="switchSectionAndBubble('home', 'nest')">الرئيسية</button>
         <div class="duck-bubble-popover" id="popover-nest">
@@ -1331,7 +1438,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- الخدمات والأسعار -->
     <div class="nav-item-wrapper">
         <button id="nav-services" onclick="switchSectionAndBubble('services', 'food')">الخدمات والأسعار</button>
         <div class="duck-bubble-popover" id="popover-food">
@@ -1339,7 +1445,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- خدمات إضافية -->
     <div class="nav-item-wrapper">
         <button id="nav-extra" onclick="switchSectionAndBubble('extra', 'extra')">خدمات إضافية</button>
         <div class="duck-bubble-popover" id="popover-extra">
@@ -1347,23 +1452,13 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- استراحة البطة (تم النقل قبل حسابي) -->
     <div class="nav-item-wrapper">
-        <button id="nav-snack" class="nav-btn-snack" onclick="switchSectionAndBubble('snack', 'snack')">استراحه البطة  </button>
-        <div class="duck-bubble-popover snack-bubble" id="popover-snack">
-            <span class="bubble-text">زغط البطة 🦆🍽️</span>
+        <button id="nav-workshop" class="nav-btn-mod" onclick="switchSectionAndBubble('workshop', 'mod')">الورشة المجنونة</button>
+        <div class="duck-bubble-popover mod-bubble" id="popover-mod">
+            <span class="bubble-text">البطة بتغير ريشها 🦆🐣</span>
         </div>
     </div>
 
-    <!-- حسابى / تسجيل الدخول -->
-    <div class="nav-item-wrapper">
-        <button id="nav-account" onclick="switchSectionAndBubble('account', 'profile')">حسابى / تسجيل الدخول</button>
-        <div class="duck-bubble-popover" id="popover-profile">
-            <span class="bubble-text">ملف البطة الشخصى  🦆🪪</span>
-        </div>
-    </div>
-
-    <!-- تواصل معنا -->
     <div class="nav-item-wrapper">
         <button id="nav-contact" onclick="switchSectionAndBubble('contact', 'contact')">تواصل معنا</button>
         <div class="duck-bubble-popover" id="popover-contact">
@@ -1371,7 +1466,22 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- طوارئ الطريق -->
+    <div class="nav-item-wrapper">
+        <button id="nav-account" onclick="switchSectionAndBubble('account', 'profile')">حسابى / تسجيل الدخول</button>
+        <div class="duck-bubble-popover" id="popover-profile">
+            <span class="bubble-text">ملف البطة الشخصى  🦆🪪</span>
+        </div>
+    </div>
+
+    <div class="nav-item-wrapper">
+        <button id="nav-snack" class="nav-btn-snack" onclick="switchSectionAndBubble('snack', 'snack')">استراحة البطة  </button>
+        <div class="duck-bubble-popover snack-bubble" id="popover-snack">
+            <span class="bubble-text">زغط البطة 🦆🍽️</span>
+        </div>
+    </div>
+
+    <div class="nav-break"></div>
+
     <div class="nav-item-wrapper">
         <button id="nav-sos" class="nav-btn-sos" onclick="switchSectionAndBubble('sos', 'sos')"> طوارئ الطريق</button>
         <div class="duck-bubble-popover sos-bubble" id="popover-sos">
@@ -1379,7 +1489,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- Golden Duck Challenge -->
     <div class="nav-item-wrapper">
         <button id="nav-challenge" class="nav-btn-challenge" onclick="switchSectionAndBubble('challenge', 'challenge')">Golden Duck Challenge</button>
         <div class="duck-bubble-popover" id="popover-challenge">
@@ -1387,7 +1496,6 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         </div>
     </div>
 
-    <!-- سهم الخير والصدقة -->
     <div class="nav-item-wrapper">
         <button id="nav-charity" class="nav-btn-charity" onclick="switchSectionAndBubble('charity', 'charity')">سهم الخير والصدقة</button>
         <div class="duck-bubble-popover charity-bubble" id="popover-charity">
@@ -1432,45 +1540,45 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
     <div class="container" style="direction: rtl; text-align: right; color: #fff;">
         
         <div class="section-title text-center" style="margin-bottom: 35px; text-align: center;">
-            <h2 style="color: #d4ac0d; font-size: 30px; font-weight: bold;">☕ استراحة البطة (Duck Lounge)</h2>
+            <h2 style="color: #d4ac0d; font-size: 30px; font-weight: bold;">☕ Duck Lounge<span class="ar-sub">(استراحة البطة)</span></h2>
         </div>
 
         <!-- ==================== 1. المأكولات ==================== -->
         <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🥐 المأكولات (Ducky Bites)</h3>
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🥐 Ducky Bites<span class="ar-sub">(المأكولات)</span></h3>
             <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 
                 <!-- أ. مأكولات غير صحية وسريعة -->
                 <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍔 مأكولات سريعة & ساندوتشات</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">ساندوتشات ومخبوزات سريعة</h3>
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍔 Fast Food & Sandwiches<span class="ar-sub" style="font-size:1em;">(مأكولات سريعة & ساندوتشات)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Sandwiches & Quick Bakery<span class="ar-sub">(ساندوتشات & مخبوزات سريعة)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>ساندوتش بانيه دجاج - 65 EGP</option>
-                        <option>ساندوتش كفتة مشوية - 70 EGP</option>
-                        <option>ساندوتش برجر لحم فاخر - 75 EGP</option>
-                        <option>ساندوتش هوت دوج - 55 EGP</option>
-                        <option>كرواسون زبدة فاخر - 40 EGP</option>
-                        <option>كرواسون جبنة شيدر - 45 EGP</option>
-                        <option>كرواسون شيكولاتة داكنة - 45 EGP</option>
-                        <option>باتيه تركي مدخن - 35 EGP</option>
-                        <option>باتيه جبنة بيضاء وزيتون - 35 EGP</option>
-                        <option>ميني بيتزا مشكلة - 40 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>ساندوتش بانيه دجاج (Chicken Schnitzel Sandwich) - 65 EGP</option>
+                        <option>ساندوتش كفتة مشوية (Grilled Kofta Sandwich) - 70 EGP</option>
+                        <option>ساندوتش برجر لحم فاخر (Premium Beef Burger Sandwich) - 75 EGP</option>
+                        <option>ساندوتش هوت دوج (Hot Dog Sandwich) - 55 EGP</option>
+                        <option>كرواسون زبدة فاخر (Premium Butter Croissant) - 40 EGP</option>
+                        <option>كرواسون جبنة شيدر (Cheddar Cheese Croissant) - 45 EGP</option>
+                        <option>كرواسون شيكولاتة داكنة (Dark Chocolate Croissant) - 45 EGP</option>
+                        <option>باتيه تركى مدخن (Smoked Turkey Pastry) - 35 EGP</option>
+                        <option>باتيه جبنة بيضاء وزيتون (White Cheese & Olive Pastry) - 35 EGP</option>
+                        <option>مينى بيتزا مشكلة (Assorted Mini Pizza) - 40 EGP</option>
                     </select>
                 </div>
 
                 <!-- ب. مأكولات صحية -->
                 <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥗 مأكولات صحية</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">كلوب ساندوتش & وراب دايت</h3>
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥗 Healthy Food<span class="ar-sub" style="font-size:1em;">(مأكولات صحية)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Club Sandwich & Diet Wrap<span class="ar-sub">(سكلوب ساندوتش & دايت)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>كلوب ساندوتش دايت (توست بني + تركي + شيدر لايت) - 85 EGP</option>
-                        <option>وراب دجاج مشوي (خبز شوفان + صوص زبادي) - 95 EGP</option>
-                        <option>توست تونة بالأفوكادو والليمون - 90 EGP</option>
-                        <option>سلطة سيزر بالدجاج المشوي - 75 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>سكلوب ساندوتش دايت (توست بني + تركي + شيدر لايت) (Diet Club Sandwich) - 85 EGP</option>
+                        <option>راب دجاج مشوي (خبز شوفان + صوص زبادي) (Grilled Chicken Wrap) - 95 EGP</option>
+                        <option>توست تونة بالأفوكادو والليمون (Tuna Avocado & Lemon Toast) - 90 EGP</option>
+                        <option>سلطة سيزر بالدجاج المشوي (Grilled Chicken Caesar Salad) - 75 EGP</option>
                     </select>
                 </div>
 
@@ -1479,38 +1587,38 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
         <!-- ==================== 2. السناكس والمسليات ==================== -->
         <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🍿 السناكس والمسليات (Quack Snacking)</h3>
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">🍿 Quack Snacking<span class="ar-sub">(السناكس والمسليات)</span></h3>
             <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 
                 <!-- أ. سناكس صحية -->
                 <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🌱 سناكس ومكسرات صحية</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">سناكس Fit & Healthy</h3>
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🌱 Healthy Snacks & Nuts<span class="ar-sub" style="font-size:1em;">(سناكس ومكسرات صحية)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Fit & Healthy Snacks<span class="ar-sub">(سناكس لياقة وصحة)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>شيبس الذرة المخبوز (Baked) أعشاب وجبنة - 30 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>شيبس الذرة المخبوز أعشاب وجبنة (Baked Corn Chips with Herbs & Cheese) - 30 EGP</option>
                         <option>بروتين بار (Fit & Protein Bar) - 60 EGP</option>
                         <option>شيكولاتة داكنة (Dark Chocolate 70%+) - 50 EGP</option>
-                        <option>كيس مكسرات مشكلة (لوز، عين جمل، كاجو) - 45 EGP</option>
-                        <option>فواكه مجففة مشكلة - 35 EGP</option>
+                        <option>كيس مكسرات مشكلة (لوز، عين جمل، كاجو) (Mixed Nuts: Almonds, Walnuts, Cashews) - 45 EGP</option>
+                        <option>فواكه مجففة مشكلة (Assorted Dried Fruits) - 35 EGP</option>
                     </select>
                 </div>
 
                 <!-- ب. سناكس غير صحية وتسالٍ -->
                 <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍿 تسالي وحلويات</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">فشار، شيبسيات وحلويات</h3>
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🍿 Munchies & Sweets<span class="ar-sub" style="font-size:1em;">(تسالى وحلويات)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Popcorn & Chips<span class="ar-sub">(فشار & شيبسيات)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>فشار سخن بالزبدة - 25 EGP</option>
-                        <option>فشار بالجبنة / الجبنة المتبلة - 25 EGP</option>
-                        <option>فشار بالكراميل - 30 EGP</option>
-                        <option>شيبسيات ومقرمشات أطعم مختلفة - 20 EGP</option>
-                        <option>دوناتس شيكولاتة / كراميل - 35 EGP</option>
-                        <option>كب كيك فاخر - 30 EGP</option>
-                        <option>شيكولاتات شهيرة مشكلة - 25 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>فشار سخن بـ الزبدة (Hot Buttered Popcorn) - 25 EGP</option>
+                        <option>فشار بـ الجبنة / الجبنة المتبلة (Cheese / Spicy Cheese Popcorn) - 25 EGP</option>
+                        <option>فشار بـ الكراميل (Caramel Popcorn) - 30 EGP</option>
+                        <option>شيبسيات ومقرمشات أطعم مختلفة (Assorted Chips & Crunchy Snacks) - 20 EGP</option>
+                        <option>دوناتس شيكولاتة / كراميل (Chocolate / Caramel Donuts) - 35 EGP</option>
+                        <option>كب كيك فاخر (Premium Cupcake) - 30 EGP</option>
+                        <option>شيكولاتات شهيرة مشكلة (Assorted Famous Chocolates) - 25 EGP</option>
                     </select>
                 </div>
 
@@ -1519,128 +1627,189 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
         <!-- ==================== 3. المشروبات التفصيلية ==================== -->
         <div class="lounge-category-block" style="margin-bottom: 40px;">
-            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">☕ المشروبات (Duck Hydration)</h3>
+            <h3 class="category-header" style="color: #ffd700; border-right: 4px solid #d4ac0d; padding-right: 10px; font-size: 22px; margin-bottom: 20px;">☕ Duck Hydration<span class="ar-sub">(المشروبات)</span></h3>
             <div class="interactive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
                 
                 <!-- أ. المشروبات الساخنة والأعشاب -->
                 <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">☕ مشروبات ساخنة وأعشاب</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">القهوة، الشاي، والأعشاب</h3>
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">☕ Hot Drinks & Herbs<span class="ar-sub" style="font-size:1em;">(مشروبات ساخنة وأعشاب)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Coffee, Tea & Herbs<span class="ar-sub">(القهوة & الشاى & الأعشاب)</span></h3>
                     
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <select style="width: 100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
-                            <option>اختر</option>
-                            <option>قهوة فاتح ساده - 25 EGP</option>
-                            <option>قهوة فاتح محوج - 30 EGP</option>
-                            <option>قهوة وسط ساده - 25 EGP</option>
-                            <option>قهوة وسط محوج - 30 EGP</option>
-                            <option>قهوة غامق ساده - 25 EGP</option>
-                            <option>قهوة غامق محوج - 30 EGP</option>
-                            <option>قهوة مانو - 30 EGP</option>
-                            <option>قهوة سكتو - 30 EGP</option>
-                            <option>قهوة فرنساوي - 35 EGP</option>
-                            <option>شاي أحمر - 20 EGP</option>
-                            <option>شاي بلبن - 25 EGP</option>
-                            <option>شاي كرك - 30 EGP</option>
-                            <option>شاي مرامية - 25 EGP</option>
-                            <option>شاي بطعم التوت - 25 EGP</option>
-                            <option>شاي بطعم الفراولة - 25 EGP</option>
-                            <option>ينسون - 20 EGP</option>
-                            <option>نعناع - 20 EGP</option>
-                            <option>حلبة - 20 EGP</option>
-                            <option>قرفة - 20 EGP</option>
+                            <option>اختر (Select)</option>
+                            <option>قهوة فاتح سادة (Light Roast Coffee, Plain) - 25 EGP</option>
+                            <option>قهوة فاتح محوج (Light Roast Spiced Coffee) - 30 EGP</option>
+                            <option>قهوة وسط سادة (Medium Roast Coffee, Plain) - 25 EGP</option>
+                            <option>قهوة وسط محوج (Medium Roast Spiced Coffee) - 30 EGP</option>
+                            <option>قهوة غامق سادة (Dark Roast Coffee, Plain) - 25 EGP</option>
+                            <option>قهوة غامق محوج (Dark Roast Spiced Coffee) - 30 EGP</option>
+                            <option>قهوة مانو (Mano Coffee) - 30 EGP</option>
+                            <option>قهوة سكتو (Sekto Coffee) - 30 EGP</option>
+                            <option>قهوة فرنساوى (French Coffee) - 35 EGP</option>
+                            <option>شاى أحمر (Black Tea) - 20 EGP</option>
+                            <option>شاى بـ لبن (Tea with Milk) - 25 EGP</option>
+                            <option>شاى كرك (Karak Tea) - 30 EGP</option>
+                            <option>شاى مرامية (Sage Tea) - 25 EGP</option>
+                            <option>شاى بـ طعم التوت (Berry Flavored Tea) - 25 EGP</option>
+                            <option>شاى بـ طعم الفراولة (Strawberry Flavored Tea) - 25 EGP</option>
+                            <option>ينسون (Anise) - 20 EGP</option>
+                            <option>نعناع (Mint) - 20 EGP</option>
+                            <option>حلبة (Fenugreek) - 20 EGP</option>
+                            <option>قرفة (Cinnamon) - 20 EGP</option>
                         </select>
 
                         <select style="width: 100%; padding: 8px; background: #111; color: #2ea44f; font-weight: bold; border: 1px solid #444; border-radius: 6px; font-size: 13px;">
-                            <option>اختر السكر أو التحلية</option>
-                            <option>سادة (بدون سكر)</option>
-                            <option>على الريحة</option>
-                            <option>مضبوط</option>
-                            <option>زيادة</option>
-                            <option>سكر ستيفيا (دايت)</option>
+                            <option>اختر السكر أو التحلية (Choose Sugar or Sweetener)</option>
+                            <option>سادة (بدون سكر) (Plain, No Sugar)</option>
+                            <option>على الريحة (Light Sugar)</option>
+                            <option>مضبوط (Medium Sweet)</option>
+                            <option>زيادة (Extra Sugar)</option>
+                            <option>سكر ستيفيا (دايت) (Stevia Sugar, Diet)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- ب. مشروبات باردة صحية -->
                 <div class="interactive-card healthy-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #2ea44f; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥤 مشروبات باردة صحية</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">مياه معدنية وعصائر طبيعية</h3>
+                    <div class="card-badge healthy-tag" style="background: rgba(46,164,79,0.2); color: #2ea44f; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🥤 Healthy Cold Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات باردة صحية)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Mineral Water & Natural Juices<span class="ar-sub">(مياه معدنية & عصائر طبيعية)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>مياه معدنية صغيرة - 10 EGP</option>
-                        <option>مياه معدنية كبيرة - 15 EGP</option>
-                        <option>مياه فوارة بالليمون والنعناع - 25 EGP</option>
-                        <option>عصير برتقال طبيعي 100% - 40 EGP</option>
-                        <option>عصير تفاح طبيعي بدون سكر - 40 EGP</option>
-                        <option>عصير مانجو طبيعي - 45 EGP</option>
-                        <option>عصير فراولة طازج - 40 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>مياه معدنية صغيرة (Small Mineral Water) - 10 EGP</option>
+                        <option>مياه معدنية كبيرة (Large Mineral Water) - 15 EGP</option>
+                        <option>مياه فوارة بـ الليمون والنعناع (Sparkling Water with Lemon & Mint) - 25 EGP</option>
+                        <option>عصير برتقال طبيعى (Fresh Orange Juice) - 40 EGP</option>
+                        <option>عصير تفاح طبيعى (Fresh Apple Juice) - 40 EGP</option>
+                        <option>عصير مانجو طبيعى (Fresh Mango Juice) - 45 EGP</option>
+                        <option>عصير فراولة طازج (Fresh Strawberry Juice) - 40 EGP</option>
                     </select>
                 </div>
 
-                <!-- ج. Energy Drinks (إنجليزي) -->
+                <!-- ج. Energy Drinks (إنجليزى ) -->
                 <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">⚡ Energy Drinks</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">Energy Drinks</h3>
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">⚡ Energy Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات الطاقة)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Energy Drinks<span class="ar-sub">(مشروبات الطاقة)</span></h3>
                     
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>Red Bull Original - 65 EGP</option>
-                        <option>Red Bull Sugarfree - 65 EGP</option>
-                        <option>Red Bull Watermelon Edition - 65 EGP</option>
-                        <option>Red Bull Tropical Edition - 65 EGP</option>
-                        <option>Monster Energy Original - 70 EGP</option>
-                        <option>Monster Ultra Zero - 70 EGP</option>
-                        <option>Monster Mango Loco - 75 EGP</option>
-                        <option>Twist Energy Drink - 35 EGP</option>
-                        <option>Gorilla Energy Drink - 35 EGP</option>
-                        <option>Bomb Energy Drink - 30 EGP</option>
-                        <option>Hell Energy Drink - 30 EGP</option>
-                        <option>Velo Energy - 35 EGP</option>
-                        <option>Sting Energy Drink - 20 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>Red Bull Original (ريد بول أوريجينال) - 65 EGP</option>
+                        <option>Red Bull Sugarfree (ريد بول بدون سكر) - 65 EGP</option>
+                        <option>Red Bull Watermelon Edition (ريد بول بطيخ) - 65 EGP</option>
+                        <option>Red Bull Tropical Edition (ريد بول تروبيكال) - 65 EGP</option>
+                        <option>Monster Energy Original (مونستر إنرجى أوريجينال) - 70 EGP</option>
+                        <option>Monster Ultra Zero (مونستر ألترا زيرو) - 70 EGP</option>
+                        <option>Monster Mango Loco (مونستر مانجو لوكو) - 75 EGP</option>
+                        <option>Twist Energy Drink (تويست مشروب طاقة) - 35 EGP</option>
+                        <option>Gorilla Energy Drink (جوريلا مشروب طاقة) - 35 EGP</option>
+                        <option>Bomb Energy Drink (بومب مشروب طاقة) - 30 EGP</option>
+                        <option>Hell Energy Drink (هيل مشروب طاقة) - 30 EGP</option>
+                        <option>Velo Energy (فيلو إنرجى) - 35 EGP</option>
+                        <option>Sting Energy Drink (ستينج مشروب طاقة) - 20 EGP</option>
                     </select>
                 </div>
 
-                <!-- د. مشروبات باردة غير صحية وآيس كوفي -->
+                <!-- د. مشروبات باردة غير صحية وآيس كوفى -->
                 <div class="interactive-card fast-card" style="background: #1a1a1a; border: 1px solid #333; border-top: 4px solid #e74c3c; border-radius: 12px; padding: 20px;">
-                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🧋 مشروبات باردة غير صحية</div>
-                    <h3 style="color: #fff; margin-bottom: 15px;">آيس كوفي، ميلك شيك ومشروبات غازية</h3>
-                    
+                    <div class="card-badge fast-tag" style="background: rgba(231,76,60,0.2); color: #e74c3c; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; margin-bottom: 10px;">🧋 Indulgent Cold Drinks<span class="ar-sub" style="font-size:1em;">(مشروبات باردة غير صحية)</span></div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Iced Coffee, Milkshakes & Soft Drinks<span class="ar-sub">(آيس كوفى & ميلك شيك & مشروبات غازية)</span></h3>
+
                     <select style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px; font-size: 14px;">
-                        <option>اختر</option>
-                        <option>Ice Coffee Vanilla - 40 EGP</option>
-                        <option>Ice Coffee Caramel - 40 EGP</option>
-                        <option>Ice Latte - 45 EGP</option>
-                        <option>Spanish Latte Iced - 50 EGP</option>
-                        <option>Milkshake Chocolate - 50 EGP</option>
-                        <option>Milkshake Vanilla - 50 EGP</option>
-                        <option>Milkshake Strawberry - 50 EGP</option>
-                        <option>Ice Tea (Peach / Raspberry) - 30 EGP</option>
-                        <option>Soft Drinks Canz (Pepsi/Coke/7Up) - 25 EGP</option>
-                        <option>Soft Drinks Diet / Zero - 25 EGP</option>
+                        <option>اختر (Select)</option>
+                        <option>Ice Coffee Vanilla (آيس كوفى فانيلا) - 40 EGP</option>
+                        <option>Ice Coffee Caramel (آيس كوفى كراميل) - 40 EGP</option>
+                        <option>Ice Latte (آيس لاتيه) - 45 EGP</option>
+                        <option>Spanish Latte Iced (سبانش لاتيه مثلج) - 50 EGP</option>
+                        <option>Milkshake Chocolate (ميلك شيك شيكولاتة) - 50 EGP</option>
+                        <option>Milkshake Vanilla (ميلك شيك فانيلا) - 50 EGP</option>
+                        <option>Milkshake Strawberry (ميلك شيك فراولة) - 50 EGP</option>
+                        <option>Ice Tea: Peach / Raspberry (آيس تى بـ الخوخ / التوت) - 30 EGP</option>
+                        <option>Soft Drinks Cans: Pepsi / Coke / 7Up (مشروبات غازية علب: بيبسى / كوكاكولا / سفن أب) - 25 EGP</option>
+                        <option>Soft Drinks Diet / Zero (مشروبات غازية دايت / زيرو) - 25 EGP</option>
                     </select>
                 </div>
 
             </div>
         </div>
 
+        <!-- ==================== طلب + ريسيت الحساب ==================== -->
+        <div style="background:#1a1a1a; border:2px solid #d4ac0d; border-radius:14px; padding:20px; text-align:center; margin-top:10px;">
+            <h3 style="color:#ffd700; margin:0 0 12px 0;">🧾 اطلب واحصل على الحساب</h3>
+            <input type="text" id="lounge-customer-name" placeholder="اكتب اسمك / Your name" style="width:100%; max-width:360px; padding:12px; background:#111; color:#fff; border:1px solid #444; border-radius:8px; font-size:16px; text-align:center;">
+            <div style="margin-top:12px;">
+                <select id="lounge-receipt-lang" onchange="renderReceipt()" style="padding:10px; background:#111; color:#fff; border:1px solid #444; border-radius:8px; font-size:15px;">
+                    <option value="ar">الريسيت بالعربى</option>
+                    <option value="en">Receipt in English</option>
+                </select>
+            </div>
+            <div style="margin-top:12px;">
+                <button type="button" onclick="placeLoungeOrder()" style="background:#d4ac0d; color:#000; font-weight:bold; font-size:18px; padding:12px 28px; border:none; border-radius:10px; cursor:pointer;">اطلب الآن 🦆</button>
+            </div>
+            <div id="lounge-receipt" style="display:none; margin:20px auto 0; max-width:420px; background:#fff; color:#000; border-radius:10px; padding:20px; text-align:right; box-shadow:0 6px 20px rgba(0,0,0,0.5);"></div>
+        </div>
+
         <!-- بنر طوارئ الطريق -->
         <div class="road-rescue-banner" style="background: linear-gradient(135deg, #d4ac0d, #b38f00); color: #000; padding: 20px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 20px;">
             <h3 style="margin: 0 0 5px 0; font-size: 20px;">🚨 خدمة توصيل طوارئ الطريق (Duck Rescue Express)</h3>
-            <p style="margin: 0; font-size: 14px;">عطلان على الطريق؟ اختار طلبك بالتفصيل وهيوصلك طازة مع ونش الطوارئ أو فني الصيانة!</p>
+            <p style="margin: 0; font-size: 14px;">عطلان على الطريق؟ اختار طلبك بـ التفصيل وهيوصلك طازة مع ونش الطوارئ أو فنى الصيانة!</p>
         </div>
 
     </div>
 </div>
-        <!-- SECTION: خدمات إضافية (المهندسة بطوطه + الصورة الموسطنة + الحاسبة حتى بطل صندوق الخير والوساطة) -->
+        <!-- SECTION: الورشة المجنونة (تعديلات السيارات) -->
+        <div id="section-workshop" class="page-section">
+            <h1 class="mod-title">الورشة المجنونة 🔥</h1>
+            <p class="mod-sub">من تعديل خفيف لحد أفكار مجنونة.. كل ده فى مكان واحد 🦆🐣</p>
+            <div class="mod-grid" id="mod-grid"></div>
+
+            <div class="mod-meter">
+                <div class="mm-top"><b id="mm-level">اختار تعديلات وشوف مستوى جنانك 🦆</b><span id="mm-info"></span></div>
+                <div class="mm-bar"><div class="mm-fill" id="mm-fill"></div></div>
+            </div>
+
+            <div class="mod-duo">
+            <div class="mod-request" id="mod-quiz">
+                <h3 style="color:#e3b5ff; margin:0;">🎯 اختار استايلك</h3>
+                <select id="q-use">
+                    <option value="daily">بستخدم العربية فى: مشاوير يومية</option>
+                    <option value="travel">بستخدم العربية فى: سفر وطرق</option>
+                    <option value="show">بستخدم العربية فى: سهر وعرض</option>
+                </select>
+                <select id="q-want">
+                    <option value="comfort">عايزها: راحة وهدوء</option>
+                    <option value="speed">عايزها: سرعة وقوة</option>
+                    <option value="flashy">عايزها: شكل لافت</option>
+                </select>
+                <select id="q-bud">
+                    <option value="low">الميزانية: اقتصادية</option>
+                    <option value="mid">الميزانية: متوسطة</option>
+                    <option value="high">الميزانية: مفتوحة</option>
+                </select>
+                <button type="button" onclick="runStyleQuiz()">رشّحلى 🦆</button>
+                <div id="q-result"></div>
+            </div>
+
+            <div class="mod-request">
+                <h3 style="color:#e3b5ff; margin:0;">🛠️ اطلب تعديلك</h3>
+                <input type="text" id="mod-name" placeholder="اكتب اسمك">
+                <input type="text" id="mod-car" placeholder="نوع العربية وموديلها">
+                <textarea id="mod-idea" rows="3" placeholder="اكتب فكرتك أو التعديل اللى نفسك فيه.. حتى لو مجنون"></textarea>
+                <button type="button" onclick="sendModRequest()">ابعت فكرتك على واتساب 🦆</button>
+            </div>
+            </div>
+
+            <p class="mod-legal">⚠️ الأسعار تقديرية وتتغير حسب نوع العربية وحالتها. التعديلات المعلّمة "يحتاج ترخيص" لازم تتوافق مع قوانين المرور قبل التنفيذ، وأفكار "معمل البطة المجنون" للضحك بس 😄</p>
+        </div>
+
+        <!-- SECTION: خدمات إضافية (المهندسة بطوطة + الصورة الموسطنة + الحاسبة حتى بطل صندوق الخير والوساطة) -->
         <div id="section-extra" class="page-section">
             
             <!-- عنوان نيون خاص بالصفحة -->
-            <h1 class="neon-heading-batota">المهندسة بطوطه</h1>
+            <h1 class="neon-heading-batota">المهندسة بطوطة</h1>
 
             <!-- الصورة موسطنة فى الشاشة وبنفس تنسيق الصورة الرئيسية -->
-            <img src="lilola.jpeg" alt="المهندسة بطوطه" class="extra-hero-img" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=LILOLA+JPEG';">
+            <img src="lilola.jpeg" alt="المهندسة بطوطة" class="extra-hero-img" onerror="this.onerror=null; this.src='https://placehold.co/750x420/1e1e1e/f1c40f?text=LILOLA+JPEG';">
 
             <!-- GRID: حاسبة التكلفة المباشرة + حجز المواعيد -->
             <div class="interactive-grid">
@@ -1666,7 +1835,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                             <option value="1100">تغيير زيت المحرك + فلتر (1,100 EGP)</option>
                             <option value="500">تنظيف داخلى عميق (500 EGP)</option>
                             <option value="800">صيانة الفرامل والعفشة (800 EGP)</option>
-                            <option value="1500">برمجه ECU(1,500 EGP)</option>
+                            <option value="1500">برمجة ECU(1,500 EGP)</option>
                             <option value="1000">رش فرن لـ القطعة (1,000 EGP)</option>
                         </select>
                     </div>
@@ -1689,7 +1858,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         <div class="form-group">
                             <label>طريقة الخدمة:</label>
                             <select id="booking-type">
-                                <option value="branch">سوف أحضر الى الفرع 🚗</option>
+                                <option value="branch">سوف أحضر إلى الفرع 🚗</option>
                                 <option value="butler">طلب "خادم البطة" (سائق لاستلام وتسليم السيارة من المنزل) 🏎️</option>
                             </select>
                         </div>
@@ -1703,7 +1872,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
             <div class="tracker-box" style="margin-top: 30px; border-color: var(--primary-yellow);">
                 <h3 style="color: var(--primary-yellow); font-size: 24px; border-bottom: 2px dashed var(--primary-yellow); padding-bottom: 10px;">🚗 سوق السيارات المستعملة والوساطة الموثوقة (خدمة المحبة)</h3>
                 <p style="color: #ddd; font-size: 16px; margin: 12px 0; line-height: 1.6;">
-                    عايز تبيع عربيتك بـ أمان وبدون استغلال التجار أو عايز تشترى عربية ومطمن لـ حالتها الفنية؟ مركز <strong>DUCKY MOTORS</strong> بـ يقدملك خدمه عرض عربيتك عندنا بـ كل تفاصيلها وعدد الكيلومترات الموثق وسجل الصيانة.
+                    عايز تبيع عربيتك بـ أمان وبدون استغلال التجار أو عايز تشترى عربية ومطمن لـ حالتها الفنية؟ مركز <strong>DUCKY MOTORS</strong> بـ يقدملك خدمة عرض عربيتك عندنا بـ كل تفاصيلها وعدد الكيلومترات الموثق وسجل الصيانة.
                 </p>
                 
                 <div class="interactive-grid" style="margin-top: 20px;">
@@ -1765,7 +1934,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
             <!-- جدول مرجعى عام لـ السيارات المنفذ عليها الكشف لـ منع النصب -->
             <div class="dashboard-section" style="margin-top: 30px; border: 2px solid var(--primary-yellow);">
-                <h3 style="color: var(--primary-yellow); font-size: 22px;">📊 السجل المرجعي العام لـ السيارات التي تم الكشف عليها (شفافية كاملة لـ منع النصب)</h3>
+                <h3 style="color: var(--primary-yellow); font-size: 22px;">📊 السجل المرجعى  العام لـ السيارات التي تم الكشف عليها (شفافية كاملة لـ منع النصب)</h3>
                 <p style="color: #bbb; font-size: 14px; margin-bottom: 15px;">جدول موثق مفتوح لـ جميع الراغبين فى شراء السيارات لـ التحقق من تاريخ وقراءة عداد الكيلومترات والحالة الفنية الفعلية لـ السيارة قبل الشراء:</p>
                 
                 <div class="table-responsive">
@@ -1901,7 +2070,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                     </div>
 
                     <div class="review-card" style="border: 2px solid #2ecc71; background: #122b15;">
-                        <h4 style="color: #2ecc71; margin-bottom: 5px;"> بطل صندوق الخير لهذا الشهر🏆</h4>
+                        <h4 style="color: #2ecc71; margin-bottom: 5px;"> بطل صندوق الخير لـ هذا الشهر🏆</h4>
                         <p style="font-size: 14px; color: #fff;">العضو <strong>#DUCK-9942</strong> ساهم بـ 15 سهم خير لدعم طوارئ الطرق والحالات الحرجة! 🌱</p>
                     </div>
                 </div>
@@ -1947,7 +2116,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 <div class="prize-card">
                     <span class="prize-badge">🏅 المركز الخامس</span>
                     <h3>باكيدج زيوت محرك وفتيس</h3>
-                    <p>تغيير زيت المحرك + الفتيس والفلتر مجاناً لـ 3 مرات متتالية.</p>
+                    <p>تغيير زيت الـ محرك + الـ فتيس والـ فلتر مجاناً لـ 3 مرات متتالية.</p>
                 </div>
 
                 <div class="prize-card">
@@ -1958,8 +2127,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
                 <div class="prize-card">
                     <span class="prize-badge">🏅 المركز السابع</span>
-                    <h3>باكيدج صيانة العفشة والفرامل</h3>
-                    <p>صيانة وفحص كامل لـ الفرامل والعفشة والفتيس مجاناً.</p>
+                    <h3>باكيدج صيانة الـ عفشة والـ فرامل</h3>
+                    <p>صيانة وفحص كامل لـ الفرامل والـ عفشة والـ فتيس مجاناً.</p>
                 </div>
 
                 <div class="prize-card">
@@ -2091,7 +2260,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                             <span style="font-size: 28px;">🛞</span>
                             <h3>عطل / فرقعة فى الكاوتش</h3>
                         </div>
-                        <p>الفرده فرقعت أو نامت؟ اكتب مقاس الكاوتش وهنبعت لك عربية الصيانة فوراً.</p>
+                        <p>الفردة فرقعت أو نامت؟ اكتب مقاس الكاوتش وهنبعت لك عربية الصيانة فوراً.</p>
                         <div class="sos-input-group">
                             <label>أدخل مقاس الكاوتش (اختيارى):</label>
                             <input type="text" id="sos-tyre-size" placeholder="مثال: R16 205/55">
@@ -2183,7 +2352,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                             <span style="font-size: 28px;">🚑</span>
                             <h3>حالة صحية / أزمة طبية لـ السائق</h3>
                         </div>
-                        <p>احسست بدوخة أو تعب مفاجئ؟ سيتم ربط موقعك وتوجيه الإسعاف والدورية فوراً.</p>
+                        <p>أحسست بدوخة أو تعب مفاجئ؟ سيتم ربط موقعك وتوجيه الإسعاف والدورية فوراً.</p>
                     </div>
                     <button class="btn-sos-action" style="background-color: #25D366;" onclick="triggerSosEmergency(12)">🚑 إرسال نداء إغاثة وإسعاف عاجل</button>
                 </div>
@@ -2272,16 +2441,29 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 <div id="donation-success-msg" style="display: none; margin-top: 20px; padding: 15px; border-radius: 10px; background-color: #133a18; border: 2px solid #2ecc71; color: #2ecc71; font-weight: 800; font-size: 18px;">
                 </div>
             </div>
+
+            <div style="background:#112414; border:2px solid #2ecc71; border-radius:14px; padding:22px; margin-top:25px; text-align:center;">
+                <h3 style="color:#2ecc71; font-size:24px; margin:0 0 12px 0;"> فضلا نرجو الـ دعاء لأصحاب أسهم الخير </h3>
+                <p style="color:#fff; font-size:18px; line-height:2; margin:0;">
+                    اللهم اجزِ خيراً كل من ساهم فى نشر هذا العلم والعمل والخير، وتقبّل منا ومنهم وعنهم صدقاتهم، وبارك اللهم لنا ولهم، واجعل هذا العمل خالصا لك وفى ميزان حسناتنا وحسناتهم.
+                </p>
+                <p style="color:#ffd700; font-size:20px; font-weight:900; line-height:2; margin:12px 0 0 0;">
+                    مصطفى محمود أبو المجد &nbsp;•&nbsp;  معتز عبدالغنى المخيمر&nbsp;•&nbsp;  يوسف أيمن صلاح 
+                </p>
+                <p style="color:#fff; font-size:17px; line-height:2; margin:8px 0 0 0;">
+                 اللهم اغفر لنا ولهم واجعل اللهم خير الجزاء لنا ولهم آمين يا رب العالمين .
+                </p>
+            </div>
         </div>
 
         <!-- SECTION: الخدمات والأسعار -->
         <div id="section-services" class="page-section">
             <div class="menus-wrapper">
                 <div class="menu-box">
-                    <h2>📋 MENU</h2>
+                    <h2>📋 MENU<span class="ar-sub">(القائمة)</span></h2>
 
-                    <details open>
-                        <summary>1. Detailing & Wash</summary>
+                    <details>
+                        <summary>1. Detailing & Wash<span class="ar-sub">(الغسيل والتلميع)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Exterior Car Wash (غسيل خارجى)</li>
@@ -2293,8 +2475,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>2. Diagnostics & Programming</summary>
+                    <details>
+                        <summary>2. Diagnostics & Programming<span class="ar-sub">(الفحص والبرمجة)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Computer Diagnostics (فحص  ECU & Control Check )</li>
@@ -2305,32 +2487,32 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>3. Mechanical & Engine Repair</summary>
+                    <details>
+                        <summary>3. Mechanical & Engine Repair<span class="ar-sub">(ميكانيكا وإصلاح المحرك)</span></summary>
                         <div class="details-flex">
                             <ul>
-                                <li>Engine Overhaul & Repair (عمرة وصيانة المحرك)</li>
-                                <li>Brake System Maintenance (صيانة الفرامل)</li>
-                                <li>Suspension & Steering Fix (صيانة العفشة والفتيس)</li>
+                                <li>Engine Overhaul & Repair (عمرة وصيانة الـ محرك)</li>
+                                <li>Brake System Maintenance (صيانة الـ فرامل)</li>
+                                <li>Suspension & Steering Fix (صيانة الـ عفشة والـ فتيس)</li>
                             </ul>
                             <video src="ducky.mp4" class="service-video" autoplay loop muted playsinline controls></video>
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>4. Oil & Fluids Service</summary>
+                    <details>
+                        <summary>4. Oil & Fluids Service<span class="ar-sub">(خدمة الزيوت والسوائل)</span></summary>
                         <div class="details-flex">
                             <ul>
-                                <li>Engine Oil Change (تغيير زيت المحرك)</li>
-                                <li>Transmission Fluid Change (تغيير زيت الفتيس)</li>
-                                <li>Coolant & Filter Service (تغيير الفلاتر ومياه الـ تبريد)</li>
+                                <li>Engine Oil Change (تغيير زيت الـ محرك)</li>
+                                <li>Transmission Fluid Change (تغيير زيت الـ فتيس)</li>
+                                <li>Coolant & Filter Service (تغيير الـ فلاتر ومياه الـ تبريد)</li>
                             </ul>
                             <img src="oil.jpeg" alt="Oil Service Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OIL';">
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>5. Bodywork & Painting</summary>
+                    <details>
+                        <summary>5. Bodywork & Painting<span class="ar-sub">(السمكرة والدهان)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Dent Repair & Body Work (سمكرة وتعديل الـ صاج)</li>
@@ -2341,8 +2523,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>6. Spare Parts & Accessories</summary>
+                    <details>
+                        <summary>6. Spare Parts & Accessories<span class="ar-sub">(قطع الغيار والإكسسوارات)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Original Spare Parts (قطع غيار أصلية)</li>
@@ -2355,23 +2537,23 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 </div>
 
                 <div class="menu-box">
-                    <h2>💰 PRICE</h2>
+                    <h2>💰 PRICE<span class="ar-sub">(الأسعار)</span></h2>
 
-                    <details open>
-                        <summary>1. Detailing & Wash Prices</summary>
+                    <details>
+                        <summary>1. Detailing & Wash Prices<span class="ar-sub">(أسعار الغسيل والتلميع)</span></summary>
                         <div class="details-flex">
                           <ul>
-    <li>Exterior Car Wash (غسيل خارجي): <del class="old-price">300 EGP</del> <span class="new-price">200 EGP</span></li>
-    <li>Interior Deep Cleaning (تنظيف داخلي عميق): <del class="old-price">700 EGP</del> <span class="new-price">500 EGP</span></li>
-    <li>Chemical Engine Cleaning (غسيل المحرك بـ الكيماوي): <del class="old-price">500 EGP</del> <span class="new-price">350 EGP</span></li>
+    <li>Exterior Car Wash (غسيل خارجى): <del class="old-price">300 EGP</del> <span class="new-price">200 EGP</span></li>
+    <li>Interior Deep Cleaning (تنظيف داخلى عميق): <del class="old-price">700 EGP</del> <span class="new-price">500 EGP</span></li>
+    <li>Chemical Engine Cleaning (غسيل المحرك بـ الكيماوى): <del class="old-price">500 EGP</del> <span class="new-price">350 EGP</span></li>
     <li>Polishing & Waxing (تلميع وشمع): <del class="old-price">1100 EGP</del> <span class="new-price">800 EGP</span></li>
 </ul>
                             <img src="duckak.jpeg" alt="Duckak Wash Price" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAK';">
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>2. Diagnostics & Programming Prices</summary>
+                    <details>
+                        <summary>2. Diagnostics & Programming Prices<span class="ar-sub">(أسعار الفحص والبرمجة)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Computer Diagnostics (فحص ECU & Control Check ): <del class="old-price">600 EGP</del> <span class="new-price">400 EGP</span></li>
@@ -2382,32 +2564,32 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>3. Mechanical & Engine Repair Prices</summary>
+                    <details>
+                        <summary>3. Mechanical & Engine Repair Prices<span class="ar-sub">(أسعار الميكانيكا وإصلاح المحرك)</span></summary>
                         <div class="details-flex">
                             <ul>
-                              <li>Engine Overhaul & Repair (عمرة وصيانة المحرك): <del class="old-price">18,000 EGP</del> <span class="new-price">15,000 EGP</span></li>
-<li>Brake System Maintenance (صيانة الفرامل): <del class="old-price">1,000 EGP</del> <span class="new-price">800 EGP</span></li>
-<li>Suspension & Steering Fix (صيانة العفشة والفتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
+                              <li>Engine Overhaul & Repair (عمرة وصيانة الـ محرك): <del class="old-price">18,000 EGP</del> <span class="new-price">15,000 EGP</span></li>
+<li>Brake System Maintenance (صيانة الـ فرامل): <del class="old-price">1,000 EGP</del> <span class="new-price">800 EGP</span></li>
+<li>Suspension & Steering Fix (صيانة الـ عفشة والـ فتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
                             </ul>
                             <img src="duckaa.jpeg" alt="Mechanical Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=DUCKAA';">
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>4. Oil & Fluids Service Prices</summary>
+                    <details>
+                        <summary>4. Oil & Fluids Service Prices<span class="ar-sub">(أسعار خدمة الزيوت والسوائل)</span></summary>
                         <div class="details-flex">
                             <ul>
-                              <li>Engine Oil Change (تغيير زيت المحرك 4L + فلتر): <del class="old-price">1,400 EGP</del> <span class="new-price">1,100 EGP</span></li>
-<li>Transmission Fluid Change (تغيير زيت الفتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
+                              <li>Engine Oil Change (تغيير زيت الـ محرك 4L + فلتر): <del class="old-price">1,400 EGP</del> <span class="new-price">1,100 EGP</span></li>
+<li>Transmission Fluid Change (تغيير زيت الـ فتيس): <del class="old-price">1,500 EGP</del> <span class="new-price">1,200 EGP</span></li>
 <li>Coolant & Filter Service (تغيير الـ فلاتر ومياه الـ تبريد): <del class="old-price">600 EGP</del> <span class="new-price">450 EGP</span></li>
                             </ul>
                             <img src="oila.jpeg" alt="Oil Price Duck" class="service-img" onerror="this.onerror=null; this.src='https://placehold.co/140x140/1e1e1e/f1c40f?text=OILA';">
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>5. Bodywork & Painting Prices</summary>
+                    <details>
+                        <summary>5. Bodywork & Painting Prices<span class="ar-sub">(أسعار السمكرة والدهان)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <li>Dent Repair & Body Work (سمكرة وتعديل الـ صاج): <del class="old-price">2,000 EGP</del> <span class="new-price">1,500 EGP</span></li>
@@ -2418,8 +2600,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                         </div>
                     </details>
 
-                    <details open>
-                        <summary>6. Spare Parts & Accessories Prices</summary>
+                    <details>
+                        <summary>6. Spare Parts & Accessories Prices<span class="ar-sub">(أسعار قطع الغيار والإكسسوارات)</span></summary>
                         <div class="details-flex">
                             <ul>
                                 <ul>
@@ -2448,12 +2630,12 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 <h2> تسجيل الدخول لـ حسابك🔐</h2>
                 <form onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label>اسم المستخدم أو البريد الإلكترونى:</label>
-                        <input type="text" id="username" placeholder="أدخل اسمك" value="مصطفى" required>
+                        <label>اكتب اسمك:</label>
+                        <input type="text" id="username" placeholder="أدخل اسمك" required>
                     </div>
                     <div class="form-group">
-                        <label>كلمة المرور:</label>
-                        <input type="password" id="password" placeholder="••••••••" value="123456" required>
+                        <label>كلمة المرور (اختيارى):</label>
+                        <input type="password" id="password" placeholder="••••••••">
                     </div>
                     <button type="submit" class="btn-submit">تسجيل الدخول</button>
                 </form>
@@ -2462,9 +2644,9 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
             <div id="dashboard-box" style="display: none;">
                 <div class="user-dashboard">
                     <div class="user-info">
-                        <h2>مرحباً بك، <span id="user-display-name">مصطفى ابو المجد</span> 🦆</h2>
+                        <h2>مرحباً بك، <span id="user-display-name">مصطفى أبو المجد</span> 🦆</h2>
                         <p>السيارة: <strong>Toyota Corolla 2022</strong></p>
-                        <p>رقم العضوية: <strong>#DUCK-9942</strong></p>
+                        <p>رقم العضوية: <strong id="user-member-id">#DUCK-9942</strong></p>
                     </div>
 
                     <div class="points-badge">
@@ -2567,7 +2749,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
         <div id="section-contact" class="page-section">
             <div class="hero-card">
                 <h2 style="color: var(--primary-yellow); margin-bottom: 15px; font-size: 28px;">يسعدنا تواصلك معنا فى أى وقت!</h2>
-                <p style="font-size: 19px; color: #dddddd;">احجز صيانتك واستفسر عن نقاطك ومكافآتك بنقرة واحدة:</p>
+                <p style="font-size: 19px; color: #dddddd;">احجز صيانتك واستفسر عن نقاطك ومكافآتك بـ نقرة واحدة:</p>
 
                 <br>
                 <a href="https://wa.me/201044503749" target="_blank" class="duck-whatsapp-btn">
@@ -2577,7 +2759,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 <div class="contact-cards">
                     <div class="contact-card">
                         <h4>📍 العنوان</h4>
-                        <p> الفرع الرئيسى التجمع الخامس امام الجامعه الامريكى _الفرع الثانى مدينه نصر شارع عباس العقاد</p>
+                        <p> الفرع الرئيسى التجمع الخامس أمام الجامعة الأمريكى _الفرع الثانى مدينة نصر شارع عباس العقاد</p>
                     </div>
                     <div class="contact-card">
                         <h4>⏰ مواعيد العمل</h4>
@@ -2602,12 +2784,12 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 <span style="cursor: pointer;" onclick="toggleChatbot()">✕</span>
             </div>
             <div class="chat-body" id="chat-body">
-                <div class="chat-msg bot"> هالو هالو اهلا بيك يا بطوطتى  أنا البطوطه الـ مطبطبه موجوده دايما عشان اساعدك.. محتاج تسأل عن إيه يا بطه؟ 🦆</div>
+                <div class="chat-msg bot"> هالو هالو أهلاً بيك يا بطوطتى  أنا البطوطة الـ مطبطبة موجودة دايما عشان أساعدك.. محتاج تسأل عن إيه يا بطة؟ 🦆</div>
             </div>
             <div class="chat-options">
                 <button class="chat-opt-btn" onclick="askChatbot('المواعيد')">⏰ مواعيد العمل</button>
                 <button class="chat-opt-btn" onclick="askChatbot('العنوان')">📍 العنوان</button>
-                <button class="chat-opt-btn" onclick="askChatbot('الخصم 50%')">🎁 الخصم 50%</button>
+                <button class="chat-opt-btn" onclick="askChatbot('الخصم الحصرى')">🎁 الخصم الحصرى</button>
             </div>
         </div>
     </div>
@@ -2615,7 +2797,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
     <!-- LIVE TOAST NOTIFICATION -->
     <div class="toast-notification" id="toast-notif">
         <span style="font-size: 22px;">🎉</span>
-        <span id="toast-msg">العميل #DUCK-4122 حجز صيانة زيوت لـ التو!</span>
+        <span id="toast-msg"></span>
     </div>
 
     <!-- SOS RESPONSE POPUP MODAL -->
@@ -2634,6 +2816,8 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
     <script>
         let selectedDonation = 10;
+        let customerName = '';
+        let charityTotal = 14250;
 
         function switchSectionAndBubble(sectionId, popoverId) {
             const sections = document.querySelectorAll('.page-section');
@@ -2660,11 +2844,19 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 activePopover.classList.add('show');
             }
 
+            if (sectionId !== 'charity') {
+                const toast = document.getElementById('toast-notif');
+                if (toast) toast.classList.remove('show');
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             switchSectionAndBubble('home', 'nest');
+            renderWorkshop();
+            initLoungeDropdowns();
+            initOpenPairs();
             calculatePrice();
             startLiveToasts();
         });
@@ -2718,25 +2910,29 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
 
         /* LIVE TOAST NOTIFICATIONS */
         function startLiveToasts() {
-            const messages = [
-                "العميل #DUCK-4122 حجز صيانة زيوت لـ التو! ",
-                "متبقى 12 مكان فقط فى مسابقة لغز البطة الذهبية! ",
-                "تمت إضافة 500 جنيه جديدة لــ صندوق سهم الخير ",
-                "العميل #DUCK-8901 استلم عربية تويوتا مغسولة ومتربطة! "
-            ];
-            let idx = 0;
+            const amounts = [5, 10, 20, 25, 50, 75, 100, 150, 200];
 
             setInterval(() => {
+                const charity = document.getElementById('section-charity');
+                if (!charity || !charity.classList.contains('active')) return;
+
+                const amount = amounts[Math.floor(Math.random() * amounts.length)];
+                const donor = '#DUCK-' + (1000 + Math.floor(Math.random() * 9000));
+
+                charityTotal += amount;
+                updateCharityTotal();
+
                 const toast = document.getElementById('toast-notif');
-                document.getElementById('toast-msg').textContent = messages[idx];
+                document.getElementById('toast-msg').textContent =
+                    `العميل ${donor} تبرع بـ ${amount} جنيه لـ سهم الخير 🌾`;
                 toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 5000);
+            }, 60000);
+        }
 
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
-
-                idx = (idx + 1) % messages.length;
-            }, 10000);
+        function updateCharityTotal() {
+            const el = document.getElementById('total-charity-shares');
+            if (el) el.textContent = charityTotal.toLocaleString('en-US') + ' جنيه';
         }
 
         function submitDuckPuzzle(e) {
@@ -2748,7 +2944,7 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
             const userId = document.getElementById('puzzle-user-id').value.trim();
             const resultBox = document.getElementById('puzzle-result');
 
-            const isQ1Correct = (q1 === "بطه" || q1 === "بطة");
+            const isQ1Correct = (q1 === "بطة" || q1 === "بطة");
             const isQ2Correct = (q2 === "100");
             const isQ3Correct = (q3.includes("فلتر") || q3.includes("الفلتر"));
 
@@ -2849,26 +3045,413 @@ nav button:not(.nav-btn-sos):not(.nav-btn-charity):not(.nav-btn-challenge).activ
                 return;
             }
 
+            charityTotal += finalAmount;
+            updateCharityTotal();
+
             msgBox.style.display = 'block';
             msgBox.innerHTML = `🌱 تقبل الله منكم الصدقة والبركة!<br>تم تسجيل "سهم الخير" بقيمة <b>(${finalAmount} جنيه)</b> لـ حساب العضوية <b>(${userId})</b> بـ نجاح.<br>سيتم تخصيص هذا السهم لـ دعم طوارئ الطرق وغير المقتدرين. تقبل الله منكم وزادكم من فضله! 🕊️✨`;
         }
 
+        /* LOUNGE DROPDOWNS: always expand downward */
+        function initLoungeDropdowns() {
+            document.querySelectorAll('#section-snack select').forEach(sel => {
+                const collapse = () => { sel.size = 1; };
+                sel.addEventListener('mousedown', e => {
+                    if (sel.size <= 1) {
+                        e.preventDefault();
+                        sel._openedAt = Date.now();
+                        sel.size = Math.min(sel.options.length, 7);
+                        sel.focus();
+                    }
+                });
+                sel.addEventListener('click', e => {
+                    if (sel.size > 1 && e.target.tagName === 'OPTION' && Date.now() - (sel._openedAt || 0) > 300) {
+                        collapse();
+                        sel.blur();
+                    }
+                });
+                sel.addEventListener('change', () => { collapse(); sel.blur(); });
+                sel.addEventListener('blur', collapse);
+                sel.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Enter') collapse(); });
+            });
+        }
+
+        /* لما سكشن وقدامه سكشن بنفس الرقم يتفتحوا مع بعض، يبقوا بنفس الحجم */
+        function syncOpenPairs() {
+            const boxes = document.querySelectorAll('#section-services .menu-box');
+            if (boxes.length < 2) return;
+            const a = boxes[0].querySelectorAll(':scope > details');
+            const b = boxes[1].querySelectorAll(':scope > details');
+            a.forEach((d, i) => { d.style.minHeight = ''; if (b[i]) b[i].style.minHeight = ''; });
+            a.forEach((d, i) => {
+                const o = b[i];
+                if (o && d.open && o.open) {
+                    const h = Math.max(d.offsetHeight, o.offsetHeight);
+                    d.style.minHeight = h + 'px';
+                    o.style.minHeight = h + 'px';
+                }
+            });
+        }
+
+        function initOpenPairs() {
+            const sec = document.getElementById('section-services');
+            if (!sec) return;
+            sec.querySelectorAll('details').forEach(d => d.addEventListener('toggle', () => {
+                syncOpenPairs();
+                setTimeout(syncOpenPairs, 400);
+            }));
+            sec.querySelectorAll('img').forEach(i => i.addEventListener('load', syncOpenPairs));
+            sec.querySelectorAll('video').forEach(v => v.addEventListener('loadedmetadata', syncOpenPairs));
+            window.addEventListener('resize', syncOpenPairs);
+        }
+
+        /* WORKSHOP DATA: [الاسم, السعر (رقم أو نص), النوع] */
+        const MOD_DATA = [
+            { title: '💰 Stage 0.5 - باكيدج الميزانية', note: 'تحسين بسيط وسريع بسعر رمزى', p: 1, items: [
+                ['تنظيف بوابة الهواء + فلتر رياضى + ظبط ضغط الإطارات', 1800, 'ok']] },
+            { title: '⚡ Stage 1 - أداء خفيف', note: 'زيادة بسيطة فى القوة من غير تغيير كبير', p: 1, items: [
+                ['ريماب ECU Stage 1', 4500, 'ok'],
+                ['فلتر هواء عالى التدفق', 1200, 'ok'],
+                ['تنظيف دورة الهواء والـ بخاخات', 900, 'ok']] },
+            { title: '🔥 Stage 2 - أداء متوسط', note: 'لو  عايز بطتك  تطير على الطريق السريع', p: 2, items: [
+                ['ريماب ECU Stage 2', 9000, 'lic'],
+                ['عادم رياضى (Sport Exhaust)', 6500, 'lic'],
+                ['إنتركولر محسّن', 8000, 'lic'],
+                ['مبرد زيت إضافى + رادياتير ألومنيوم', 7500, 'ok']] },
+            { title: '🚀 Stage 3 - أداء عالى', note: 'لـ المجانين بس.. قوة حقيقية وتجهيز كامل', p: 4, items: [
+                ['ريماب ECU مخصص (Custom Tune)', 18000, 'lic'],
+                ['تيربو أكبر (Big Turbo)', 25000, 'lic'],
+                ['نظام وقود محسّن (طلمبة + بخاخات)', 8500, 'lic'],
+                ['دبرياج مقوّى (Performance Clutch)', 9000, 'ok'],
+                ['بساتم وبيل مطروقة (Forged)', 40000, 'lic'],
+                ['حقن ميثانول + ماء (Water-Methanol)', 12000, 'lic'],
+                ['كيت وقود كحولى (Flex Fuel E85)', 15000, 'lic'],
+                ['أنبوب تفريغ التيربو (Screamer Pipe) - للمضمار بس', 6000, 'lic']] },
+            { title: '🏁 العفشة والفرامل والثبات', note: 'ثبات أكتر وفرامل أقوى', p: 2, items: [
+                ['عفشة منخفضة (Coilovers)', 9500, 'lic'],
+                ['عفشة هوائية ذكية (Air Suspension)', 22000, 'lic'],
+                ['بارات تثبيت (Strut Bars)', 2200, 'ok'],
+                ['قضبان ثبات (Sway Bars)', 3500, 'ok'],
+                ['طقم فرامل رياضية كامل (BBK)', 12000, 'ok']] },
+            { title: '🎨 الشكل والستايل', note: 'خلّى عربيتك تلفت الأنظار', p: 1, items: [
+                ['تغليف كامل بـ الورق (Wrap)', 18000, 'lic'],
+                ['دهان ماتّ / لامع', 12000, 'lic'],
+                ['حماية لـ الدهان (PPF)', 15000, 'ok'],
+                ['جنوط رياضية', 7000, 'ok'],
+                ['جنوط بـ تغيّر لونها (Chameleon)', 9000, 'ok'],
+                ['تلوين الـ كاليبرز', 1500, 'ok'],
+                ['كابوت وسبويلر كربون فايبر', 20000, 'lic']] },
+            { title: '💡 الإضاءة', note: 'إضاءة تنوّر وتفرّح', p: 1, items: [
+                ['كشافات LED عالية الكفاءة', 2000, 'lic'],
+                ['كشافات ليزر / ماتريكس (Retrofit)', 12000, 'lic'],
+                ['إضاءة داخلية RGB', 1200, 'ok'],
+                ['إضاءة ترحيب بـ شعار البطة على الأرض', 1500, 'ok'],
+                ['نيون تحت العربية (Underglow)', 1800, 'lic']] },
+            { title: '🛋️ الداخل والراحة', note: 'كابينة أحلامك', p: 1, items: [
+                ['تنجيد جلد كامل', 10000, 'ok'],
+                ['غطاء طارة مخصص', 800, 'ok'],
+                ['دريكسيون رياضى بـ لمبات تغيير السرعات', 7500, 'ok'],
+                ['عزل صوت وحرارة شامل (Dynamat)', 6500, 'ok'],
+                ['فاميه عزل حرارى', 3500, 'lic'],
+                ['رسم جرافيتى على التابلوه أو السقف', 5000, 'ok']] },
+            { title: '📱 تكنولوجيا الكابينة', note: 'شاشة وموبايل وخرائط بسهولة', p: 1, items: [
+                ['شاشة Apple CarPlay / Android Auto', 5500, 'ok'],
+                ['عرض السرعة على الزجاج (HUD)', 4500, 'ok'],
+                ['لوحة عدادات رقمية', 6000, 'ok']] },
+            { title: '🔊 الصوت', note: 'سيستم يخلى الشارع كله يسمعك', p: 1, items: [
+                ['سيستم صوت كامل', 5000, 'ok'],
+                ['سب ووفر وأمبلفاير', 3500, 'ok'],
+                ['عازل صوت لـ الأبواب', 2500, 'ok']] },
+            { title: '🔬 خدمات القياس والضبط', note: 'اعرف قوة عربيتك الحقيقية', p: 0, items: [
+                ['قياس القوة الحقيقية على الداينو (Dyno)', 2500, 'ok'],
+                ['موازنة أوزان العربية (Corner Weighting)', 1500, 'ok'],
+                ['ظبط زوايا العجل (Alignment)', 600, 'ok'],
+                ['دراى كلين وتنظيف عميق للموتور والصالون', 1800, 'ok']] },
+            { title: '📦 باكيدجات جاهزة', note: 'من غير لخبطة.. اختار باكيدج وخلاص', p: 2, items: [
+                ['باكيدج الصيف: تكييف + عزل حرارة + تنظيف دورى', 4500, 'ok'],
+                ['باكيدج الشياكة: تنجيد + إضاءة داخلية + تلميع', 13000, 'ok'],
+                ['باكيدج السفر: عزل صوت + فحص شامل + فلتر رياضى', 7000, 'ok']] },
+            { title: '🦆🚀 معمل البطة المجنون', note: 'أفكار للضحك بس.. لسه مش موجودة 😄', crazy: true, p: 3, items: [
+                ['كلاكس بيقول "كواك"', 'الثمن: ضحكة', 'joke'],
+                ['كلاكس البطة الزعلانة (Angry Duck Horn)', 'الثمن: ضحكة', 'joke'],
+                ['زرار الـ نيترو الوهمى (صوت ونور بس!)', 'الثمن: شوية دلع', 'joke'],
+                ['دخان شكمان ملون (قوس قزح)', 'الثمن: مفاجأة', 'joke'],
+                ['حساس ركن بطة بتتريق عليك', 'الثمن: كرامتك', 'joke'],
+                ['فرقعة الـ شكمان الصوتية (Pop & Bangs)', 'الثمن: ضحكة', 'joke'],
+                ['عجلات على شكل أقدام بطة', 'الثمن: شوية دلع', 'joke'],
+                ['عادم يطلّع فقاعات صابون', 'الثمن: كيس مناديل', 'joke'],
+                ['زرار الطيران (لسه تحت التجربة)', 'الثمن: بطة تانية', 'joke'],
+                ['مقعد حمام سباحة صغير', 'الثمن: مايوه', 'joke']] }
+        ];
+
+        function renderWorkshop() {
+            const grid = document.getElementById('mod-grid');
+            if (!grid) return;
+            const tags = { ok: ['تعديل متاح', 'tag-ok'], lic: ['يحتاج ترخيص', 'tag-lic'], joke: ['فكرة مجنونة', 'tag-joke'] };
+            grid.innerHTML = MOD_DATA.map(c => `
+                <div class="mod-card ${c.crazy ? 'crazy' : ''}">
+                    <h3>${c.title}</h3>
+                    <div class="mod-note">${c.note}</div>
+                    ${c.items.map(i => `
+                        <label class="mod-item">
+                            <span><input type="checkbox" class="mod-chk" data-p="${c.p}" data-v="${typeof i[1] === 'number' ? i[1] : 0}" data-n="${i[0].replace(/"/g, '&quot;')}">${i[0]} <span class="mod-tag ${tags[i[2]][1]}">${tags[i[2]][0]}</span></span>
+                            <span class="mod-price">${typeof i[1] === 'number' ? 'تبدأ من ' + i[1].toLocaleString('en-US') + ' EGP' : i[1]}</span>
+                        </label>`).join('')}
+                </div>`).join('');
+            grid.addEventListener('change', updateCrazyMeter);
+        }
+
+        function updateCrazyMeter() {
+            let score = 0, total = 0, count = 0;
+            document.querySelectorAll('.mod-chk:checked').forEach(c => {
+                score += +c.dataset.p; total += +c.dataset.v; count++;
+            });
+            let level = 'اختار تعديلات وشوف مستوى جنانك 🦆';
+            if (count) {
+                level = score <= 4 ? 'عاقل 😇' : score <= 10 ? 'مجنون نص نص 🤪' : score <= 18 ? 'مجنون رسمى 🔥' : 'بطة متطورة 🦆🚀';
+                level = 'مستوى الجنان: ' + level;
+            }
+            document.getElementById('mm-level').textContent = level;
+            document.getElementById('mm-info').textContent = count ? `${count} تعديل • تقديرى من ${total.toLocaleString('en-US')} EGP` : '';
+            document.getElementById('mm-fill').style.width = Math.min(100, score / 22 * 100) + '%';
+        }
+
+        function runStyleQuiz() {
+            const use = document.getElementById('q-use').value;
+            const want = document.getElementById('q-want').value;
+            const bud = document.getElementById('q-bud').value;
+            let rec;
+            if (want === 'comfort') rec = 'باكيدج الصيف (تكييف + عزل حرارة + تنظيف دورى)';
+            else if (want === 'speed') rec = bud === 'low' ? 'Stage 0.5 - باكيدج الميزانية' : bud === 'mid' ? 'Stage 1 + بارات تثبيت (Strut Bars)' : 'Stage 2 + طقم فرامل رياضية (BBK)';
+            else rec = bud === 'low' ? 'إضاءة داخلية RGB + تلميع' : bud === 'mid' ? 'باكيدج الشياكة (تنجيد + إضاءة داخلية + تلميع)' : 'تغليف كامل (Wrap) + جنوط رياضية + إضاءة ترحيب بـ شعار البطة';
+            const extra = use === 'travel' ? ' ويفضل تضيف عزل الصوت والحرارة لراحة السفر.' : use === 'show' ? ' وضيف لمسة من معمل البطة المجنون 🦆😄' : '';
+            document.getElementById('q-result').textContent = '🎯 ترشيحنا ليك: ' + rec + '.' + extra;
+        }
+
+        function sendModRequest() {
+            const name = document.getElementById('mod-name').value.trim();
+            const car = document.getElementById('mod-car').value.trim();
+            const idea = document.getElementById('mod-idea').value.trim();
+            const picked = [...document.querySelectorAll('.mod-chk:checked')].map(c => '- ' + c.dataset.n);
+            if (!idea && !picked.length) { alert('اكتب فكرتك أو اختار تعديل الأول يا بطل 🦆'); return; }
+            const msg = `طلب تعديل من الورشة المجنونة 🔥\nالاسم: ${name || '-'}\nالعربية: ${car || '-'}\n` +
+                (picked.length ? `التعديلات المختارة:\n${picked.join('\n')}\n` : '') + (idea ? `الفكرة: ${idea}` : '');
+            window.open('https://wa.me/201044503749?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        /* EXCLUSIVE DAILY OFFER */
+        const DAILY_OFFERS = [
+            'خصم 50 جنيه على الغسيل الخارجى',
+            'خصم 100 جنيه على التنظيف الداخلى العميق',
+            'خصم 75 جنيه على غسيل المحرك بالكيماوى',
+            'خصم 150 جنيه على التلميع والشمع',
+            'فحص الكمبيوتر بنص السعر',
+            'فحص فرامل مجانى مع أى صيانة',
+            'مشروب مجانى من استراحة البطة مع أى خدمة',
+            'خصم 15% على تغيير الزيت والفلتر',
+            'غسيل خارجى هدية مع أى فحص أو برمجة',
+            'خصم 20% على إكسسوارات السيارات',
+            'فحص شامل قبل السفر مجاناً'
+        ];
+
+        function dayIndex(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); }
+
+        function todaysOffer() {
+            const now = new Date();
+            return {
+                text: DAILY_OFFERS[dayIndex(now) % DAILY_OFFERS.length],
+                code: 'DUCK-' + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0')
+            };
+        }
+
+        function updateCouponTimers() {
+            const now = new Date();
+            const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const s = Math.max(0, Math.floor((end - now) / 1000));
+            const p = n => String(n).padStart(2, '0');
+            const txt = `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`;
+            document.querySelectorAll('.c-timer-val').forEach(el => el.textContent = txt);
+        }
+        setInterval(updateCouponTimers, 1000);
+
+        function showExclusiveOffer() {
+            const body = document.getElementById('chat-body');
+            const typing = document.createElement('div');
+            typing.className = 'chat-msg bot duck-typing';
+            typing.textContent = '🦆 البطة بتفتح صندوق عرض النهاردة... 🎁';
+            body.appendChild(typing);
+            body.scrollTop = body.scrollHeight;
+
+            setTimeout(() => {
+                const o = todaysOffer();
+                typing.className = 'chat-msg bot coupon-msg';
+                typing.innerHTML = `
+                    <div class="coupon">
+                        <div class="c-shine"></div>
+                        <div class="c-head">🎁 عرض النهاردة الحصرى 🎁</div>
+                        <div class="c-offer">${o.text}</div>
+                        <div class="c-code">${o.code}</div>
+                        <div class="c-timer">⏳ ينتهى بعد <span class="c-timer-val">--:--:--</span></div>
+                        <div class="c-foot">فوق العروض الموجودة أصلاً • بكرة عرض مفاجأة 🤫🦆</div>
+                    </div>`;
+                updateCouponTimers();
+                body.scrollTop = body.scrollHeight;
+            }, 1300);
+        }
+
+        /* CHATBOT */
+        let currentChatAudio = null;
+
+        function stopChatSound() {
+            if (currentChatAudio) {
+                currentChatAudio.pause();
+                currentChatAudio.currentTime = 0;
+                currentChatAudio = null;
+            }
+        }
+
+        function playChatSound(file) {
+            stopChatSound();
+            try {
+                currentChatAudio = new Audio(file);
+                const p = currentChatAudio.play();
+                if (p && p.catch) p.catch(() => {});
+            } catch (e) {}
+        }
+
+        function toggleChatbot() {
+            const win = document.getElementById('chat-window');
+            win.classList.toggle('show');
+            if (win.classList.contains('show')) {
+                playChatSound('hi.oga');
+            } else {
+                stopChatSound();
+            }
+        }
+
+        function askChatbot(topic) {
+            const answers = {
+                'المواعيد': 'مواعيد العمل يومياً من 10 صباحاً حتى 10 مساءً ⏰🦆',
+                'العنوان': 'الفرع الرئيسى: التجمع الخامس أمام الجامعة الأمريكية. الفرع الثانى: مدينة نصر شارع عباس العقاد 📍🦆',
+            };
+            const sounds = { 'المواعيد': 'time.oga', 'العنوان': 'address.oga' };
+            const body = document.getElementById('chat-body');
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = topic;
+            body.appendChild(userMsg);
+
+            if (topic === 'الخصم الحصرى') {
+                body.scrollTop = body.scrollHeight;
+                stopChatSound();
+                showExclusiveOffer();
+                return;
+            }
+
+            const botMsg = document.createElement('div');
+            botMsg.className = 'chat-msg bot';
+            botMsg.textContent = answers[topic] || 'مش فاهمة قصدك يا بطوطتى، جرّب أحد الأزرار تحت 🦆';
+            body.appendChild(botMsg);
+
+            body.scrollTop = body.scrollHeight;
+            if (sounds[topic]) playChatSound(sounds[topic]);
+        }
+
+        /* LOUNGE ORDER RECEIPT */
+        let lastLoungeOrder = null;
+
+        function splitName(n) {
+            const hasAr = s => /[\u0600-\u06FF]/.test(s);
+            const m = n.match(/^(.*)\(([^()]*)\)\s*$/);
+            if (m) {
+                const main = m[1].trim(), par = m[2].trim();
+                if (hasAr(main) && !hasAr(par) && /[A-Za-z]/.test(par)) return { ar: main, en: par };
+                if (!hasAr(main) && /[A-Za-z]/.test(main) && hasAr(par)) return { ar: par, en: main };
+            }
+            return { ar: n, en: n };
+        }
+
+        function placeLoungeOrder() {
+            const name = document.getElementById('lounge-customer-name').value.trim();
+            const items = [];
+            let total = 0;
+
+            document.querySelectorAll('#section-snack select').forEach(sel => {
+                if (sel.selectedIndex <= 0) return;
+                const txt = sel.options[sel.selectedIndex].text.trim();
+                const m = txt.match(/^(.*)\s-\s(\d+)\s*EGP$/);
+                if (m) {
+                    items.push({ name: m[1].trim(), price: parseInt(m[2], 10) });
+                    total += parseInt(m[2], 10);
+                }
+            });
+
+            if (!name) { alert('من فضلك اكتب اسمك الأول. / Please enter your name first.'); return; }
+            if (!items.length) { alert('اختار طلب واحد على الأقل من القوائم. / Please choose at least one item.'); return; }
+
+            const now = new Date();
+            lastLoungeOrder = { name, items, total, now, orderNo: 'DL-' + String(now.getTime()).slice(-6) };
+            renderReceipt();
+            document.getElementById('lounge-receipt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function renderReceipt() {
+            if (!lastLoungeOrder) return;
+            const o = lastLoungeOrder;
+            const en = document.getElementById('lounge-receipt-lang').value === 'en';
+            const receipt = document.getElementById('lounge-receipt');
+            const L = en
+                ? { sub: 'Duck Lounge - Receipt', name: 'Name', no: 'Order No.', date: 'Date', total: 'Total', thanks: 'Thank you for visiting Duck Lounge 🦆💛' }
+                : { sub: 'استراحة البطة - إيصال الحساب', name: 'الاسم', no: 'رقم الطلب', date: 'التاريخ', total: 'الإجمالى', thanks: 'شكراً لزيارتك استراحة البطة 🦆💛' };
+            const loc = en ? 'en-GB' : 'ar-EG';
+            const safeName = o.name.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+            const rows = o.items.map(it => {
+                const nm = splitName(it.name)[en ? 'en' : 'ar'];
+                return `<tr><td style="padding:4px 0;">${nm}</td><td style="padding:4px 0; text-align:${en ? 'right' : 'left'}; white-space:nowrap;">${it.price} EGP</td></tr>`;
+            }).join('');
+
+            receipt.style.direction = en ? 'ltr' : 'rtl';
+            receipt.style.textAlign = en ? 'left' : 'right';
+            receipt.innerHTML = `
+                <div style="text-align:center; border-bottom:2px dashed #000; padding-bottom:10px; margin-bottom:10px;">
+                    <h3 style="margin:0; color:#000;">🦆 DUCKY MOTORS</h3>
+                    <div style="font-size:14px;">${L.sub}</div>
+                </div>
+                <div style="font-size:14px; margin-bottom:8px;">
+                    <div>${L.name}: <b>${safeName}</b></div>
+                    <div>${L.no}: <b>${o.orderNo}</b></div>
+                    <div>${L.date}: ${o.now.toLocaleDateString(loc)} - ${o.now.toLocaleTimeString(loc, {hour:'2-digit', minute:'2-digit'})}</div>
+                </div>
+                <table style="width:100%; font-size:14px; border-top:1px dashed #000; border-bottom:1px dashed #000; margin:8px 0;">${rows}</table>
+                <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:900;">
+                    <span>${L.total}</span><span>${o.total} EGP</span>
+                </div>
+                <div style="text-align:center; margin-top:12px; font-size:13px;">${L.thanks}</div>
+            `;
+            receipt.style.display = 'block';
+        }
+
         function handleLogin(event) {
             event.preventDefault();
-            const usernameInput = document.getElementById('username').value.trim();
-            
-            if (usernameInput) {
-                let fullName = usernameInput;
-                if (usernameInput === "مصطفى") {
-                    fullName = "مصطفى ابو المجد";
-                } else if (!usernameInput.includes("ابو المجد")) {
-                    fullName = usernameInput + " ابو المجد";
-                }
+            const name = document.getElementById('username').value.trim();
+            if (!name) return;
 
-                document.getElementById('user-display-name').textContent = fullName;
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('dashboard-box').style.display = 'block';
-            }
+            // رقم عضوية ثابت لكل اسم
+            let h = 0;
+            for (let k = 0; k < name.length; k++) h = (h * 31 + name.charCodeAt(k)) % 9000;
+            const memberId = '#DUCK-' + (1000 + h);
+
+            customerName = name;
+            document.getElementById('user-display-name').textContent = name;
+            document.getElementById('user-member-id').textContent = memberId;
+            document.getElementById('donation-user-id').value = memberId;
+            const orderName = document.getElementById('lounge-customer-name');
+            if (orderName && !orderName.value) orderName.value = name;
+
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('dashboard-box').style.display = 'block';
         }
 
         function handleLogout() {
